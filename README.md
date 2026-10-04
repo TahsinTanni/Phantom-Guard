@@ -1,183 +1,113 @@
-# Predictable Hallucination, Preventable Payload
+# Phantom Guard
 
-Linking LLM artifact-naming grammar to injection-payload risk across
-package and agent-skill ecosystems.
+## What this is
 
-**Status: Phase 0 complete.** This README will be filled out fully per the
-spec (dataset licenses, Kaggle setup, runtime estimates, ethics, citation)
-as later phases add real content. Right now it documents what exists.
+A study of whether package-naming grammar predicts the malware mechanisms
+described in GitHub Security Advisory (GHSA) and OSV malware advisories for
+PyPI and npm. The corpus is a frozen snapshot of 401 advisory records (200
+packages), collapsed to independent campaigns so that re-reports of one
+package and multi-name campaigns by one actor are counted once. The
+independent variable is a compound/generic naming-grammar flag
+(`src/data/naming_grammar.py`); the outcome is whether the advisory text
+describes a concrete malware mechanism (`src/labeling/malware_taxonomy.py`).
+The estimate depends on which reporters' text is used: OSV records carry
+more reporters' write-ups than GHSA records, and that extra detail falls
+mostly on unflagged packages (research log 5.9–5.10). On the default
+setting the result is null: n 94 campaigns, OR 0.884, p 0.818, with power
+0.31 to detect OR 2.0. The grammar flags 7/139 (5.0%) of a published set
+of LLM-hallucinated names against 18.5% of top-5,000 benign names (log
+5.11), so it is reported as compound/generic naming only, with no claim
+about hallucination.
 
-## 1. Research question (current)
+`reports/research_log.md` is the full history. `reports/review.md` lists
+open problems in priority order.
 
-Does predictable LLM-hallucination-style naming grammar in software
-artifacts (packages, and separately, agent skills) correlate with — and
-precede more quickly — the presence of prompt-injection payloads in that
-artifact's documentation, relative to a matched sample of non-flagged real
-artifacts? See `reports/` for the living hypothesis/novelty audit.
+## Repository layout
 
-## 2. What exists as of Phase 0
+```
+run_check.py            Reproduces log Section 5.14 and the power analysis
+review_diagnostics.py   Diagnostics referenced in reports/review.md
+config/base.yaml        Project config and data-source status flags
+data/frozen/            incidents_snapshot.jsonl (401 records; read-only)
+data/external/          Hallucinated-name list and benign top-N name lists
+data/metadata/          Manifests for the benign lists
+src/data/               GHSA/OSV and registry clients, naming grammar, seed lists
+src/labeling/           Malware taxonomy (regex) and labeler
+src/statistics/         Campaign collapse, Fisher/CMH, logistic models, power
+src/evaluation/         Grammar validation, labeler spot check, signature diagnostics
+src/utils/              Environment, manifests, checkpointing
+tests/                  pytest suite
+reports/                Research log, review, spot-check sheet, other reports
+results/                JSON outputs of run_check.py and evaluation scripts
+```
 
-- `src/utils/environment.py` — Kaggle/local/Colab environment detection and
-  path resolution. Data collection is explicitly NOT assumed to run on
-  Kaggle (see module docstring) — Kaggle consumes frozen, versioned
-  snapshots as a read-only input Dataset.
-- `src/utils/manifest.py` — dataset and experiment manifest generation
-  (SHA256 checksums, git commit, config hash, package versions, license,
-  data-generating-process tag).
-- `src/utils/checkpointing.py` — restart-safe batch processing for
-  long-running, disconnect-prone operations (downloads, feature
-  extraction, embeddings, training, inference).
-- `src/data/leakage_checks.py` — automated leakage detection (duplicate,
-  name-family, temporal, label, documentation-version). Raises loudly on
-  severe leakage via `assert_no_severe_leakage`.
-- `src/statistics/power_analysis.py` — approximate power analysis for H1
-  (logistic regression) and H1b (Cox PH), used to drive the go/no-go gate.
-- `src/statistics/phase0_gate.py` — consumes pilot counts, produces
-  `reports/phase0_go_no_go.md` with a GO / GO_WITH_REDUCED_SCOPE / NO_GO
-  decision.
-- `config/base.yaml` — project-wide config, including data-source status
-  flags (several sources are marked `needs_verification` — do not build
-  parsers against them until license/availability is confirmed).
-- `tests/` — unit tests for all of the above.
+`src/labeling/injection_*.py` belong to an earlier framing (log 4.1) and
+are not used in the analysis.
 
-## 2b. Phase 1 (in progress) — package collection layer
+## How to reproduce
 
-- `src/data/registry_clients.py` — async PyPI/npm metadata + **full README
-  text** fetchers. Ported from the prior notebook's `fetch_pypi_meta`/
-  `fetch_npm_meta` (cells 11, 23, 25b), extended to capture documentation
-  text (needed for injection labeling, Phase 2) and raw publish timestamps
-  instead of fetch-time-relative `age_days` (temporal-leakage fix).
-- `src/data/naming_grammar.py` — the H1 independent-variable classifier.
-  `COMPOUND_SUFFIXES`/`COMPOUND_PREFIXES` ported verbatim from the prior
-  notebook's Cell 18, repurposed from candidate-generation to
-  observed-name classification. Also carries a `TREND_SUFFIXES` list
-  (`-turbo`/`-pro`/`-plus`/etc.) distinguishing hallucination-trend naming
-  from legitimate-compound naming — these were conflated in the original
-  notebook's single suffix list and are now tracked separately since H1
-  needs that distinction. Includes the typosquat generator ported from
-  Cell 12 (pure-Python Levenshtein fallback, no hard `rapidfuzz`
-  dependency).
-- `src/data/seed_lists.py` — control-sample name sources, ported from
-  cells 9/10 (hugovk top-PyPI-packages JSON; npm search-API fallback —
-  starting from the fallback path specifically because that's what
-  actually worked in the original run).
-- `src/data/collect_packages.py` — orchestration layer that did NOT exist
-  before as reusable code. Unifies the prior notebook's four separate
-  bespoke JSON-checkpoint-dict patterns (cells 11, 19, 23, 25b) onto the
-  single Phase 0 `CheckpointManager`, and auto-generates a dataset
-  manifest on completion.
-
-**Not yet ported / built:** confirmed-incident collection (GHSA/OSV/
-`pypa/malware-reports`) and agent-skill corpus ingestion (MalSkillBench/
-SkillJect/DDIPE) — these have no equivalent in the original notebook and
-are the next piece of Phase 1.
-
-**Known environment limitation:** `tests/test_registry_clients.py`
-requires `aiohttp` + `pytest-asyncio`. Not installed in the sandbox this
-was developed in (no network access there); verified via code review
-against the original notebook's already-live-tested fetch logic instead.
-Both packages are present in Kaggle's default image — run
-`pytest tests/test_registry_clients.py -v` there or after
-`pip install aiohttp pytest-asyncio` locally.
-
-## 2c. Phase 1b (in progress) — confirmed-incident collection
-
-- `src/data/incident_clients.py` — GHSA (`api.github.com/advisories`) and
-  OSV.dev clients. Fetches and normalizes advisory metadata ONLY
-  (package name, ecosystem, summary/description text, dates, references).
-  Deliberately does NOT compute `injection_present` — that's Phase 2's
-  separate, reviewed labeling step, kept apart so labeling decisions stay
-  auditable independent of collection code.
-- `src/data/collect_incidents.py` — orchestration: bulk GHSA fetch ->
-  candidate package list -> per-package OSV cross-check (checkpointed) ->
-  dedupe (prefers GHSA on exact advisory-ID collision, keeps distinct
-  advisory IDs as separate records) -> manifest.
-- `tests/test_incident_clients.py` — 8 tests, fully mocked `requests`
-  calls, verified passing (46/46 total across the whole suite as of this
-  phase, all runnable without network in this sandbox since `requests`
-  — unlike `aiohttp` — was available for mocking here).
-
-**Not yet built:** Phase 2 injection-payload labeling/taxonomy (reads the
-`description`/`summary` text these collectors capture and applies the
-10-category taxonomy from the original spec) — that's next after this
-phase is confirmed on Kaggle.
-
-## 3. Installation
+Python 3.14. No GPU and no credentials needed.
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate   # or .venv\Scripts\activate on Windows
+source .venv/bin/activate
 pip install -r requirements.txt
+python -m pytest tests/ -q       # expect 158 passed
+python run_check.py
 ```
 
-## 4. Running tests
+`run_check.py` reads only the frozen snapshot (no network) and writes
+`results/power_campaign_level.json`. Expected headline numbers (log 5.14,
+text source "any", grouping "any"):
 
-```bash
-pytest tests/ -v
-```
+| Stratum | n | table | OR [95% CI] | p |
+|---|---|---|---|---|
+| Pooled (Fisher) | 94 | [[13,12],[38,31]] | 0.884 [0.353, 2.211] | 0.818 |
+| npm | 22 | [[3,3],[5,11]] | 2.200 [0.323, 14.975] | 0.624 |
+| PyPI | 72 | [[10,9],[33,20]] | 0.673 [0.234, 1.940] | 0.587 |
+| CMH by ecosystem | 94 | — | 0.890 [0.355, 2.232] | 0.802 |
 
-## 5. Kaggle setup (Phase 0 relevant parts only)
+Power at n 94 for OR 2.0: 0.31; n for 80% power at OR 2.0: 339.
+Other text/grouping settings: `python run_check.py --text-source ghsa`
+(see `--help`). The GHSA-text setting gives OR 2.851, p 0.047; log 5.14
+explains why that is not read as a finding.
 
-1. Data collection happens OFF Kaggle (local machine or a scheduled
-   runner) — see `src/utils/environment.py` docstring for rationale.
-2. Collected, checksummed Parquet/JSONL snapshots + their manifests
-   (`src/utils/manifest.py`) are packaged as a Kaggle Dataset.
-3. Attach that Dataset to a Kaggle Notebook as input. Kaggle code reads
-   from `/kaggle/input/<dataset-slug>/...` (resolved automatically via
-   `get_paths()` when `detect_environment()` returns `"kaggle"`), and
-   writes only to `/kaggle/working/...`.
-4. At the top of every notebook, call:
-   ```python
-   from src.utils.environment import print_environment_banner
-   paths = print_environment_banner()
-   ```
+## Data provenance and licenses
 
-## 6. Phase 0 gate
+- **Incident snapshot** — `data/frozen/incidents_snapshot.jsonl`, 401
+  records: 200 from the GHSA REST API (`type=malware`, ecosystems pip and
+  npm) and 201 from OSV.dev per-package queries; 201 PyPI, 200 npm.
+  Advisory `published_at` ranges from 2025-10-30 to 2026-10-02, so the
+  pull was made on or after 2026-10-02. The file was committed on
+  2026-10-04. The log (5.5) mentions a snapshot manifest; it is not in
+  `data/metadata/`, and the exact pull date is not recorded. Advisory text
+  is from GHSA (CC-BY-4.0) and OSV, which republishes the OpenSSF
+  malicious-packages data (Apache-2.0); per-record credits are kept in
+  the text.
+- **Hallucinated names** — `data/external/hallucinated_names.txt`, 121
+  PyPI + 18 npm names. Churilov, A. (2026), arXiv:2605.17062, release
+  `v0.2-preprint` of github.com/churik5/slopsquatting-replication-2026
+  (Zenodo DOI 10.5281/zenodo.19859120), retrieved 2026-10-03. License
+  CC-BY-4.0. Details in `hallucinated_names_SOURCES.md`.
+- **Benign name lists** — fetched 2026-10-03, manifests with SHA-256 in
+  `data/metadata/`:
+  - `benign_top5000_pypi.txt`: top 5,000 from hugovk/top-pypi-packages
+    (list dated 2026-10-01 12:40:51; not version-pinned).
+  - `benign_top5000_npm.txt`: top 5,000 from `npm-high-impact@1.13.0`
+    (`lib/top.js` via jsDelivr).
+  - `benign_npm_search_api.txt`: 2,593 names from the npm registry search
+    API, live at fetch time.
 
-Before any data collection beyond a small pilot, run:
+## Contributing / analysis rules
 
-```bash
-python -m src.statistics.phase0_gate
-```
-
-(Currently runs with placeholder example counts — replace
-`Phase0PilotCounts` in `if __name__ == "__main__":` with real pilot numbers
-once Phase 1 pilot collection exists.) This produces
-`reports/phase0_go_no_go.md` with an explicit decision and reasons. **Do
-not proceed to full-scale modeling if the decision is NO_GO.**
-
-## 7. Data sources — verification status
-
-See `config/base.yaml` → `data_sources`. Several sources referenced in the
-research proposal (`pypa/malware-reports`, MalSkillBench, SkillJect, DDIPE,
-the NymGuard repo) are marked `needs_verification` — their license,
-current availability, and structure have not yet been confirmed. Do not
-build ingestion code against a `needs_verification` source until its
-status is updated, per the project's explicit source-verification
-requirement.
-
-## 8. Limitations acknowledged at this stage (see full audit)
-
-- Confirmed-incident base rates may be too low to power H1b (survival
-  analysis); the gate exists specifically to catch this before wasted
-  effort.
-- Real-world incident corpora likely have a detection-bias confound with
-  naming-grammar flagging (sources that watch known hallucination-prone
-  slots more closely). See `src/data/leakage_checks.py` docstrings and the
-  living proposal audit in `reports/` for the planned sensitivity analysis.
-- Agent-skill corpora (MalSkillBench, DDIPE, SkillJect) are predominantly
-  red-team/synthetic, not in-the-wild — cross-artifact generalization
-  claims (H2) must be reported split by `data_generating_process`, never
-  pooled into one number.
-
-## 9. Ethics
-
-All malicious/injection artifact text is handled as inert strings only.
-Nothing in this repository executes artifact contents, publishes malicious
-packages or skills, or targets a live registry or production agent. Any
-adversarial-evasion generation (later phases) runs in a sandboxed, local,
-offline harness only.
-
-## 10. Citation
-
-TBD — added once the paper has a stable draft.
+1. Do not change the regex patterns in `src/labeling/malware_taxonomy.py`
+   or the token lists in `src/data/naming_grammar.py` to move a
+   statistical result. A pattern change needs a specific advisory-text
+   example that justifies it and a regression test built on that text.
+2. Do not modify `data/frozen/incidents_snapshot.jsonl`. New data goes in
+   a new file with its own manifest.
+3. Every analysis change must keep `python run_check.py` reproducing the
+   current target (log 5.14: n 94, [[13,12],[38,31]], OR 0.884, p 0.818),
+   or the research log must explain why the target changed. After any
+   change, run `python -m pytest tests/ -q` and append a numbered
+   subsection to `reports/research_log.md` that reports numbers.
