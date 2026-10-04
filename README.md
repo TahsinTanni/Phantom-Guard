@@ -1,50 +1,73 @@
 # Phantom Guard
 
-## What this is
+Naming grammar and described malware mechanisms in GHSA/OSV malware
+advisories for PyPI and npm.
 
-A study of whether package-naming grammar predicts the malware mechanisms
-described in GitHub Security Advisory (GHSA) and OSV malware advisories for
-PyPI and npm. The corpus is a frozen snapshot of 401 advisory records (200
-packages), collapsed to independent campaigns so that re-reports of one
-package and multi-name campaigns by one actor are counted once. The
-independent variable is a compound/generic naming-grammar flag
-(`src/data/naming_grammar.py`); the outcome is whether the advisory text
-describes a concrete malware mechanism (`src/labeling/malware_taxonomy.py`).
-The estimate depends on which reporters' text is used: OSV records carry
-more reporters' write-ups than GHSA records, and that extra detail falls
-mostly on unflagged packages (research log 5.9–5.10). On the default
-setting the result is null: n 94 campaigns, OR 0.884, p 0.818, with power
-0.31 to detect OR 2.0. The grammar flags 7/139 (5.0%) of a published set
-of LLM-hallucinated names against 18.5% of top-5,000 benign names (log
-5.11), so it is reported as compound/generic naming only, with no claim
-about hallucination.
+**Status:** Analysis frozen at research_log.md §5.14 (2026-10-04).
+Manuscript in preparation.
 
-`reports/research_log.md` is the full history. `reports/review.md` lists
-open problems in priority order.
+## Overview
+
+**Research question.** Do malicious packages with compound or generic
+names (built from tokens such as `py`, `tools`, `ai`, `client`, `utils`) more often have
+advisories that describe a concrete malware mechanism than packages with
+other names?
+
+**Data.** A frozen snapshot of 401 malware advisory records for 200
+packages (201 PyPI, 200 npm records), retrieved on 2026-10-02 from the
+GitHub Security Advisories (200 records) and OSV.dev (201 records) APIs.
+Advisories were published between 2025-10-30 and 2026-10-02.
+
+**Method.** Each package name is classified by a token-based
+compound/generic naming grammar (`src/data/naming_grammar.py`). Advisory
+text is labeled by a regex taxonomy of malware mechanisms
+(`src/labeling/malware_taxonomy.py`), with negated mentions removed.
+Records are collapsed to independent campaigns, so that cross-source
+re-reports of one package and multi-name campaigns by one actor count
+once. A campaign is positive on either variable if any member is. The
+association is tested with Fisher's exact test, Cochran–Mantel–Haenszel
+tests stratified by ecosystem and by reporter count, and a logistic
+regression adjusting for ecosystem and reporter coverage. The grammar flags
+7/139 (5.0%) of a published set of LLM-hallucinated names against 18.5%
+of top-5,000 benign names, so it is treated as a compound/generic naming
+measure, not a hallucination detector.
+
+**Headline result.** At the campaign level (n = 94), there is no
+association: pooled OR 0.884 [95% CI 0.353, 2.211], p 0.818; CMH by
+ecosystem OR 0.890, p 0.802; adjusted logistic OR 0.912 [0.331, 2.515],
+p 0.858. Power to detect OR 2.0 at n = 94 is 0.31; 339 campaigns are
+needed for 80% power. The estimate depends on reporter coverage. Using
+GHSA advisory text alone gives OR 2.851, p 0.047. This is one of several
+text-source and grouping settings that were examined, with no correction
+for multiple comparisons, and the npm stratum has a zero cell. OSV
+records combine more reporters' write-ups than GHSA records, and the
+extra detail falls mostly on packages the grammar does not flag.
 
 ## Repository layout
 
 ```
 run_check.py            Reproduces log Section 5.14 and the power analysis
-review_diagnostics.py   Diagnostics referenced in reports/review.md
+review_diagnostics.py   Additional diagnostics on the frozen snapshot
 config/base.yaml        Project config and data-source status flags
 data/frozen/            incidents_snapshot.jsonl (401 records; read-only)
 data/external/          Hallucinated-name list and benign top-N name lists
-data/metadata/          Manifests for the benign lists
+data/metadata/          Manifests for the snapshot and the benign lists
 src/data/               GHSA/OSV and registry clients, naming grammar, seed lists
 src/labeling/           Malware taxonomy (regex) and labeler
 src/statistics/         Campaign collapse, Fisher/CMH, logistic models, power
 src/evaluation/         Grammar validation, labeler spot check, signature diagnostics
 src/utils/              Environment, manifests, checkpointing
 tests/                  pytest suite
-reports/                Research log, review, spot-check sheet, other reports
+reports/                Research log, spot-check sheet, other reports
 results/                JSON outputs of run_check.py and evaluation scripts
 ```
 
-`src/labeling/injection_*.py` belong to an earlier framing (log 4.1) and
-are not used in the analysis.
+### Legacy modules
 
-## How to reproduce
+`src/labeling/injection_taxonomy.py` and `src/labeling/injection_labeler.py`
+are retained for provenance and are not used in the analysis.
+
+## Reproduction
 
 Python 3.14. No GPU and no credentials needed.
 
@@ -74,31 +97,32 @@ explains why that is not read as a finding.
 
 ## Data provenance and licenses
 
-- **Incident snapshot** — `data/frozen/incidents_snapshot.jsonl`, 401
-  records: 200 from the GHSA REST API (`type=malware`, ecosystems pip and
-  npm) and 201 from OSV.dev per-package queries; 201 PyPI, 200 npm.
-  Advisory `published_at` ranges from 2025-10-30 to 2026-10-02, so the
-  pull was made on or after 2026-10-02. The file was committed on
-  2026-10-04. The log (5.5) mentions a snapshot manifest; it is not in
-  `data/metadata/`, and the exact pull date is not recorded. Advisory text
-  is from GHSA (CC-BY-4.0) and OSV, which republishes the OpenSSF
-  malicious-packages data (Apache-2.0); per-record credits are kept in
-  the text.
-- **Hallucinated names** — `data/external/hallucinated_names.txt`, 121
+- **Incident snapshot.** `data/frozen/incidents_snapshot.jsonl`, described
+  by `data/metadata/incidents_snapshot_manifest.json`. 401 records, SHA-256
+  `cb830db6232fd164faa16707da847133269b07b7194e168a4bc705a454ea4f52`.
+  It has 200 records from the GHSA REST API (`type=malware`, ecosystems pip
+  and npm) and 201 from OSV.dev per-package queries. The records cover
+  200 packages (201 PyPI, 200 npm records). Fetched 2026-10-02
+  20:00:31–20:01:14 UTC. Advisories were published between 2025-10-30
+  and 2026-10-02. License: GHSA advisory data is CC-BY-4.0, and OSV
+  records carry the license of their upstream source (OpenSSF
+  malicious-packages: Apache-2.0). Per-record credits are kept in the
+  advisory text.
+- **Hallucinated names.** `data/external/hallucinated_names.txt`, 121
   PyPI + 18 npm names. Churilov, A. (2026), arXiv:2605.17062, release
   `v0.2-preprint` of github.com/churik5/slopsquatting-replication-2026
   (Zenodo DOI 10.5281/zenodo.19859120), retrieved 2026-10-03. License
   CC-BY-4.0. Details in `hallucinated_names_SOURCES.md`.
-- **Benign name lists** — fetched 2026-10-03, manifests with SHA-256 in
-  `data/metadata/`:
+- **Benign name lists.** Fetched 2026-10-03. The manifests, with SHA-256
+  checksums, are in `data/metadata/`:
   - `benign_top5000_pypi.txt`: top 5,000 from hugovk/top-pypi-packages
-    (list dated 2026-10-01 12:40:51; not version-pinned).
+    (list dated 2026-10-01 12:40:51).
   - `benign_top5000_npm.txt`: top 5,000 from `npm-high-impact@1.13.0`
     (`lib/top.js` via jsDelivr).
   - `benign_npm_search_api.txt`: 2,593 names from the npm registry search
-    API, live at fetch time.
+    API, used only as a sensitivity set.
 
-## Contributing / analysis rules
+## Analysis rules
 
 1. Do not change the regex patterns in `src/labeling/malware_taxonomy.py`
    or the token lists in `src/data/naming_grammar.py` to move a
@@ -111,3 +135,22 @@ explains why that is not read as a finding.
    or the research log must explain why the target changed. After any
    change, run `python -m pytest tests/ -q` and append a numbered
    subsection to `reports/research_log.md` that reports numbers.
+
+## Citation
+
+```bibtex
+@unpublished{tanni2026phantomguard,
+  title  = {Naming Grammar and Described Malware Mechanisms in
+            {GHSA}/{OSV} Malware Advisories},
+  author = {Tanni, Tahsin Tajwar and Khan, Nafiz},
+  institution = {BRAC University},
+  year   = {2026},
+  note   = {Manuscript under preparation; preprint forthcoming.}
+}
+```
+
+## License
+
+Code is released under the MIT License (see `LICENSE`). Data files remain
+under the license of their original source, as listed under Data
+provenance and licenses.

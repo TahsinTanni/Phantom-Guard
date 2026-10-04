@@ -1,0 +1,31 @@
+{
+  "checksum": "cb830db6232fd164faa16707da847133269b07b7194e168a4bc705a454ea4f52",
+  "code_version": "b861c6fad30026d0b313afaf1ae3843edc2f3fc6",
+  "data_generating_process": "real_world_observed",
+  "dataset_name": "incidents_snapshot",
+  "download_timestamp": "2026-10-04T12:46:26.889307+00:00",
+  "exclusions": [],
+  "extra": {
+    "ecosystem_counts": {
+      "npm": 200,
+      "pypi": 201
+    },
+    "fetched_at_max": "2026-10-02T20:01:14.213936+00:00",
+    "fetched_at_min": "2026-10-02T20:00:31.606621+00:00",
+    "note": "Manifest generated retrospectively; download_timestamp is manifest-generation time, the pull time is fetched_at.",
+    "published_at_max": "2026-10-02T15:31:12Z",
+    "published_at_min": "2025-10-30T17:38:57Z",
+    "source_counts": {
+      "ghsa": 200,
+      "osv": 201
+    },
+    "unique_packages": 200
+  },
+  "license": "GHSA records: CC-BY-4.0; OSV records: per upstream source (OpenSSF malicious-packages: Apache-2.0)",
+  "missing_value_policy": "not specified",
+  "preprocessing_version": "v1-postfix",
+  "random_seed": null,
+  "record_count": 401,
+  "source": "GitHub Security Advisories REST API (api.github.com/advisories, type=malware, ecosystems pip/npm) + OSV.dev v1 query API (per-package)",
+  "source_version": "live API pull; see extra.fetched_at_min/max"
+}
