@@ -1,0 +1,18 @@
+{
+  "checksum": "eedf7747a1a7fb5cc34ad778154c880d7b8683fc14f7ea7678624ee2b5c172bd",
+  "code_version": "no-git-repo",
+  "data_generating_process": "real_world_observed",
+  "dataset_name": "benign_top5000_npm",
+  "download_timestamp": "2026-10-03T17:27:49.447767+00:00",
+  "exclusions": [],
+  "extra": {
+    "role": "benign comparison set for grammar validation (review.md D3)"
+  },
+  "license": "not specified",
+  "missing_value_policy": "not specified",
+  "preprocessing_version": "v0",
+  "random_seed": null,
+  "record_count": 5000,
+  "source": "https://cdn.jsdelivr.net/npm/npm-high-impact@1.13.0/lib/top.js",
+  "source_version": "npm-high-impact@1.13.0"
+}

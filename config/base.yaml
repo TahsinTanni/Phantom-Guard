@@ -1,0 +1,50 @@
+# Base project configuration.
+# Environment-specific and experiment-specific configs (data.yaml,
+# model.yaml, experiments.yaml) override/extend this. Kept minimal at
+# Phase 0 — expanded as later phases add real data sources and models.
+
+project:
+  name: "predictable-hallucination-preventable-payload"
+  version: "0.0.1-phase0"
+
+random_seeds: [42, 123, 2026]
+
+power_analysis:
+  # Default targets used by src/statistics/power_analysis.py unless
+  # overridden per-analysis. OR/HR = 2.0 is a conventional "moderate
+  # effect" default — revisit once pilot data gives you a defensible prior.
+  target_odds_ratio: 2.0
+  target_hazard_ratio: 2.0
+  alpha: 0.05
+  power: 0.80
+
+phase0_gate:
+  # Minimum pilot counts before proceeding past Phase 0. These are
+  # deliberately conservative placeholders — tune after reading the
+  # power_analysis output on real pilot numbers.
+  min_confirmed_incidents_with_injection_label: 30
+  min_control_sample_size: 100
+  min_events_with_usable_date: 15
+
+data_sources:
+  # Status: "needs_verification" means license/availability/structure has
+  # NOT yet been confirmed as of this proposal — do not build a parser
+  # against it until verified, per the project's source-verification rule.
+  ghsa_api:
+    url: "https://api.github.com/advisories"
+    status: verified_accessible
+  osv_api:
+    url: "https://api.osv.dev"
+    status: verified_accessible
+  pypa_malware_reports:
+    url: "https://github.com/pypa/malware-reports"
+    status: needs_verification
+  malskillbench:
+    status: needs_verification
+  skilljject:
+    status: needs_verification
+  ddipe:
+    status: needs_verification
+  nymguard_repo:
+    url: "https://github.com/xiaoye798/Package-Hallucination-Research"
+    status: needs_verification

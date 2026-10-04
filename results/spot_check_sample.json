@@ -1,0 +1,832 @@
+{
+  "seed": 42,
+  "rng": "random.Random(seed).sample, PyPI stratum only; frame sorted by package_name",
+  "context_chars": 100,
+  "setting": {
+    "text_source": "any",
+    "group_on": "any"
+  },
+  "n_campaigns": 106,
+  "n_dv_positive_campaigns": 62,
+  "frame_sizes": {
+    "npm": 12,
+    "pypi": 33
+  },
+  "n_sampled": {
+    "npm": 12,
+    "pypi": 18
+  },
+  "note": "npm frame has 12 campaigns, so all 12 are taken (census) and PyPI is 18 to keep 30 rows in part (b) (rule of the 2026-10-04 decision; research_log 5.13).",
+  "n_rows": 51,
+  "package_names": [
+    "ddok-modal",
+    "homestack-cheer",
+    "pf25133",
+    "pf25262",
+    "pflag14570",
+    "aiosendletter",
+    "auclean",
+    "gcphelpit",
+    "licloud",
+    "memoryos",
+    "metricboxlite",
+    "prosocks",
+    "proxycer",
+    "rak-lab-yoav-orca-zrktd2cp5hjmo4x7",
+    "starlette-healthchecks",
+    "timeweave",
+    "trongappy",
+    "trongridew",
+    "trongridi",
+    "tsshare",
+    "vercel-runtime-python",
+    "@bluewin/utils",
+    "ai-workshop-maa15-radio",
+    "ai-workshop-radio-app",
+    "ai-workshop-radio-lambda",
+    "alexa-cybertron-team-code-review-agent",
+    "apl-rive-renderer",
+    "brioche-apl-dev-env",
+    "com.epi.e2e_test",
+    "figma-to-apl",
+    "live-detection-dashboard",
+    "niksinnkatalapp",
+    "okra-cloud-cdk",
+    "aitextkit-py",
+    "aitextutils-py",
+    "aseitylab",
+    "bfox-build-utils",
+    "bq-build-probe-vrp-2026",
+    "caracas4check",
+    "chroma-client",
+    "company-sdk",
+    "houdus",
+    "praetorian-mind-rce-test-2026",
+    "pullgetsage",
+    "pylever",
+    "requests-auroras",
+    "rrs",
+    "telemetry-helper",
+    "uvhttp-custom",
+    "web3-eth-account",
+    "websetup"
+  ],
+  "rows": [
+    {
+      "row": 1,
+      "part": "a",
+      "ecosystem": "npm",
+      "package_name": "ddok-modal",
+      "campaign_size": 1,
+      "categories": [
+        "brand_impersonation_narrative",
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "MAL-2026-10497"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 2,
+      "part": "a",
+      "ecosystem": "npm",
+      "package_name": "homestack-cheer",
+      "campaign_size": 1,
+      "categories": [
+        "remote_payload_retrieval"
+      ],
+      "advisory_ids": [
+        "MAL-2026-16333"
+      ],
+      "n_matches": 1
+    },
+    {
+      "row": 3,
+      "part": "a",
+      "ecosystem": "npm",
+      "package_name": "pf25133",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "MAL-2026-16339"
+      ],
+      "n_matches": 1
+    },
+    {
+      "row": 4,
+      "part": "a",
+      "ecosystem": "npm",
+      "package_name": "pf25262",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "MAL-2026-16340"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 5,
+      "part": "a",
+      "ecosystem": "npm",
+      "package_name": "pflag14570",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "MAL-2026-16341"
+      ],
+      "n_matches": 1
+    },
+    {
+      "row": 6,
+      "part": "a",
+      "ecosystem": "pypi",
+      "package_name": "aiosendletter",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "MAL-2026-16264"
+      ],
+      "n_matches": 1
+    },
+    {
+      "row": 7,
+      "part": "a",
+      "ecosystem": "pypi",
+      "package_name": "auclean",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "MAL-2026-16410"
+      ],
+      "n_matches": 1
+    },
+    {
+      "row": 8,
+      "part": "a",
+      "ecosystem": "pypi",
+      "package_name": "gcphelpit",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "MAL-2026-15810"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 9,
+      "part": "a",
+      "ecosystem": "pypi",
+      "package_name": "licloud",
+      "campaign_size": 15,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "MAL-2026-16219"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 10,
+      "part": "a",
+      "ecosystem": "pypi",
+      "package_name": "memoryos",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "MAL-2026-16475"
+      ],
+      "n_matches": 1
+    },
+    {
+      "row": 11,
+      "part": "a",
+      "ecosystem": "pypi",
+      "package_name": "metricboxlite",
+      "campaign_size": 15,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "MAL-2026-15931"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 12,
+      "part": "a",
+      "ecosystem": "pypi",
+      "package_name": "prosocks",
+      "campaign_size": 1,
+      "categories": [
+        "hidden_install_hook",
+        "remote_backdoor_access"
+      ],
+      "advisory_ids": [
+        "MAL-2026-17167"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 13,
+      "part": "a",
+      "ecosystem": "pypi",
+      "package_name": "proxycer",
+      "campaign_size": 1,
+      "categories": [
+        "obfuscated_payload_execution"
+      ],
+      "advisory_ids": [
+        "MAL-2026-15935"
+      ],
+      "n_matches": 1
+    },
+    {
+      "row": 14,
+      "part": "a",
+      "ecosystem": "pypi",
+      "package_name": "rak-lab-yoav-orca-zrktd2cp5hjmo4x7",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "MAL-2026-16241"
+      ],
+      "n_matches": 3
+    },
+    {
+      "row": 15,
+      "part": "a",
+      "ecosystem": "pypi",
+      "package_name": "starlette-healthchecks",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "MAL-2026-16356"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 16,
+      "part": "a",
+      "ecosystem": "pypi",
+      "package_name": "timeweave",
+      "campaign_size": 1,
+      "categories": [
+        "remote_payload_retrieval"
+      ],
+      "advisory_ids": [
+        "MAL-2026-15910"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 17,
+      "part": "a",
+      "ecosystem": "pypi",
+      "package_name": "trongappy",
+      "campaign_size": 3,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "MAL-2026-16242"
+      ],
+      "n_matches": 1
+    },
+    {
+      "row": 18,
+      "part": "a",
+      "ecosystem": "pypi",
+      "package_name": "trongridew",
+      "campaign_size": 3,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "MAL-2026-15936"
+      ],
+      "n_matches": 1
+    },
+    {
+      "row": 19,
+      "part": "a",
+      "ecosystem": "pypi",
+      "package_name": "trongridi",
+      "campaign_size": 3,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "MAL-2026-15858"
+      ],
+      "n_matches": 1
+    },
+    {
+      "row": 20,
+      "part": "a",
+      "ecosystem": "pypi",
+      "package_name": "tsshare",
+      "campaign_size": 1,
+      "categories": [
+        "brand_impersonation_narrative",
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "MAL-2026-16044"
+      ],
+      "n_matches": 3
+    },
+    {
+      "row": 21,
+      "part": "a",
+      "ecosystem": "pypi",
+      "package_name": "vercel-runtime-python",
+      "campaign_size": 15,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "MAL-2026-17168"
+      ],
+      "n_matches": 1
+    },
+    {
+      "row": 22,
+      "part": "b",
+      "ecosystem": "npm",
+      "package_name": "@bluewin/utils",
+      "campaign_size": 1,
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "advisory_ids": [
+        "GHSA-9ggj-2v34-hwv8",
+        "MAL-2026-17437"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 23,
+      "part": "b",
+      "ecosystem": "npm",
+      "package_name": "ai-workshop-maa15-radio",
+      "campaign_size": 1,
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "advisory_ids": [
+        "GHSA-5m79-v4p8-r597",
+        "MAL-2026-17427"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 24,
+      "part": "b",
+      "ecosystem": "npm",
+      "package_name": "ai-workshop-radio-app",
+      "campaign_size": 1,
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "advisory_ids": [
+        "GHSA-rxfj-38w3-hw2x",
+        "MAL-2026-17428"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 25,
+      "part": "b",
+      "ecosystem": "npm",
+      "package_name": "ai-workshop-radio-lambda",
+      "campaign_size": 1,
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "advisory_ids": [
+        "GHSA-427x-rv7c-m3f9",
+        "MAL-2026-17429"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 26,
+      "part": "b",
+      "ecosystem": "npm",
+      "package_name": "alexa-cybertron-team-code-review-agent",
+      "campaign_size": 1,
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "advisory_ids": [
+        "GHSA-g7c3-m79h-9cqq",
+        "MAL-2026-17430"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 27,
+      "part": "b",
+      "ecosystem": "npm",
+      "package_name": "apl-rive-renderer",
+      "campaign_size": 1,
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "advisory_ids": [
+        "GHSA-66jg-9x42-xwh9",
+        "MAL-2026-17431"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 28,
+      "part": "b",
+      "ecosystem": "npm",
+      "package_name": "brioche-apl-dev-env",
+      "campaign_size": 1,
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "advisory_ids": [
+        "GHSA-8r2r-7gc9-8vq8",
+        "MAL-2026-17432"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 29,
+      "part": "b",
+      "ecosystem": "npm",
+      "package_name": "com.epi.e2e_test",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration",
+        "hidden_install_hook"
+      ],
+      "advisory_ids": [
+        "GHSA-76w7-xhq5-w327",
+        "MAL-2026-17415"
+      ],
+      "n_matches": 6
+    },
+    {
+      "row": 30,
+      "part": "b",
+      "ecosystem": "npm",
+      "package_name": "figma-to-apl",
+      "campaign_size": 1,
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "advisory_ids": [
+        "GHSA-fmw8-mrp6-mj68",
+        "MAL-2026-17433"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 31,
+      "part": "b",
+      "ecosystem": "npm",
+      "package_name": "live-detection-dashboard",
+      "campaign_size": 1,
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "advisory_ids": [
+        "GHSA-h4cx-hwvc-8mgj",
+        "MAL-2026-17434"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 32,
+      "part": "b",
+      "ecosystem": "npm",
+      "package_name": "niksinnkatalapp",
+      "campaign_size": 1,
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "advisory_ids": [
+        "GHSA-g37r-cvvp-rj75",
+        "MAL-2026-17435"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 33,
+      "part": "b",
+      "ecosystem": "npm",
+      "package_name": "okra-cloud-cdk",
+      "campaign_size": 1,
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "advisory_ids": [
+        "GHSA-7rq8-hfxr-pxhw",
+        "MAL-2026-17436"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 34,
+      "part": "b",
+      "ecosystem": "pypi",
+      "package_name": "aitextkit-py",
+      "campaign_size": 1,
+      "categories": [
+        "obfuscated_payload_execution",
+        "remote_backdoor_access",
+        "remote_payload_retrieval"
+      ],
+      "advisory_ids": [
+        "GHSA-657v-53xv-3xw9",
+        "MAL-2026-16130"
+      ],
+      "n_matches": 5
+    },
+    {
+      "row": 35,
+      "part": "b",
+      "ecosystem": "pypi",
+      "package_name": "aitextutils-py",
+      "campaign_size": 1,
+      "categories": [
+        "remote_backdoor_access",
+        "remote_payload_retrieval"
+      ],
+      "advisory_ids": [
+        "GHSA-hm5j-9gw8-8568",
+        "MAL-2026-16131"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 36,
+      "part": "b",
+      "ecosystem": "pypi",
+      "package_name": "aseitylab",
+      "campaign_size": 5,
+      "categories": [
+        "obfuscated_payload_execution",
+        "remote_payload_retrieval"
+      ],
+      "advisory_ids": [
+        "GHSA-jv9w-2v63-767g",
+        "MAL-2026-17240"
+      ],
+      "n_matches": 5
+    },
+    {
+      "row": 37,
+      "part": "b",
+      "ecosystem": "pypi",
+      "package_name": "bfox-build-utils",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "GHSA-rx43-29mc-6h3f",
+        "MAL-2026-17319"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 38,
+      "part": "b",
+      "ecosystem": "pypi",
+      "package_name": "bq-build-probe-vrp-2026",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "GHSA-f69f-h5mx-9x8p",
+        "MAL-2026-16098"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 39,
+      "part": "b",
+      "ecosystem": "pypi",
+      "package_name": "caracas4check",
+      "campaign_size": 1,
+      "categories": [
+        "remote_payload_retrieval"
+      ],
+      "advisory_ids": [
+        "GHSA-8p46-j5h8-w78j",
+        "MAL-2026-17198"
+      ],
+      "n_matches": 6
+    },
+    {
+      "row": 40,
+      "part": "b",
+      "ecosystem": "pypi",
+      "package_name": "chroma-client",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration",
+        "remote_payload_retrieval"
+      ],
+      "advisory_ids": [
+        "GHSA-qp4x-pg53-7xh8",
+        "MAL-2026-16143"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 41,
+      "part": "b",
+      "ecosystem": "pypi",
+      "package_name": "company-sdk",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "GHSA-xwp3-c9rw-wggc",
+        "MAL-2026-15827"
+      ],
+      "n_matches": 6
+    },
+    {
+      "row": 42,
+      "part": "b",
+      "ecosystem": "pypi",
+      "package_name": "houdus",
+      "campaign_size": 1,
+      "categories": [
+        "remote_backdoor_access",
+        "remote_payload_retrieval"
+      ],
+      "advisory_ids": [
+        "GHSA-frjq-w86w-r3gr",
+        "MAL-2026-15933"
+      ],
+      "n_matches": 8
+    },
+    {
+      "row": 43,
+      "part": "b",
+      "ecosystem": "pypi",
+      "package_name": "praetorian-mind-rce-test-2026",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "GHSA-8gcf-3vx7-2wrq",
+        "MAL-2026-16240"
+      ],
+      "n_matches": 3
+    },
+    {
+      "row": 44,
+      "part": "b",
+      "ecosystem": "pypi",
+      "package_name": "pullgetsage",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "GHSA-4whg-cvj9-8v3f",
+        "MAL-2026-16366"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 45,
+      "part": "b",
+      "ecosystem": "pypi",
+      "package_name": "pylever",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "GHSA-x38c-f232-xj2x",
+        "MAL-2026-16122"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 46,
+      "part": "b",
+      "ecosystem": "pypi",
+      "package_name": "requests-auroras",
+      "campaign_size": 2,
+      "categories": [
+        "remote_backdoor_access"
+      ],
+      "advisory_ids": [
+        "GHSA-5p5r-2g2v-44x5",
+        "MAL-2026-16274"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 47,
+      "part": "b",
+      "ecosystem": "pypi",
+      "package_name": "rrs",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "GHSA-5w9q-gw92-3wq8",
+        "MAL-2026-16346"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 48,
+      "part": "b",
+      "ecosystem": "pypi",
+      "package_name": "telemetry-helper",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "advisory_ids": [
+        "GHSA-r35m-jqvr-hwxp",
+        "MAL-2026-15829"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 49,
+      "part": "b",
+      "ecosystem": "pypi",
+      "package_name": "uvhttp-custom",
+      "campaign_size": 1,
+      "categories": [
+        "remote_payload_retrieval"
+      ],
+      "advisory_ids": [
+        "GHSA-hf2r-8r5g-8hg8",
+        "MAL-2026-15863"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 50,
+      "part": "b",
+      "ecosystem": "pypi",
+      "package_name": "web3-eth-account",
+      "campaign_size": 2,
+      "categories": [
+        "obfuscated_payload_execution",
+        "remote_payload_retrieval"
+      ],
+      "advisory_ids": [
+        "GHSA-6rvw-xw58-h4pf",
+        "MAL-2026-16129"
+      ],
+      "n_matches": 3
+    },
+    {
+      "row": 51,
+      "part": "b",
+      "ecosystem": "pypi",
+      "package_name": "websetup",
+      "campaign_size": 1,
+      "categories": [
+        "credential_or_wallet_exfiltration",
+        "remote_backdoor_access"
+      ],
+      "advisory_ids": [
+        "GHSA-v8mm-56q4-h26q",
+        "MAL-2026-16121"
+      ],
+      "n_matches": 5
+    }
+  ]
+}

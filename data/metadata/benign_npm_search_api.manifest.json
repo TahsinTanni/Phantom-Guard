@@ -1,0 +1,18 @@
+{
+  "checksum": "09efeb81c0f17a6dc3585e95a1dfd3e079a217e4dff4668d9e4a254d9261195c",
+  "code_version": "no-git-repo",
+  "data_generating_process": "real_world_observed",
+  "dataset_name": "benign_npm_search_api",
+  "download_timestamp": "2026-10-03T17:28:00.234434+00:00",
+  "exclusions": [],
+  "extra": {
+    "role": "benign comparison set for grammar validation (review.md D3)"
+  },
+  "license": "not specified",
+  "missing_value_policy": "not specified",
+  "preprocessing_version": "v0",
+  "random_seed": null,
+  "record_count": 2593,
+  "source": "https://registry.npmjs.org/-/v1/search (terms: react, webpack, babel, eslint, test, server, cli, api, util, core, plugin, loader, parser, client)",
+  "source_version": "live search at fetch time; failed terms are skipped"
+}

@@ -1,0 +1,20 @@
+# Phase 0-1 dependencies. Later phases add: transformers, datasets,
+# torch (GPU build on Kaggle is preinstalled — do not pin a CPU-only
+# version in this file, since that would break the Kaggle GPU environment),
+# lifelines (survival analysis, Phase 5), lightgbm (Phase 8 baselines).
+
+pyyaml>=6.0
+pandas>=2.0
+numpy>=1.24
+scipy>=1.11
+statsmodels>=0.14     # reporter-adjusted logistic regression (review.md D2)
+pytest>=7.4
+pytest-asyncio>=0.21   # needed for tests/test_registry_clients.py
+requests>=2.31         # seed_lists.py (sync bulk-list fetches)
+aiohttp>=3.9            # registry_clients.py, collect_packages.py
+                        # (already present in Kaggle's default image;
+                        # only needs explicit install for local dev)
+nest_asyncio>=1.5.8     # required inside Kaggle/Jupyter notebooks when
+                        # calling collect_packages() (asyncio.run) from a
+                        # cell — same reason the original notebook applied
+                        # nest_asyncio.apply() before its async cells

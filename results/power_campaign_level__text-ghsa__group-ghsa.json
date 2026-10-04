@@ -1,0 +1,153 @@
+{
+  "settings": {
+    "text_source": "ghsa",
+    "group_on": "ghsa"
+  },
+  "snapshot_records": 401,
+  "n_campaigns": 142,
+  "section_5_6": {
+    "pooled": {
+      "odds_ratio": 1.911764705882353,
+      "p_value": 0.12131044676892745,
+      "n_total": 142,
+      "rate_when_flagged": 0.5405405405405406,
+      "rate_when_not_flagged": 0.38095238095238093,
+      "table_2x2": [
+        [
+          20,
+          17
+        ],
+        [
+          40,
+          65
+        ]
+      ]
+    },
+    "by_ecosystem": {
+      "npm": {
+        "odds_ratio": 3.6666666666666665,
+        "p_value": 0.08213040088096417,
+        "n_total": 42,
+        "rate_when_flagged": 0.5,
+        "rate_when_not_flagged": 0.21428571428571427,
+        "table_2x2": [
+          [
+            7,
+            7
+          ],
+          [
+            6,
+            22
+          ]
+        ]
+      },
+      "pypi": {
+        "odds_ratio": 1.6441176470588235,
+        "p_value": 0.3459968340622736,
+        "n_total": 100,
+        "rate_when_flagged": 0.5652173913043478,
+        "rate_when_not_flagged": 0.44155844155844154,
+        "table_2x2": [
+          [
+            13,
+            10
+          ],
+          [
+            34,
+            43
+          ]
+        ]
+      }
+    },
+    "cmh": {
+      "common_odds_ratio": 2.1037878787878785,
+      "chi2_statistic": 3.629090553840619,
+      "p_value": 0.05677783459095025,
+      "n_strata": 2,
+      "n_total": 142
+    }
+  },
+  "power": {
+    "pooled": {
+      "n": 142,
+      "p_control": 0.38095238095238093,
+      "exposure_prevalence": 0.2605633802816901,
+      "by_odds_ratio": {
+        "0.5": {
+          "n_required_80pct": 360,
+          "achieved_power": 0.42101038457119444
+        },
+        "0.67": {
+          "n_required_80pct": 1078,
+          "achieved_power": 0.17291313530934338
+        },
+        "1.5": {
+          "n_required_80pct": 1051,
+          "achieved_power": 0.17617336373311676
+        },
+        "2.0": {
+          "n_required_80pct": 360,
+          "achieved_power": 0.42101038457119444
+        },
+        "3.0": {
+          "n_required_80pct": 144,
+          "achieved_power": 0.7969023286077285
+        }
+      }
+    },
+    "npm": {
+      "n": 42,
+      "p_control": 0.21428571428571427,
+      "exposure_prevalence": 0.3333333333333333,
+      "by_odds_ratio": {
+        "0.5": {
+          "n_required_80pct": 437,
+          "achieved_power": 0.13762367896714994
+        },
+        "0.67": {
+          "n_required_80pct": 1308,
+          "achieved_power": 0.07242870818472133
+        },
+        "1.5": {
+          "n_required_80pct": 1277,
+          "achieved_power": 0.07329438726680118
+        },
+        "2.0": {
+          "n_required_80pct": 437,
+          "achieved_power": 0.13762367896714994
+        },
+        "3.0": {
+          "n_required_80pct": 174,
+          "achieved_power": 0.28002050398281925
+        }
+      }
+    },
+    "pypi": {
+      "n": 100,
+      "p_control": 0.44155844155844154,
+      "exposure_prevalence": 0.23,
+      "by_odds_ratio": {
+        "0.5": {
+          "n_required_80pct": 375,
+          "achieved_power": 0.30451217040284884
+        },
+        "0.67": {
+          "n_required_80pct": 1121,
+          "achieved_power": 0.13070387852110232
+        },
+        "1.5": {
+          "n_required_80pct": 1094,
+          "achieved_power": 0.13292995654100492
+        },
+        "2.0": {
+          "n_required_80pct": 375,
+          "achieved_power": 0.30451217040284884
+        },
+        "3.0": {
+          "n_required_80pct": 149,
+          "achieved_power": 0.631508003006616
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,798 @@
+{
+  "sets": {
+    "hallucinated": {
+      "all": {
+        "n": 139,
+        "flag_count": 7,
+        "flag_rate": 0.050359712230215826,
+        "pattern_type_distribution": {
+          "none": 132,
+          "compound": 7,
+          "trend": 0,
+          "both": 0
+        },
+        "top_flagging_tokens": [
+          [
+            "aws",
+            2
+          ],
+          [
+            "api",
+            1
+          ],
+          [
+            "flask",
+            1
+          ],
+          [
+            "plugin",
+            1
+          ],
+          [
+            "react",
+            1
+          ],
+          [
+            "language",
+            1
+          ]
+        ]
+      },
+      "npm": {
+        "n": 18,
+        "flag_count": 3,
+        "flag_rate": 0.16666666666666666,
+        "pattern_type_distribution": {
+          "none": 15,
+          "compound": 3,
+          "trend": 0,
+          "both": 0
+        },
+        "top_flagging_tokens": [
+          [
+            "plugin",
+            1
+          ],
+          [
+            "react",
+            1
+          ],
+          [
+            "language",
+            1
+          ]
+        ]
+      },
+      "pypi": {
+        "n": 121,
+        "flag_count": 4,
+        "flag_rate": 0.03305785123966942,
+        "pattern_type_distribution": {
+          "none": 117,
+          "compound": 4,
+          "trend": 0,
+          "both": 0
+        },
+        "top_flagging_tokens": [
+          [
+            "aws",
+            2
+          ],
+          [
+            "api",
+            1
+          ],
+          [
+            "flask",
+            1
+          ]
+        ]
+      }
+    },
+    "benign_top5000": {
+      "all": {
+        "n": 10000,
+        "flag_count": 1852,
+        "flag_rate": 0.1852,
+        "pattern_type_distribution": {
+          "none": 8148,
+          "compound": 1803,
+          "trend": 26,
+          "both": 23
+        },
+        "top_flagging_tokens": [
+          [
+            "plugin",
+            251
+          ],
+          [
+            "react",
+            242
+          ],
+          [
+            "azure",
+            180
+          ],
+          [
+            "core",
+            174
+          ],
+          [
+            "sdk",
+            135
+          ],
+          [
+            "google",
+            122
+          ],
+          [
+            "aws",
+            110
+          ],
+          [
+            "django",
+            107
+          ],
+          [
+            "node",
+            97
+          ],
+          [
+            "client",
+            95
+          ],
+          [
+            "cloud",
+            93
+          ],
+          [
+            "utils",
+            75
+          ],
+          [
+            "py",
+            60
+          ],
+          [
+            "api",
+            56
+          ],
+          [
+            "cli",
+            54
+          ]
+        ]
+      },
+      "npm": {
+        "n": 5000,
+        "flag_count": 1031,
+        "flag_rate": 0.2062,
+        "pattern_type_distribution": {
+          "none": 3969,
+          "compound": 1011,
+          "trend": 9,
+          "both": 11
+        },
+        "top_flagging_tokens": [
+          [
+            "react",
+            242
+          ],
+          [
+            "plugin",
+            234
+          ],
+          [
+            "core",
+            110
+          ],
+          [
+            "node",
+            94
+          ],
+          [
+            "sdk",
+            83
+          ],
+          [
+            "aws",
+            77
+          ],
+          [
+            "utils",
+            60
+          ],
+          [
+            "client",
+            41
+          ],
+          [
+            "extension",
+            39
+          ],
+          [
+            "config",
+            37
+          ],
+          [
+            "cli",
+            31
+          ],
+          [
+            "tools",
+            29
+          ],
+          [
+            "vue",
+            24
+          ],
+          [
+            "azure",
+            19
+          ],
+          [
+            "api",
+            17
+          ]
+        ]
+      },
+      "pypi": {
+        "n": 5000,
+        "flag_count": 821,
+        "flag_rate": 0.1642,
+        "pattern_type_distribution": {
+          "none": 4179,
+          "compound": 792,
+          "trend": 17,
+          "both": 12
+        },
+        "top_flagging_tokens": [
+          [
+            "azure",
+            161
+          ],
+          [
+            "google",
+            107
+          ],
+          [
+            "django",
+            107
+          ],
+          [
+            "cloud",
+            85
+          ],
+          [
+            "core",
+            64
+          ],
+          [
+            "py",
+            60
+          ],
+          [
+            "client",
+            54
+          ],
+          [
+            "sdk",
+            52
+          ],
+          [
+            "api",
+            39
+          ],
+          [
+            "flask",
+            36
+          ],
+          [
+            "aws",
+            33
+          ],
+          [
+            "cli",
+            23
+          ],
+          [
+            "ai",
+            22
+          ],
+          [
+            "dagster",
+            19
+          ],
+          [
+            "plugin",
+            17
+          ]
+        ]
+      }
+    },
+    "malware_campaigns": {
+      "all": {
+        "n": 142,
+        "flag_count": 37,
+        "flag_rate": 0.2605633802816901,
+        "pattern_type_distribution": {
+          "none": 105,
+          "compound": 33,
+          "trend": 3,
+          "both": 1
+        },
+        "top_flagging_tokens": [
+          [
+            "py",
+            8
+          ],
+          [
+            "tools",
+            5
+          ],
+          [
+            "ai",
+            4
+          ],
+          [
+            "client",
+            4
+          ],
+          [
+            "utils",
+            3
+          ],
+          [
+            "test",
+            3
+          ],
+          [
+            "sdk",
+            2
+          ],
+          [
+            "cli",
+            2
+          ],
+          [
+            "dev",
+            2
+          ],
+          [
+            "azure",
+            1
+          ],
+          [
+            "core",
+            1
+          ],
+          [
+            "cloud",
+            1
+          ],
+          [
+            "config",
+            1
+          ],
+          [
+            "react",
+            1
+          ]
+        ]
+      },
+      "npm": {
+        "n": 42,
+        "flag_count": 14,
+        "flag_rate": 0.3333333333333333,
+        "pattern_type_distribution": {
+          "none": 28,
+          "compound": 11,
+          "trend": 3,
+          "both": 0
+        },
+        "top_flagging_tokens": [
+          [
+            "ai",
+            3
+          ],
+          [
+            "dev",
+            2
+          ],
+          [
+            "tools",
+            2
+          ],
+          [
+            "client",
+            2
+          ],
+          [
+            "utils",
+            1
+          ],
+          [
+            "cloud",
+            1
+          ],
+          [
+            "config",
+            1
+          ],
+          [
+            "react",
+            1
+          ],
+          [
+            "test",
+            1
+          ]
+        ]
+      },
+      "pypi": {
+        "n": 100,
+        "flag_count": 23,
+        "flag_rate": 0.23,
+        "pattern_type_distribution": {
+          "none": 77,
+          "compound": 22,
+          "trend": 0,
+          "both": 1
+        },
+        "top_flagging_tokens": [
+          [
+            "py",
+            8
+          ],
+          [
+            "tools",
+            3
+          ],
+          [
+            "utils",
+            2
+          ],
+          [
+            "sdk",
+            2
+          ],
+          [
+            "test",
+            2
+          ],
+          [
+            "cli",
+            2
+          ],
+          [
+            "client",
+            2
+          ],
+          [
+            "azure",
+            1
+          ],
+          [
+            "ai",
+            1
+          ],
+          [
+            "core",
+            1
+          ]
+        ]
+      }
+    },
+    "benign_npm_search_api": {
+      "all": {
+        "n": 2593,
+        "flag_count": 1898,
+        "flag_rate": 0.7319706903200925,
+        "pattern_type_distribution": {
+          "none": 695,
+          "compound": 1882,
+          "trend": 2,
+          "both": 14
+        },
+        "top_flagging_tokens": [
+          [
+            "plugin",
+            519
+          ],
+          [
+            "react",
+            314
+          ],
+          [
+            "core",
+            263
+          ],
+          [
+            "cli",
+            229
+          ],
+          [
+            "server",
+            210
+          ],
+          [
+            "api",
+            197
+          ],
+          [
+            "test",
+            168
+          ],
+          [
+            "utils",
+            66
+          ],
+          [
+            "node",
+            62
+          ],
+          [
+            "config",
+            56
+          ],
+          [
+            "vue",
+            51
+          ],
+          [
+            "sdk",
+            37
+          ],
+          [
+            "client",
+            32
+          ],
+          [
+            "dev",
+            23
+          ],
+          [
+            "aws",
+            21
+          ]
+        ]
+      },
+      "npm": {
+        "n": 2593,
+        "flag_count": 1898,
+        "flag_rate": 0.7319706903200925,
+        "pattern_type_distribution": {
+          "none": 695,
+          "compound": 1882,
+          "trend": 2,
+          "both": 14
+        },
+        "top_flagging_tokens": [
+          [
+            "plugin",
+            519
+          ],
+          [
+            "react",
+            314
+          ],
+          [
+            "core",
+            263
+          ],
+          [
+            "cli",
+            229
+          ],
+          [
+            "server",
+            210
+          ],
+          [
+            "api",
+            197
+          ],
+          [
+            "test",
+            168
+          ],
+          [
+            "utils",
+            66
+          ],
+          [
+            "node",
+            62
+          ],
+          [
+            "config",
+            56
+          ],
+          [
+            "vue",
+            51
+          ],
+          [
+            "sdk",
+            37
+          ],
+          [
+            "client",
+            32
+          ],
+          [
+            "dev",
+            23
+          ],
+          [
+            "aws",
+            21
+          ]
+        ]
+      }
+    }
+  },
+  "hallucinated_examples": {
+    "flagged": [
+      {
+        "ecosystem": "pypi",
+        "count": 429,
+        "pattern_type": "compound",
+        "tokens": [
+          "aws"
+        ],
+        "name": "aws-cdk"
+      },
+      {
+        "ecosystem": "pypi",
+        "count": 5,
+        "pattern_type": "compound",
+        "tokens": [
+          "api"
+        ],
+        "name": "simics-6-api"
+      },
+      {
+        "ecosystem": "pypi",
+        "count": 5,
+        "pattern_type": "compound",
+        "tokens": [
+          "flask"
+        ],
+        "name": "flask-idempotency"
+      },
+      {
+        "ecosystem": "pypi",
+        "count": 5,
+        "pattern_type": "compound",
+        "tokens": [
+          "aws"
+        ],
+        "name": "aws-retry"
+      },
+      {
+        "ecosystem": "npm",
+        "count": 5,
+        "pattern_type": "compound",
+        "tokens": [
+          "plugin"
+        ],
+        "name": "rollup-plugin-es6"
+      },
+      {
+        "ecosystem": "npm",
+        "count": 5,
+        "pattern_type": "compound",
+        "tokens": [
+          "react"
+        ],
+        "name": "react-randomized"
+      },
+      {
+        "ecosystem": "npm",
+        "count": 5,
+        "pattern_type": "compound",
+        "tokens": [
+          "language"
+        ],
+        "name": "iana-language-tag"
+      }
+    ],
+    "unflagged_top15_by_count": [
+      {
+        "ecosystem": "pypi",
+        "name": "objc",
+        "count": 375
+      },
+      {
+        "ecosystem": "pypi",
+        "name": "opentelemetry",
+        "count": 374
+      },
+      {
+        "ecosystem": "pypi",
+        "name": "rest-framework",
+        "count": 315
+      },
+      {
+        "ecosystem": "pypi",
+        "name": "tencentcloud",
+        "count": 215
+      },
+      {
+        "ecosystem": "pypi",
+        "name": "mpl-toolkits",
+        "count": 117
+      },
+      {
+        "ecosystem": "pypi",
+        "name": "opengl",
+        "count": 103
+      },
+      {
+        "ecosystem": "pypi",
+        "name": "openstack",
+        "count": 102
+      },
+      {
+        "ecosystem": "pypi",
+        "name": "git",
+        "count": 91
+      },
+      {
+        "ecosystem": "pypi",
+        "name": "android",
+        "count": 62
+      },
+      {
+        "ecosystem": "npm",
+        "name": "@ember/service",
+        "count": 55
+      },
+      {
+        "ecosystem": "pypi",
+        "name": "ruamel",
+        "count": 53
+      },
+      {
+        "ecosystem": "npm",
+        "name": "@ember/object",
+        "count": 53
+      },
+      {
+        "ecosystem": "pypi",
+        "name": "openssl",
+        "count": 45
+      },
+      {
+        "ecosystem": "pypi",
+        "name": "pyobjctools",
+        "count": 40
+      },
+      {
+        "ecosystem": "pypi",
+        "name": "dbus",
+        "count": 33
+      }
+    ]
+  },
+  "inputs": {
+    "hallucinated": "data/external/hallucinated_names.txt",
+    "snapshot": "data/frozen/incidents_snapshot.jsonl",
+    "benign_pypi": {
+      "cache": "data/external/benign_top5000_pypi.txt",
+      "source": "https://hugovk.github.io/top-pypi-packages/top-pypi-packages.min.json",
+      "source_version": "latest at fetch time (see download_timestamp)"
+    },
+    "benign_npm": {
+      "cache": "data/external/benign_top5000_npm.txt",
+      "source": "https://cdn.jsdelivr.net/npm/npm-high-impact@1.13.0/lib/top.js",
+      "source_version": "npm-high-impact@1.13.0"
+    },
+    "benign_npm_search_api": {
+      "cache": "data/external/benign_npm_search_api.txt",
+      "source": "https://registry.npmjs.org/-/v1/search (terms: react, webpack, babel, eslint, test, server, cli, api, util, core, plugin, loader, parser, client)",
+      "source_version": "live search at fetch time; failed terms are skipped"
+    }
+  }
+}

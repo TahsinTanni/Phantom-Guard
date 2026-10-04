@@ -1,0 +1,18 @@
+{
+  "checksum": "0ce6b2d53eabbb82727e806019e7d22be120c3ae293edd60e0503a5e273b91e8",
+  "code_version": "no-git-repo",
+  "data_generating_process": "real_world_observed",
+  "dataset_name": "benign_top5000_pypi",
+  "download_timestamp": "2026-10-03T17:27:49.244126+00:00",
+  "exclusions": [],
+  "extra": {
+    "role": "benign comparison set for grammar validation (review.md D3)"
+  },
+  "license": "not specified",
+  "missing_value_policy": "not specified",
+  "preprocessing_version": "v0",
+  "random_seed": null,
+  "record_count": 5000,
+  "source": "https://hugovk.github.io/top-pypi-packages/top-pypi-packages.min.json",
+  "source_version": "latest at fetch time (see download_timestamp)"
+}

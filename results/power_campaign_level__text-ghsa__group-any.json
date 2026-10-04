@@ -1,0 +1,627 @@
+{
+  "settings": {
+    "text_source": "ghsa",
+    "group_on": "any"
+  },
+  "snapshot_records": 401,
+  "n_campaigns": 94,
+  "section_5_6": {
+    "pooled": {
+      "odds_ratio": 2.8508771929824563,
+      "odds_ratio_ci_95": [
+        1.107137781106408,
+        7.341002094017048
+      ],
+      "p_value": 0.047121278155203075,
+      "n_total": 94,
+      "rate_when_flagged": 0.52,
+      "rate_when_not_flagged": 0.2753623188405797,
+      "table_2x2": [
+        [
+          13,
+          12
+        ],
+        [
+          19,
+          50
+        ]
+      ]
+    },
+    "by_ecosystem": {
+      "npm": {
+        "odds_ratio": Infinity,
+        "odds_ratio_ci_95": null,
+        "p_value": 0.012987012987012988,
+        "n_total": 22,
+        "rate_when_flagged": 0.5,
+        "rate_when_not_flagged": 0.0,
+        "table_2x2": [
+          [
+            3,
+            3
+          ],
+          [
+            0,
+            16
+          ]
+        ]
+      },
+      "pypi": {
+        "odds_ratio": 1.9883040935672514,
+        "odds_ratio_ci_95": [
+          0.6880348854735495,
+          5.745861513657615
+        ],
+        "p_value": 0.27641243565829615,
+        "n_total": 72,
+        "rate_when_flagged": 0.5263157894736842,
+        "rate_when_not_flagged": 0.3584905660377358,
+        "table_2x2": [
+          [
+            10,
+            9
+          ],
+          [
+            19,
+            34
+          ]
+        ]
+      }
+    },
+    "cmh": {
+      "common_odds_ratio": 2.906964380648591,
+      "common_odds_ratio_ci_95": [
+        1.1101074249412977,
+        7.612274020062973
+      ],
+      "chi2_statistic": 5.1928527789230765,
+      "p_value": 0.022679957279199518,
+      "n_strata": 2,
+      "n_total": 94
+    }
+  },
+  "power": {
+    "pooled": {
+      "n": 94,
+      "p_control": 0.2753623188405797,
+      "exposure_prevalence": 0.26595744680851063,
+      "by_odds_ratio": {
+        "0.5": {
+          "n_required_80pct": 420,
+          "achieved_power": 0.2631770062680761
+        },
+        "0.67": {
+          "n_required_80pct": 1257,
+          "achieved_power": 0.11631255537530566
+        },
+        "1.5": {
+          "n_required_80pct": 1226,
+          "achieved_power": 0.11819071043631318
+        },
+        "2.0": {
+          "n_required_80pct": 420,
+          "achieved_power": 0.2631770062680761
+        },
+        "3.0": {
+          "n_required_80pct": 167,
+          "achieved_power": 0.5565795037596755
+        }
+      }
+    },
+    "npm": {
+      "n": 22,
+      "p_control": 0.0,
+      "exposure_prevalence": 0.2727272727272727,
+      "by_odds_ratio": {
+        "0.5": {
+          "n_required_80pct": Infinity,
+          "achieved_power": NaN
+        },
+        "0.67": {
+          "n_required_80pct": Infinity,
+          "achieved_power": NaN
+        },
+        "1.5": {
+          "n_required_80pct": Infinity,
+          "achieved_power": NaN
+        },
+        "2.0": {
+          "n_required_80pct": Infinity,
+          "achieved_power": NaN
+        },
+        "3.0": {
+          "n_required_80pct": Infinity,
+          "achieved_power": NaN
+        }
+      }
+    },
+    "pypi": {
+      "n": 72,
+      "p_control": 0.3584905660377358,
+      "exposure_prevalence": 0.2638888888888889,
+      "by_odds_ratio": {
+        "0.5": {
+          "n_required_80pct": 366,
+          "achieved_power": 0.2367363180808365
+        },
+        "0.67": {
+          "n_required_80pct": 1096,
+          "achieved_power": 0.10716844021636823
+        },
+        "1.5": {
+          "n_required_80pct": 1069,
+          "achieved_power": 0.10882832091758476
+        },
+        "2.0": {
+          "n_required_80pct": 366,
+          "achieved_power": 0.2367363180808365
+        },
+        "3.0": {
+          "n_required_80pct": 146,
+          "achieved_power": 0.5041251587333073
+        }
+      }
+    }
+  },
+  "reporters_d2": {
+    "by_n_reporters": {
+      "1": {
+        "odds_ratio": 3.5416666666666665,
+        "odds_ratio_ci_95": [
+          0.7073272131026814,
+          17.73352211737522
+        ],
+        "p_value": 0.2133663472234107,
+        "n_total": 32,
+        "rate_when_flagged": 0.45454545454545453,
+        "rate_when_not_flagged": 0.19047619047619047,
+        "table_2x2": [
+          [
+            5,
+            6
+          ],
+          [
+            4,
+            17
+          ]
+        ]
+      },
+      "2+": {
+        "odds_ratio": 2.933333333333333,
+        "odds_ratio_ci_95": [
+          0.8644031982901085,
+          9.954202461843096
+        ],
+        "p_value": 0.11585855736192163,
+        "n_total": 62,
+        "rate_when_flagged": 0.5714285714285714,
+        "rate_when_not_flagged": 0.3125,
+        "table_2x2": [
+          [
+            8,
+            6
+          ],
+          [
+            15,
+            33
+          ]
+        ]
+      }
+    },
+    "cmh": {
+      "n_reporters_stratum": {
+        "result": {
+          "common_odds_ratio": 3.1405677655677655,
+          "common_odds_ratio_ci_95": [
+            1.1867451220851888,
+            8.311107167470874
+          ],
+          "chi2_statistic": 5.447504550550956,
+          "p_value": 0.01959629905158774,
+          "n_strata": 2,
+          "n_total": 94
+        },
+        "strata": {
+          "1": [
+            [
+              5,
+              6
+            ],
+            [
+              4,
+              17
+            ]
+          ],
+          "2+": [
+            [
+              8,
+              6
+            ],
+            [
+              15,
+              33
+            ]
+          ]
+        }
+      },
+      "ecosystem_x_n_reporters": {
+        "result": {
+          "common_odds_ratio": 2.700209849826218,
+          "common_odds_ratio_ci_95": [
+            0.9965113591892664,
+            7.316658426282653
+          ],
+          "chi2_statistic": 3.882737221250862,
+          "p_value": 0.04878495992658089,
+          "n_strata": 4,
+          "n_total": 94
+        },
+        "strata": {
+          "npm|1": [
+            [
+              3,
+              3
+            ],
+            [
+              0,
+              7
+            ]
+          ],
+          "npm|2+": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              9
+            ]
+          ],
+          "pypi|1": [
+            [
+              2,
+              3
+            ],
+            [
+              4,
+              10
+            ]
+          ],
+          "pypi|2+": [
+            [
+              8,
+              6
+            ],
+            [
+              15,
+              24
+            ]
+          ]
+        }
+      }
+    },
+    "by_indicator": {
+      "has_kam193": {
+        "True": {
+          "n": 63,
+          "n_grammar_flagged": 17,
+          "grammar_flag_rate": 0.2698412698412698,
+          "n_outcome": 24,
+          "dv_rate": 0.38095238095238093
+        },
+        "False": {
+          "n": 31,
+          "n_grammar_flagged": 8,
+          "grammar_flag_rate": 0.25806451612903225,
+          "n_outcome": 8,
+          "dv_rate": 0.25806451612903225
+        }
+      },
+      "has_amazon_inspector": {
+        "True": {
+          "n": 71,
+          "n_grammar_flagged": 19,
+          "grammar_flag_rate": 0.2676056338028169,
+          "n_outcome": 27,
+          "dv_rate": 0.38028169014084506
+        },
+        "False": {
+          "n": 23,
+          "n_grammar_flagged": 6,
+          "grammar_flag_rate": 0.2608695652173913,
+          "n_outcome": 5,
+          "dv_rate": 0.21739130434782608
+        }
+      },
+      "has_other": {
+        "True": {
+          "n": 12,
+          "n_grammar_flagged": 5,
+          "grammar_flag_rate": 0.4166666666666667,
+          "n_outcome": 5,
+          "dv_rate": 0.4166666666666667
+        },
+        "False": {
+          "n": 82,
+          "n_grammar_flagged": 20,
+          "grammar_flag_rate": 0.24390243902439024,
+          "n_outcome": 27,
+          "dv_rate": 0.32926829268292684
+        }
+      },
+      "has_boilerplate": {
+        "True": {
+          "n": 13,
+          "n_grammar_flagged": 0,
+          "grammar_flag_rate": 0.0,
+          "n_outcome": 0,
+          "dv_rate": 0.0
+        },
+        "False": {
+          "n": 81,
+          "n_grammar_flagged": 25,
+          "grammar_flag_rate": 0.30864197530864196,
+          "n_outcome": 32,
+          "dv_rate": 0.3950617283950617
+        }
+      }
+    },
+    "logit": {
+      "formula": "dv ~ grammar_flag + C(ecosystem) + n_reporters + has_amazon_inspector",
+      "n": 94,
+      "converged": true,
+      "log_likelihood": -54.088888315710996,
+      "pseudo_r2": 0.10276288992918858,
+      "llr_p_value": 0.014675697334903185,
+      "terms": {
+        "Intercept": {
+          "coef": -2.201122554591762,
+          "se": 0.9409682395429448,
+          "z": -2.339210253962355,
+          "p_value": 0.019324554664196383,
+          "ci_low": -4.0453864146919924,
+          "ci_high": -0.35685869449153196,
+          "odds_ratio": 0.11067884555514294,
+          "or_ci_low": 0.017502939955736742,
+          "or_ci_high": 0.6998713864298095
+        },
+        "C(ecosystem)[T.pypi]": {
+          "coef": 1.5218461542837283,
+          "se": 0.7292692981165021,
+          "z": 2.0868095753026075,
+          "p_value": 0.03690535124378197,
+          "ci_low": 0.09250459494458019,
+          "ci_high": 2.9511877136228764,
+          "odds_ratio": 4.5806740247942,
+          "or_ci_low": 1.0969181818269786,
+          "or_ci_high": 19.128659611126732
+        },
+        "grammar_flag": {
+          "coef": 1.128786783984286,
+          "se": 0.5108542429302406,
+          "z": 2.209606359554944,
+          "p_value": 0.02713249356487491,
+          "ci_low": 0.12753086649153889,
+          "ci_high": 2.1300427014770333,
+          "odds_ratio": 3.0919030773962812,
+          "or_ci_low": 1.1360199326496405,
+          "or_ci_high": 8.415226146354028
+        },
+        "n_reporters": {
+          "coef": -0.4331612817176252,
+          "se": 0.6332291596646968,
+          "z": -0.6840513818835977,
+          "p_value": 0.4939427207184378,
+          "ci_low": -1.6742676286209943,
+          "ci_high": 0.807945065185744,
+          "odds_ratio": 0.648455899289531,
+          "or_ci_low": 0.18744540887697012,
+          "or_ci_high": 2.2432934252307373
+        },
+        "has_amazon_inspector": {
+          "coef": 0.9018192864372918,
+          "se": 0.8153905994628519,
+          "z": 1.1059966683836873,
+          "p_value": 0.2687279614018345,
+          "ci_low": -0.6963169218424226,
+          "ci_high": 2.499955494717006,
+          "odds_ratio": 2.464081906608781,
+          "or_ci_low": 0.49841763852187804,
+          "or_ci_high": 12.181951787427057
+        }
+      }
+    },
+    "logit_vif": {
+      "C(ecosystem)[T.pypi]": 1.1027716635695872,
+      "grammar_flag": 1.0093615143392713,
+      "n_reporters": 2.339122406184112,
+      "has_amazon_inspector": 2.293204723750386
+    },
+    "logit_sensitivity": {
+      "a_drop_amazon": {
+        "formula": "dv ~ grammar_flag + C(ecosystem) + n_reporters",
+        "n": 94,
+        "converged": true,
+        "log_likelihood": -54.70976410987437,
+        "pseudo_r2": 0.09246368022799278,
+        "llr_p_value": 0.010951266470489026,
+        "terms": {
+          "Intercept": {
+            "coef": -2.3261642975518937,
+            "se": 0.9092850409243247,
+            "z": -2.5582344290930537,
+            "p_value": 0.010520514299358215,
+            "ci_low": -4.108330229444599,
+            "ci_high": -0.543998365659188,
+            "odds_ratio": 0.09766966127818102,
+            "or_ci_low": 0.016435194631347426,
+            "or_ci_high": 0.5804228637487416
+          },
+          "C(ecosystem)[T.pypi]": {
+            "coef": 1.5216741666834106,
+            "se": 0.716823632915825,
+            "z": 2.1228013374694323,
+            "p_value": 0.03377050272960977,
+            "ci_low": 0.11672566290123321,
+            "ci_high": 2.926622670465588,
+            "odds_ratio": 4.579886273404515,
+            "or_ci_low": 1.1238110843247486,
+            "or_ci_high": 18.664487803946447
+          },
+          "grammar_flag": {
+            "coef": 1.141430961414261,
+            "se": 0.5076358123794572,
+            "z": 2.2485233184475226,
+            "p_value": 0.024542839890255817,
+            "ci_low": 0.14648305188779276,
+            "ci_high": 2.1363788709407294,
+            "odds_ratio": 3.1312458528600886,
+            "or_ci_low": 1.1577553088852959,
+            "or_ci_high": 8.468715725858875
+          },
+          "n_reporters": {
+            "coef": 0.053538927514004304,
+            "se": 0.4607882674349148,
+            "z": 0.11618986701211212,
+            "p_value": 0.9075020673134043,
+            "ci_low": -0.8495894811570393,
+            "ci_high": 0.956667336185048,
+            "odds_ratio": 1.054998059419988,
+            "or_ci_low": 0.42759042985218787,
+            "or_ci_high": 2.6030070545888884
+          }
+        }
+      },
+      "b_drop_n_reporters": {
+        "formula": "dv ~ grammar_flag + C(ecosystem) + has_amazon_inspector",
+        "n": 94,
+        "converged": true,
+        "log_likelihood": -54.323058798783144,
+        "pseudo_r2": 0.09887842393186264,
+        "llr_p_value": 0.007656821549089516,
+        "terms": {
+          "Intercept": {
+            "coef": -2.5598640122272887,
+            "se": 0.7741853480751745,
+            "z": -3.3065260387474065,
+            "p_value": 0.0009446057071502281,
+            "ci_low": -4.0772394118132365,
+            "ci_high": -1.042488612641341,
+            "odds_ratio": 0.07731525365759076,
+            "or_ci_low": 0.016954204686584057,
+            "or_ci_high": 0.3525761637682563
+          },
+          "C(ecosystem)[T.pypi]": {
+            "coef": 1.4149600492926697,
+            "se": 0.6996294934170357,
+            "z": 2.0224419676504963,
+            "p_value": 0.04313071313900473,
+            "ci_low": 0.04371143967327695,
+            "ci_high": 2.7862086589120625,
+            "odds_ratio": 4.116322012712263,
+            "or_ci_low": 1.0446808579408182,
+            "or_ci_high": 16.219409768585443
+          },
+          "grammar_flag": {
+            "coef": 1.142500034606199,
+            "se": 0.510009432637949,
+            "z": 2.240154713799675,
+            "p_value": 0.025080880510096305,
+            "ci_low": 0.14289991486011233,
+            "ci_high": 2.1421001543522857,
+            "odds_ratio": 3.134595173874403,
+            "or_ci_low": 1.1536143362357014,
+            "or_ci_high": 8.517306516958156
+          },
+          "has_amazon_inspector": {
+            "coef": 0.5251461818866272,
+            "se": 0.6032469353138875,
+            "z": 0.870532697548439,
+            "p_value": 0.38400935839160344,
+            "ci_low": -0.6571960851127561,
+            "ci_high": 1.7074884488860105,
+            "odds_ratio": 1.6907059809055225,
+            "or_ci_low": 0.518302575269987,
+            "or_ci_high": 5.515092631713631
+          }
+        }
+      },
+      "c_a_plus_boilerplate_kam193": {
+        "formula": "dv ~ grammar_flag + C(ecosystem) + n_reporters + has_boilerplate + has_kam193",
+        "n": 94,
+        "converged": false,
+        "log_likelihood": -51.590029858449206,
+        "pseudo_r2": 0.14421444514664594,
+        "llr_p_value": 0.00382045074331205,
+        "terms": {
+          "Intercept": {
+            "coef": -1.9386264378544995,
+            "se": 0.9909582451156701,
+            "z": -1.9563149581829378,
+            "p_value": 0.05042806317281146,
+            "ci_low": -3.880868908464228,
+            "ci_high": 0.003616032755228815,
+            "odds_ratio": 0.14390147170654372,
+            "or_ci_low": 0.02063288929836778,
+            "or_ci_high": 1.003622578489157
+          },
+          "C(ecosystem)[T.pypi]": {
+            "coef": 1.2089560866732463,
+            "se": 1.0394564136762219,
+            "z": 1.1630656858401198,
+            "p_value": 0.24480285295063953,
+            "ci_low": -0.8283410476313164,
+            "ci_high": 3.2462532209778088,
+            "odds_ratio": 3.349985731831894,
+            "or_ci_low": 0.43677327168051316,
+            "or_ci_high": 25.69389001368684
+          },
+          "grammar_flag": {
+            "coef": 0.8797041817425516,
+            "se": 0.5261020612837162,
+            "z": 1.6721169645221081,
+            "p_value": 0.09450125999744516,
+            "ci_low": -0.15143691056581654,
+            "ci_high": 1.9108452740509199,
+            "odds_ratio": 2.4101866237438117,
+            "or_ci_low": 0.8594721041712432,
+            "or_ci_high": 6.758799422437329
+          },
+          "n_reporters": {
+            "coef": 0.6276986492209075,
+            "se": 0.5676812681222791,
+            "z": 1.1057237299676066,
+            "p_value": 0.2688461157075317,
+            "ci_low": -0.48493619099678564,
+            "ci_high": 1.7403334894386004,
+            "odds_ratio": 1.873294506997961,
+            "or_ci_low": 0.6157364850421521,
+            "or_ci_high": 5.699243743382363
+          },
+          "has_boilerplate": {
+            "coef": -22.841000254068327,
+            "se": 38447.758346669056,
+            "z": -0.0005940788549522074,
+            "p_value": 0.999525993681616,
+            "ci_low": -75379.06264602467,
+            "ci_high": 75333.38064551655,
+            "odds_ratio": 1.203038783997318e-10,
+            "or_ci_low": 0.0,
+            "or_ci_high": Infinity
+          },
+          "has_kam193": {
+            "coef": -1.1828230957951391,
+            "se": 0.8268720273574981,
+            "z": -1.4304790302015449,
+            "p_value": 0.15257958013031847,
+            "ci_low": -2.803462489239454,
+            "ci_high": 0.4378162976491755,
+            "odds_ratio": 0.3064124846205633,
+            "or_ci_low": 0.060599872538179354,
+            "or_ci_high": 1.5493202675004782
+          }
+        }
+      }
+    }
+  }
+}

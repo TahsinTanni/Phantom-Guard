@@ -1,0 +1,1742 @@
+{
+  "source": "reports/labeler_spot_check.md",
+  "n_rows": 51,
+  "counts": {
+    "REAL": 44,
+    "FALSE": 3,
+    "UNSURE": 4
+  },
+  "annotation_rule": "Matches found only in analyst tag lists, not in prose, were counted FALSE.",
+  "tag_line_definition": "A match is a tag-line match if, in the frozen snapshot text (summary + description, whitespace collapsed), its span lies after the 'Reasons (based on the campaign):' header with no '---' separator in between.",
+  "precision": {
+    "excluding_unsure": {
+      "k": 44,
+      "n": 47,
+      "p": 0.9362,
+      "wilson95": [
+        0.8284,
+        0.9781
+      ]
+    },
+    "unsure_as_false": {
+      "k": 44,
+      "n": 51,
+      "p": 0.8627,
+      "wilson95": [
+        0.7428,
+        0.9319
+      ]
+    }
+  },
+  "rows_only_tag_line_matches": {
+    "n": 3,
+    "rows": [
+      16,
+      40,
+      49
+    ],
+    "verdicts": {
+      "FALSE": 3
+    }
+  },
+  "rows_with_any_tag_line_match": [
+    16,
+    34,
+    35,
+    36,
+    39,
+    40,
+    41,
+    42,
+    46,
+    49,
+    50
+  ],
+  "notes_containing_category_colon": {
+    "n": 0,
+    "rows": [],
+    "n_case_insensitive": 0
+  },
+  "by_part": {
+    "a": {
+      "REAL": 18,
+      "UNSURE": 2,
+      "FALSE": 1
+    },
+    "b": {
+      "REAL": 26,
+      "UNSURE": 2,
+      "FALSE": 2
+    }
+  },
+  "rows": [
+    {
+      "row": 1,
+      "package": "ddok-modal",
+      "ecosystem": "npm",
+      "part": "a",
+      "verdict": "REAL",
+      "note": "It describes wallet credential harvesting and sending the input to a backend.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-10497",
+          "source": "osv",
+          "span": "harvesting impersonations of those wallets. Each wallet",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "brand_impersonation_narrative",
+          "advisory_id": "MAL-2026-10497",
+          "source": "osv",
+          "span": "impersonations",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 2,
+      "package": "homestack-cheer",
+      "ecosystem": "npm",
+      "part": "a",
+      "verdict": "REAL",
+      "note": "It decodes a second-stage payload and executes it.",
+      "n_matches": 1,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "MAL-2026-16333",
+          "source": "osv",
+          "span": "second-stage payload",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 3,
+      "package": "pf25133",
+      "ecosystem": "npm",
+      "part": "a",
+      "verdict": "REAL",
+      "note": "It collects data and POSTs it to a hardcoded URL.",
+      "n_matches": 1,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16339",
+          "source": "osv",
+          "span": "POSTs the aggregated data as JSON to a hardcoded webhook.site collector URL (https://webhook",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 4,
+      "package": "pf25262",
+      "ecosystem": "npm",
+      "part": "a",
+      "verdict": "REAL",
+      "note": "It describes collecting credentials/cookies and sending them out.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16340",
+          "source": "osv",
+          "span": "exfiltration snippet that issues a credential",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16340",
+          "source": "osv",
+          "span": "exfiltration snippet, sending same-origin credential",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 5,
+      "package": "pflag14570",
+      "ecosystem": "npm",
+      "part": "a",
+      "verdict": "REAL",
+      "note": "It says the package extracts information from responses and POSTs the aggregated JSON to a collector.",
+      "n_matches": 1,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16341",
+          "source": "osv",
+          "span": "POSTs the aggregated JSON to the hardcoded collector https://webhook",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 6,
+      "package": "aiosendletter",
+      "ecosystem": "PyPI",
+      "part": "a",
+      "verdict": "REAL",
+      "note": "It archives local files and POSTs the archive to a hardcoded endpoint.",
+      "n_matches": 1,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16264",
+          "source": "osv",
+          "span": "POSTs the resulting archive to a hardcoded, non-configurable Cloudflare Workers endpoint",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 7,
+      "package": "auclean",
+      "ecosystem": "PyPI",
+      "part": "a",
+      "verdict": "UNSURE",
+      "note": "It says the behavior is consistent with harvesting tokens, but the snippet does not clearly show the harvesting itself.",
+      "n_matches": 1,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16410",
+          "source": "osv",
+          "span": "harvesting Kubernetes/CI service-account token",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 8,
+      "package": "gcphelpit",
+      "ecosystem": "PyPI",
+      "part": "a",
+      "verdict": "REAL",
+      "note": "It reads .zshrc and POSTs its contents to a webhook.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-15810",
+          "source": "osv",
+          "span": "exfiltration of installer-owned shell secret",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-15810",
+          "source": "osv",
+          "span": "POSTs the raw file contents to the hardcoded endpoint https://webhook",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 9,
+      "package": "licloud",
+      "ecosystem": "PyPI",
+      "part": "a",
+      "verdict": "REAL",
+      "note": "It collects systems informations and posts it.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16219",
+          "source": "osv",
+          "span": "collects the installer's OS name, username, and hostname and POSTs them to a hardcoded plain-HTTP bare-IP endpoint",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16219",
+          "source": "osv",
+          "span": "POSTs them to a hardcoded plain-HTTP bare-IP endpoint",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 10,
+      "package": "memoryos",
+      "ecosystem": "PyPI",
+      "part": "a",
+      "verdict": "UNSURE",
+      "note": "It says it steals publish tokens, but gives no actual mechanism in the snippet.",
+      "n_matches": 1,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16475",
+          "source": "osv",
+          "span": "steals publish token",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 11,
+      "package": "metricboxlite",
+      "ecosystem": "PyPI",
+      "part": "a",
+      "verdict": "REAL",
+      "note": "It collects the installer's username and hostname and POSTs them to a hardcoded remote endpoint.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-15931",
+          "source": "osv",
+          "span": "collects the installer's username (getpass.getuser) and hostname (socket.gethostname), JSON-encodes them, and POST",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-15931",
+          "source": "osv",
+          "span": "POSTs the payload to a hardcoded remote endpoint",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 12,
+      "package": "prosocks",
+      "ecosystem": "PyPI",
+      "part": "a",
+      "verdict": "REAL",
+      "note": "It writes a file to the Windows Startup folder for persistence.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "hidden_install_hook",
+          "advisory_id": "MAL-2026-17167",
+          "source": "osv",
+          "span": "custom install command",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "remote_backdoor_access",
+          "advisory_id": "MAL-2026-17167",
+          "source": "osv",
+          "span": "backdoor",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 13,
+      "package": "proxycer",
+      "ecosystem": "PyPI",
+      "part": "a",
+      "verdict": "REAL",
+      "note": "It decodes a payload and executes it.",
+      "n_matches": 1,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "obfuscated_payload_execution",
+          "advisory_id": "MAL-2026-15935",
+          "source": "osv",
+          "span": "base64-decodes it, marshal.loads the result into a code object, and exec(",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 14,
+      "package": "rak-lab-yoav-orca-zrktd2cp5hjmo4x7",
+      "ecosystem": "PyPI",
+      "part": "a",
+      "verdict": "REAL",
+      "note": "It reads a deployment token and POSTs it to a webhook.",
+      "n_matches": 3,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16241",
+          "source": "osv",
+          "span": "reads the DEPLOYMENT_TOKEN environment variable and POST",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16241",
+          "source": "osv",
+          "span": "POSTs it as JSON to https://webhook",
+          "tag_line": false
+        },
+        {
+          "match": 3,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16241",
+          "source": "osv",
+          "span": "POST to a non-publisher webhook.site collector",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 15,
+      "package": "starlette-healthchecks",
+      "ecosystem": "PyPI",
+      "part": "a",
+      "verdict": "REAL",
+      "note": "It POSTs host reconnaissance to a hardcoded endpoint.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16356",
+          "source": "osv",
+          "span": "sends the hostname. Requests are authenticated with a hardcoded",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16356",
+          "source": "osv",
+          "span": "POSTs host reconnaissance to a hardcoded Azure Container Apps subdomain ca-fusion-dev-collector",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 16,
+      "package": "timeweave",
+      "ecosystem": "PyPI",
+      "part": "a",
+      "verdict": "FALSE",
+      "note": "The only match is in Reasons (based on the campaign), so it is campaign boilerplate rather than direct evidence.",
+      "n_matches": 2,
+      "only_tag_line_matches": true,
+      "matches": [
+        {
+          "match": 1,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "MAL-2026-15910",
+          "source": "osv",
+          "span": "Downloads and executes a remote",
+          "tag_line": true
+        },
+        {
+          "match": 2,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "MAL-2026-15910",
+          "source": "osv",
+          "span": "Downloads and executes a remote executable",
+          "tag_line": true
+        }
+      ]
+    },
+    {
+      "row": 17,
+      "package": "trongappy",
+      "ecosystem": "PyPI",
+      "part": "a",
+      "verdict": "REAL",
+      "note": "It POSTs the supplied private key.",
+      "n_matches": 1,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16242",
+          "source": "osv",
+          "span": "POSTs its `private_key` argument as JSON to the hardcoded",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 18,
+      "package": "trongridew",
+      "ecosystem": "PyPI",
+      "part": "a",
+      "verdict": "REAL",
+      "note": "It POSTs the supplied private key.",
+      "n_matches": 1,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-15936",
+          "source": "osv",
+          "span": "POSTs the caller-supplied Tron private key as JSON to the hardcoded endpoint",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 19,
+      "package": "trongridi",
+      "ecosystem": "PyPI",
+      "part": "a",
+      "verdict": "REAL",
+      "note": "It sends the TRON private key to a fixed endpoint.",
+      "n_matches": 1,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-15858",
+          "source": "osv",
+          "span": "POSTs the caller-supplied TRON wallet private key as JSON to the hardcoded endpoint",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 20,
+      "package": "tsshare",
+      "ecosystem": "PyPI",
+      "part": "a",
+      "verdict": "REAL",
+      "note": "It sends the auth code to a hardcoded backend.",
+      "n_matches": 3,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16044",
+          "source": "osv",
+          "span": "POSTs to a hardcoded",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16044",
+          "source": "osv",
+          "span": "POST body to that endpoint",
+          "tag_line": false
+        },
+        {
+          "match": 3,
+          "category": "brand_impersonation_narrative",
+          "advisory_id": "MAL-2026-16044",
+          "source": "osv",
+          "span": "impersonates",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 21,
+      "package": "vercel-runtime-python",
+      "ecosystem": "PyPI",
+      "part": "a",
+      "verdict": "REAL",
+      "note": "It collects machine information and POSTs it to a fixed URL.",
+      "n_matches": 1,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-17168",
+          "source": "osv",
+          "span": "POSTs the result as JSON to the hardcoded URL https://webhook",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 22,
+      "package": "@bluewin/utils",
+      "ecosystem": "npm",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "It collects machine information and POSTs it.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "hidden_install_hook",
+          "advisory_id": "GHSA-9ggj-2v34-hwv8",
+          "source": "ghsa",
+          "span": "postinstall script",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "hidden_install_hook",
+          "advisory_id": "MAL-2026-17437",
+          "source": "osv",
+          "span": "postinstall script",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 23,
+      "package": "ai-workshop-maa15-radio",
+      "ecosystem": "npm",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "The preinstall script runs and sends system information.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "hidden_install_hook",
+          "advisory_id": "GHSA-5m79-v4p8-r597",
+          "source": "ghsa",
+          "span": "preinstall script",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "hidden_install_hook",
+          "advisory_id": "MAL-2026-17427",
+          "source": "osv",
+          "span": "preinstall script",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 24,
+      "package": "ai-workshop-radio-app",
+      "ecosystem": "npm",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "Preinstall behavior",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "hidden_install_hook",
+          "advisory_id": "GHSA-rxfj-38w3-hw2x",
+          "source": "ghsa",
+          "span": "preinstall script",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "hidden_install_hook",
+          "advisory_id": "MAL-2026-17428",
+          "source": "osv",
+          "span": "preinstall script",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 25,
+      "package": "ai-workshop-radio-lambda",
+      "ecosystem": "npm",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "Concrete preinstall behavior.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "hidden_install_hook",
+          "advisory_id": "GHSA-427x-rv7c-m3f9",
+          "source": "ghsa",
+          "span": "preinstall script",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "hidden_install_hook",
+          "advisory_id": "MAL-2026-17429",
+          "source": "osv",
+          "span": "preinstall script",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 26,
+      "package": "alexa-cybertron-team-code-review-agent",
+      "ecosystem": "npm",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "The preinstall script runs and sends host information.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "hidden_install_hook",
+          "advisory_id": "GHSA-g7c3-m79h-9cqq",
+          "source": "ghsa",
+          "span": "preinstall script",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "hidden_install_hook",
+          "advisory_id": "MAL-2026-17430",
+          "source": "osv",
+          "span": "preinstall script",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 27,
+      "package": "apl-rive-renderer",
+      "ecosystem": "npm",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "The preinstall script runs and sends hosts information.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "hidden_install_hook",
+          "advisory_id": "GHSA-66jg-9x42-xwh9",
+          "source": "ghsa",
+          "span": "preinstall script",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "hidden_install_hook",
+          "advisory_id": "MAL-2026-17431",
+          "source": "osv",
+          "span": "preinstall script",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 28,
+      "package": "brioche-apl-dev-env",
+      "ecosystem": "npm",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "The preinstall script runs and sends systems information.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "hidden_install_hook",
+          "advisory_id": "GHSA-8r2r-7gc9-8vq8",
+          "source": "ghsa",
+          "span": "preinstall script",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "hidden_install_hook",
+          "advisory_id": "MAL-2026-17432",
+          "source": "osv",
+          "span": "preinstall script",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 29,
+      "package": "com.epi.e2e_test",
+      "ecosystem": "npm",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "It collects host/package information and POSTs it externally.",
+      "n_matches": 6,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "hidden_install_hook",
+          "advisory_id": "GHSA-76w7-xhq5-w327",
+          "source": "ghsa",
+          "span": "preinstall script",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "GHSA-76w7-xhq5-w327",
+          "source": "ghsa",
+          "span": "collects host identifiers (os.homedir(), os.hostname(), os.userInfo().username, dns.get",
+          "tag_line": false
+        },
+        {
+          "match": 3,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "GHSA-76w7-xhq5-w327",
+          "source": "ghsa",
+          "span": "POSTs them over HTTPS to the hardcoded",
+          "tag_line": false
+        },
+        {
+          "match": 4,
+          "category": "hidden_install_hook",
+          "advisory_id": "MAL-2026-17415",
+          "source": "osv",
+          "span": "preinstall script",
+          "tag_line": false
+        },
+        {
+          "match": 5,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-17415",
+          "source": "osv",
+          "span": "collects host identifiers (os.homedir(), os.hostname(), os.userInfo().username, dns.get",
+          "tag_line": false
+        },
+        {
+          "match": 6,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-17415",
+          "source": "osv",
+          "span": "POSTs them over HTTPS to the hardcoded",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 30,
+      "package": "figma-to-apl",
+      "ecosystem": "npm",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "The preinstall script runs setup, sends host data.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "hidden_install_hook",
+          "advisory_id": "GHSA-fmw8-mrp6-mj68",
+          "source": "ghsa",
+          "span": "preinstall script",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "hidden_install_hook",
+          "advisory_id": "MAL-2026-17433",
+          "source": "osv",
+          "span": "preinstall script",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 31,
+      "package": "live-detection-dashboard",
+      "ecosystem": "npm",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "Preinstall script sends systems information",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "hidden_install_hook",
+          "advisory_id": "GHSA-h4cx-hwvc-8mgj",
+          "source": "ghsa",
+          "span": "preinstall script",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "hidden_install_hook",
+          "advisory_id": "MAL-2026-17434",
+          "source": "osv",
+          "span": "preinstall script",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 32,
+      "package": "niksinnkatalapp",
+      "ecosystem": "npm",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "preinstall script performs the described action.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "hidden_install_hook",
+          "advisory_id": "GHSA-g37r-cvvp-rj75",
+          "source": "ghsa",
+          "span": "preinstall script",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "hidden_install_hook",
+          "advisory_id": "MAL-2026-17435",
+          "source": "osv",
+          "span": "preinstall script",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 33,
+      "package": "okra-cloud-cdk",
+      "ecosystem": "npm",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "The preinstall script executes and sends host information.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "hidden_install_hook",
+          "advisory_id": "GHSA-7rq8-hfxr-pxhw",
+          "source": "ghsa",
+          "span": "preinstall script",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "hidden_install_hook",
+          "advisory_id": "MAL-2026-17436",
+          "source": "osv",
+          "span": "preinstall script",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 34,
+      "package": "aitextkit-py",
+      "ecosystem": "PyPI",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "Establishes persistence and executes decoded code.",
+      "n_matches": 5,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "remote_backdoor_access",
+          "advisory_id": "GHSA-657v-53xv-3xw9",
+          "source": "ghsa",
+          "span": "establishes persistence",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "GHSA-657v-53xv-3xw9",
+          "source": "ghsa",
+          "span": "Downloads and executes a remote",
+          "tag_line": true
+        },
+        {
+          "match": 3,
+          "category": "obfuscated_payload_execution",
+          "advisory_id": "MAL-2026-16130",
+          "source": "osv",
+          "span": "base64-decodes, zlib-decompresses, and exec(",
+          "tag_line": false
+        },
+        {
+          "match": 4,
+          "category": "remote_backdoor_access",
+          "advisory_id": "MAL-2026-16130",
+          "source": "osv",
+          "span": "establishes persistence",
+          "tag_line": false
+        },
+        {
+          "match": 5,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "MAL-2026-16130",
+          "source": "osv",
+          "span": "Downloads and executes a remote",
+          "tag_line": true
+        }
+      ]
+    },
+    {
+      "row": 35,
+      "package": "aitextutils-py",
+      "ecosystem": "PyPI",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "Establishes persistence.",
+      "n_matches": 4,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "remote_backdoor_access",
+          "advisory_id": "GHSA-hm5j-9gw8-8568",
+          "source": "ghsa",
+          "span": "establishes persistence",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "GHSA-hm5j-9gw8-8568",
+          "source": "ghsa",
+          "span": "Downloads and executes a remote",
+          "tag_line": true
+        },
+        {
+          "match": 3,
+          "category": "remote_backdoor_access",
+          "advisory_id": "MAL-2026-16131",
+          "source": "osv",
+          "span": "establishes persistence",
+          "tag_line": false
+        },
+        {
+          "match": 4,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "MAL-2026-16131",
+          "source": "osv",
+          "span": "Downloads and executes a remote",
+          "tag_line": true
+        }
+      ]
+    },
+    {
+      "row": 36,
+      "package": "aseitylab",
+      "ecosystem": "PyPI",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "Downloads an executable and also executes decoded code.",
+      "n_matches": 5,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "GHSA-jv9w-2v63-767g",
+          "source": "ghsa",
+          "span": "Downloads and executes a remote",
+          "tag_line": true
+        },
+        {
+          "match": 2,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "GHSA-jv9w-2v63-767g",
+          "source": "ghsa",
+          "span": "Downloads and executes a remote executable",
+          "tag_line": true
+        },
+        {
+          "match": 3,
+          "category": "obfuscated_payload_execution",
+          "advisory_id": "MAL-2026-17240",
+          "source": "osv",
+          "span": "exec(compile(",
+          "tag_line": false
+        },
+        {
+          "match": 4,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "MAL-2026-17240",
+          "source": "osv",
+          "span": "Downloads and executes a remote",
+          "tag_line": true
+        },
+        {
+          "match": 5,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "MAL-2026-17240",
+          "source": "osv",
+          "span": "Downloads and executes a remote executable",
+          "tag_line": true
+        }
+      ]
+    },
+    {
+      "row": 37,
+      "package": "bfox-build-utils",
+      "ecosystem": "PyPI",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "Harvests the installer's GitHub credential and uses it to modify the installer's own repository.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "GHSA-rx43-29mc-6h3f",
+          "source": "ghsa",
+          "span": "harvests the installer's GitHub credential",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-17319",
+          "source": "osv",
+          "span": "harvests the installer's GitHub credential",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 38,
+      "package": "bq-build-probe-vrp-2026",
+      "ecosystem": "PyPI",
+      "part": "b",
+      "verdict": "UNSURE",
+      "note": "mentions harvested secrets but does not clearly show the actual action.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "GHSA-f69f-h5mx-9x8p",
+          "source": "ghsa",
+          "span": "harvested secret",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16098",
+          "source": "osv",
+          "span": "harvested secret",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 39,
+      "package": "caracas4check",
+      "ecosystem": "PyPI",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "Explicitly says the code downloads an executable during installation.",
+      "n_matches": 6,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "GHSA-8p46-j5h8-w78j",
+          "source": "ghsa",
+          "span": "downloads a malicious executable from a remote",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "GHSA-8p46-j5h8-w78j",
+          "source": "ghsa",
+          "span": "Downloads and executes a remote",
+          "tag_line": true
+        },
+        {
+          "match": 3,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "GHSA-8p46-j5h8-w78j",
+          "source": "ghsa",
+          "span": "Downloads and executes a remote executable",
+          "tag_line": true
+        },
+        {
+          "match": 4,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "MAL-2026-17198",
+          "source": "osv",
+          "span": "downloads a malicious executable from a remote",
+          "tag_line": false
+        },
+        {
+          "match": 5,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "MAL-2026-17198",
+          "source": "osv",
+          "span": "Downloads and executes a remote",
+          "tag_line": true
+        },
+        {
+          "match": 6,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "MAL-2026-17198",
+          "source": "osv",
+          "span": "Downloads and executes a remote executable",
+          "tag_line": true
+        }
+      ]
+    },
+    {
+      "row": 40,
+      "package": "chroma-client",
+      "ecosystem": "PyPI",
+      "part": "b",
+      "verdict": "FALSE",
+      "note": "The matches are campaign-reason/category wording such as exfiltration-credentials and “Downloads and executes...”; no direct mechanism is shown in these matched passages.",
+      "n_matches": 4,
+      "only_tag_line_matches": true,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "GHSA-qp4x-pg53-7xh8",
+          "source": "ghsa",
+          "span": "stealer - exfiltration-credential",
+          "tag_line": true
+        },
+        {
+          "match": 2,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "GHSA-qp4x-pg53-7xh8",
+          "source": "ghsa",
+          "span": "Downloads and executes a remote",
+          "tag_line": true
+        },
+        {
+          "match": 3,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16143",
+          "source": "osv",
+          "span": "stealer - exfiltration-credential",
+          "tag_line": true
+        },
+        {
+          "match": 4,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "MAL-2026-16143",
+          "source": "osv",
+          "span": "Downloads and executes a remote",
+          "tag_line": true
+        }
+      ]
+    },
+    {
+      "row": 41,
+      "package": "company-sdk",
+      "ecosystem": "PyPI",
+      "part": "b",
+      "verdict": "UNSURE",
+      "note": "Prose says it exfiltrates files/credentials to a Gist and POSTs an encrypted blob, but I could not confirm from the snippet what data the blob contains.",
+      "n_matches": 6,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "GHSA-xwp3-c9rw-wggc",
+          "source": "ghsa",
+          "span": "exfiltrates sensitive files, credentials and env variabl",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "GHSA-xwp3-c9rw-wggc",
+          "source": "ghsa",
+          "span": "exfiltration - exfiltration-credential",
+          "tag_line": true
+        },
+        {
+          "match": 3,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "GHSA-xwp3-c9rw-wggc",
+          "source": "ghsa",
+          "span": "POSTs the encrypted blob to https://api.github.com/gists using a hardcoded",
+          "tag_line": false
+        },
+        {
+          "match": 4,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-15827",
+          "source": "osv",
+          "span": "exfiltrates sensitive files, credentials and env variabl",
+          "tag_line": false
+        },
+        {
+          "match": 5,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-15827",
+          "source": "osv",
+          "span": "exfiltration - exfiltration-credential",
+          "tag_line": true
+        },
+        {
+          "match": 6,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-15827",
+          "source": "osv",
+          "span": "POSTs the encrypted blob to https://api.github.com/gists using a hardcoded",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 42,
+      "package": "houdus",
+      "ecosystem": "PyPI",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "Establishes persistence and executes downloaded code.",
+      "n_matches": 8,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "remote_backdoor_access",
+          "advisory_id": "GHSA-frjq-w86w-r3gr",
+          "source": "ghsa",
+          "span": "persistence via scheduled task",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "remote_backdoor_access",
+          "advisory_id": "GHSA-frjq-w86w-r3gr",
+          "source": "ghsa",
+          "span": "establishes persistence",
+          "tag_line": false
+        },
+        {
+          "match": 3,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "GHSA-frjq-w86w-r3gr",
+          "source": "ghsa",
+          "span": "downloads and executes heavily obfuscated code. The remote",
+          "tag_line": false
+        },
+        {
+          "match": 4,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "GHSA-frjq-w86w-r3gr",
+          "source": "ghsa",
+          "span": "Downloads and executes a remote",
+          "tag_line": true
+        },
+        {
+          "match": 5,
+          "category": "remote_backdoor_access",
+          "advisory_id": "MAL-2026-15933",
+          "source": "osv",
+          "span": "persistence via scheduled task",
+          "tag_line": false
+        },
+        {
+          "match": 6,
+          "category": "remote_backdoor_access",
+          "advisory_id": "MAL-2026-15933",
+          "source": "osv",
+          "span": "establishes persistence",
+          "tag_line": false
+        },
+        {
+          "match": 7,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "MAL-2026-15933",
+          "source": "osv",
+          "span": "downloads and executes heavily obfuscated code. The remote",
+          "tag_line": false
+        },
+        {
+          "match": 8,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "MAL-2026-15933",
+          "source": "osv",
+          "span": "Downloads and executes a remote",
+          "tag_line": true
+        }
+      ]
+    },
+    {
+      "row": 43,
+      "package": "praetorian-mind-rce-test-2026",
+      "ecosystem": "PyPI",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "It exfiltrates environment variables/tokens and POSTs the payload.",
+      "n_matches": 3,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "GHSA-8gcf-3vx7-2wrq",
+          "source": "ghsa",
+          "span": "exfiltrates environment variables, token",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16240",
+          "source": "osv",
+          "span": "exfiltrates environment variables, token",
+          "tag_line": false
+        },
+        {
+          "match": 3,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16240",
+          "source": "osv",
+          "span": "POSTed via urllib.request.urlopen to the hardcoded non-publisher endpoint",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 44,
+      "package": "pullgetsage",
+      "ecosystem": "PyPI",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "It sends the Telegram data archive to a hardcoded endpoint.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "GHSA-4whg-cvj9-8v3f",
+          "source": "ghsa",
+          "span": "POSTs it to a hardcoded Cloudflare Workers endpoint",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16366",
+          "source": "osv",
+          "span": "POSTs it to a hardcoded Cloudflare Workers endpoint",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 45,
+      "package": "pylever",
+      "ecosystem": "PyPI",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "It explicitly exfiltrates Discord tokens",
+      "n_matches": 4,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "GHSA-x38c-f232-xj2x",
+          "source": "ghsa",
+          "span": "exfiltrating Discord token",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "GHSA-x38c-f232-xj2x",
+          "source": "ghsa",
+          "span": "stealer exfiltrating Discord token",
+          "tag_line": false
+        },
+        {
+          "match": 3,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16122",
+          "source": "osv",
+          "span": "exfiltrating Discord token",
+          "tag_line": false
+        },
+        {
+          "match": 4,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16122",
+          "source": "osv",
+          "span": "stealer exfiltrating Discord token",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 46,
+      "package": "requests-auroras",
+      "ecosystem": "PyPI",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "Starts/creates a reverse shell.",
+      "n_matches": 4,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "remote_backdoor_access",
+          "advisory_id": "GHSA-5p5r-2g2v-44x5",
+          "source": "ghsa",
+          "span": "reverse shell",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "remote_backdoor_access",
+          "advisory_id": "GHSA-5p5r-2g2v-44x5",
+          "source": "ghsa",
+          "span": "reverse shell",
+          "tag_line": true
+        },
+        {
+          "match": 3,
+          "category": "remote_backdoor_access",
+          "advisory_id": "MAL-2026-16274",
+          "source": "osv",
+          "span": "reverse shell",
+          "tag_line": false
+        },
+        {
+          "match": 4,
+          "category": "remote_backdoor_access",
+          "advisory_id": "MAL-2026-16274",
+          "source": "osv",
+          "span": "reverse shell",
+          "tag_line": true
+        }
+      ]
+    },
+    {
+      "row": 47,
+      "package": "rrs",
+      "ecosystem": "PyPI",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "It captures screenshots and POSTs them with host information.",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "GHSA-5w9q-gw92-3wq8",
+          "source": "ghsa",
+          "span": "POSTs the image together with hostname, username, OS/release, local IP, and timestamp to a hardcoded",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16346",
+          "source": "osv",
+          "span": "POSTs the image together with hostname, username, OS/release, local IP, and timestamp to a hardcoded",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 48,
+      "package": "telemetry-helper",
+      "ecosystem": "PyPI",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "Explicitly describes environment-variable exfiltration during import",
+      "n_matches": 2,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "GHSA-r35m-jqvr-hwxp",
+          "source": "ghsa",
+          "span": "exfiltrating environment variabl",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-15829",
+          "source": "osv",
+          "span": "exfiltrating environment variabl",
+          "tag_line": false
+        }
+      ]
+    },
+    {
+      "row": 49,
+      "package": "uvhttp-custom",
+      "ecosystem": "PyPI",
+      "part": "b",
+      "verdict": "FALSE",
+      "note": "The matched text is in a campaign-style bullet list describing the “Reasons,” rather than direct code evidence.",
+      "n_matches": 4,
+      "only_tag_line_matches": true,
+      "matches": [
+        {
+          "match": 1,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "GHSA-hf2r-8r5g-8hg8",
+          "source": "ghsa",
+          "span": "Downloads and executes a remote",
+          "tag_line": true
+        },
+        {
+          "match": 2,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "GHSA-hf2r-8r5g-8hg8",
+          "source": "ghsa",
+          "span": "Downloads and executes a remote executable",
+          "tag_line": true
+        },
+        {
+          "match": 3,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "MAL-2026-15863",
+          "source": "osv",
+          "span": "Downloads and executes a remote",
+          "tag_line": true
+        },
+        {
+          "match": 4,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "MAL-2026-15863",
+          "source": "osv",
+          "span": "Downloads and executes a remote executable",
+          "tag_line": true
+        }
+      ]
+    },
+    {
+      "row": 50,
+      "package": "web3-eth-account",
+      "ecosystem": "PyPI",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "It downloads remote code and executes it.",
+      "n_matches": 3,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "GHSA-6rvw-xw58-h4pf",
+          "source": "ghsa",
+          "span": "Downloads and executes a remote",
+          "tag_line": true
+        },
+        {
+          "match": 2,
+          "category": "obfuscated_payload_execution",
+          "advisory_id": "MAL-2026-16129",
+          "source": "osv",
+          "span": "exec(compile(",
+          "tag_line": false
+        },
+        {
+          "match": 3,
+          "category": "remote_payload_retrieval",
+          "advisory_id": "MAL-2026-16129",
+          "source": "osv",
+          "span": "Downloads and executes a remote",
+          "tag_line": true
+        }
+      ]
+    },
+    {
+      "row": 51,
+      "package": "websetup",
+      "ecosystem": "PyPI",
+      "part": "b",
+      "verdict": "REAL",
+      "note": "It POSTs supplied text and local file contents to a Discord webhook.",
+      "n_matches": 5,
+      "only_tag_line_matches": false,
+      "matches": [
+        {
+          "match": 1,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "GHSA-v8mm-56q4-h26q",
+          "source": "ghsa",
+          "span": "POSTs the given text and the contents of any local file path to a hardcoded Discord webhook",
+          "tag_line": false
+        },
+        {
+          "match": 2,
+          "category": "remote_backdoor_access",
+          "advisory_id": "GHSA-v8mm-56q4-h26q",
+          "source": "ghsa",
+          "span": "backdoor",
+          "tag_line": false
+        },
+        {
+          "match": 3,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16121",
+          "source": "osv",
+          "span": "POSTs the given text and the contents of any local file path to a hardcoded Discord webhook",
+          "tag_line": false
+        },
+        {
+          "match": 4,
+          "category": "credential_or_wallet_exfiltration",
+          "advisory_id": "MAL-2026-16121",
+          "source": "osv",
+          "span": "POSTs the caller-supplied text and the contents of the file at file_path to a hardcoded",
+          "tag_line": false
+        },
+        {
+          "match": 5,
+          "category": "remote_backdoor_access",
+          "advisory_id": "MAL-2026-16121",
+          "source": "osv",
+          "span": "backdoor",
+          "tag_line": false
+        }
+      ]
+    }
+  ]
+}
