@@ -312,31 +312,27 @@
     },
     "malware_campaigns": {
       "all": {
-        "n": 142,
-        "flag_count": 37,
-        "flag_rate": 0.2605633802816901,
+        "n": 94,
+        "flag_count": 25,
+        "flag_rate": 0.26595744680851063,
         "pattern_type_distribution": {
-          "none": 105,
-          "compound": 33,
-          "trend": 3,
-          "both": 1
+          "none": 69,
+          "compound": 23,
+          "trend": 0,
+          "both": 2
         },
         "top_flagging_tokens": [
           [
             "py",
-            8
-          ],
-          [
-            "tools",
             5
-          ],
-          [
-            "ai",
-            4
           ],
           [
             "client",
             4
+          ],
+          [
+            "tools",
+            3
           ],
           [
             "utils",
@@ -352,6 +348,10 @@
           ],
           [
             "cli",
+            2
+          ],
+          [
+            "ai",
             2
           ],
           [
@@ -381,26 +381,18 @@
         ]
       },
       "npm": {
-        "n": 42,
-        "flag_count": 14,
-        "flag_rate": 0.3333333333333333,
+        "n": 22,
+        "flag_count": 6,
+        "flag_rate": 0.2727272727272727,
         "pattern_type_distribution": {
-          "none": 28,
-          "compound": 11,
-          "trend": 3,
-          "both": 0
+          "none": 16,
+          "compound": 5,
+          "trend": 0,
+          "both": 1
         },
         "top_flagging_tokens": [
           [
-            "ai",
-            3
-          ],
-          [
             "dev",
-            2
-          ],
-          [
-            "tools",
             2
           ],
           [
@@ -408,11 +400,19 @@
             2
           ],
           [
-            "utils",
+            "ai",
             1
           ],
           [
             "cloud",
+            1
+          ],
+          [
+            "utils",
+            1
+          ],
+          [
+            "tools",
             1
           ],
           [
@@ -430,23 +430,23 @@
         ]
       },
       "pypi": {
-        "n": 100,
-        "flag_count": 23,
-        "flag_rate": 0.23,
+        "n": 72,
+        "flag_count": 19,
+        "flag_rate": 0.2638888888888889,
         "pattern_type_distribution": {
-          "none": 77,
-          "compound": 22,
+          "none": 53,
+          "compound": 18,
           "trend": 0,
           "both": 1
         },
         "top_flagging_tokens": [
           [
             "py",
-            8
+            5
           ],
           [
             "tools",
-            3
+            2
           ],
           [
             "utils",
