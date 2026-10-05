@@ -143,7 +143,7 @@ explains why that is not read as a finding.
   title  = {Naming Grammar and Described Malware Mechanisms in
             {GHSA}/{OSV} Malware Advisories},
   author = {Tanni, Tahsin Tajwar and Khan, Nafiz},
-  institution = {BRAC University},
+  institution = {Independent Researcher, Dhaka, Bangladesh},
   year   = {2026},
   note   = {Manuscript under preparation; preprint forthcoming.}
 }
