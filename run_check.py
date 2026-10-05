@@ -10,6 +10,9 @@ text that builds the campaign signature (each any|ghsa|osv). The defaults
 (any/any) reproduce Section 5.14 exactly; other settings write to
 results/power_campaign_level__text-<x>__group-<y>.json.
 
+Also writes the per-campaign table results/campaigns.csv (non-default
+settings: results/campaigns__text-<x>__group-<y>.csv).
+
 Reproduces research-log Section 5.14 (campaign-level Fisher / CMH; supersedes 5.13 and 5.6) from the
 frozen 401-record snapshot, then runs the power analysis that Section 7
 item 1 asks for. Writes results/power_campaign_level.json.
@@ -47,6 +50,7 @@ from src.statistics.h1_pilot_analysis import (  # noqa: E402
     collapse_to_campaign_level,
     run_cmh_test,
     run_fisher_exact,
+    write_campaign_csv,
 )
 from src.statistics.power_analysis import logistic_regression_power  # noqa: E402
 
@@ -225,6 +229,10 @@ def main(argv=None) -> None:
     with open(out_path, "w") as f:
         json.dump(out, f, indent=2, default=str)
     print(f"\nWritten: {out_path}")
+    csv_path = Path("results") / ("campaigns.csv" if is_default else
+                                  f"campaigns__text-{args.text_source}__group-{args.group_on}.csv")
+    rows = write_campaign_csv(campaigns, csv_path)
+    print(f"Written: {csv_path}  ({len(rows)} campaigns)")
 
     pw2 = out["power"]["pooled"]["by_odds_ratio"]["2.0"]["achieved_power"]
     banner("Verdict")

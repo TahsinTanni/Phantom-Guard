@@ -689,6 +689,38 @@ So for those 2 rows the FALSE verdict reflects the labeler matching the wrong ev
 
 **Not done.** `run_check.py` and the analysis code were not touched; 5.14 numbers are unaffected.
 
+### 5.16 Per-campaign CSV export (Data in Brief Section 3.2)
+
+**Why.** The Data in Brief draft (`paper_dib/dib_main.tex`, Section 3.2) says `run_check.py` writes a per-campaign table to `results/`. Before this section it wrote only the aggregate JSON.
+
+**Change.**
+- `src/statistics/h1_pilot_analysis.py`:
+  - `campaign_table_rows()` gives one row per campaign in collapse order.
+  - `write_campaign_csv()` writes those rows.
+  - `signature_type()` recovers which `build_campaign_signature()` rule keyed the campaign: `campaign_tag`, `own_package` (boilerplate or GENERIC tag) or `text_prefix`.
+- `run_check.py` writes `results/campaigns.csv`. Non-default settings write `results/campaigns__text-<x>__group-<y>.csv`.
+- Columns: `campaign_id` (C001.., collapse order), `ecosystem`, `member_packages` (`;`-separated), `signature_type`, `grammar_flag`, `mechanism_label`, `n_reporters`, `kam193`, `amazon_inspector`, `boilerplate`. Flags and indicators are 0/1.
+- The collapse, labeler, grammar and snapshot are unchanged.
+
+**Output (any/any).**
+- 94 rows: 22 npm, 72 PyPI.
+- 200 distinct member packages.
+- grammar_flag 25, mechanism_label 51, flagged and positive 13. These match [[13,12],[38,31]].
+- signature_type counts: campaign_tag 42, own_package 30, text_prefix 22.
+- Largest campaigns have 45, 15, 10, 10, 6 and 5 packages.
+- Mechanism rate by reporter indicator: amazon_inspector 46/71 vs 5/23 without it; boilerplate 5/13.
+
+**Reproduction.**
+- `run_check.py` still prints the 5.14 numbers: n 94, OR 0.884, p 0.818; CMH OR 0.890, p 0.802.
+- `results/power_campaign_level.json` is byte-identical after the rerun.
+
+**Tests.**
+- `test_campaign_csv_rows_signature_types_flags_and_reporters` covers a synthetic fixture with one campaign per signature type, plus the CSV round-trip.
+- `test_snapshot_campaign_csv_matches_section_5_14` pins the counts above on the frozen snapshot.
+- Suite: **160 passed**.
+
+**Note for the paper.** Section 3.4 of the draft calls 5/13 the rate for "boilerplate-only campaigns". 13 is the count of campaigns with *any* boilerplate reporter (`boilerplate` = 1). Campaigns whose only reporter is the boilerplate number 4, and all 4 are mechanism-negative (0/4).
+
 ---
 
 ## 6. Novelty / Literature Positioning

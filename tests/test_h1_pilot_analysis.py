@@ -689,3 +689,58 @@ def test_cmh_reports_ci_containing_common_or():
     r = run_cmh_test([ContingencyTable(7, 7, 11, 17), ContingencyTable(13, 10, 50, 27)])
     lo, hi = r["common_odds_ratio_ci_95"]
     assert lo < r["common_odds_ratio"] < hi
+
+
+# --- Per-campaign CSV export (results/campaigns.csv) -----------------------
+
+import csv
+
+from src.statistics.h1_pilot_analysis import (
+    CAMPAIGN_CSV_COLUMNS,
+    campaign_table_rows,
+    write_campaign_csv,
+)
+
+
+def test_campaign_csv_rows_signature_types_flags_and_reporters(tmp_path):
+    tagged = "Campaign: tea-farm-1\nfarms tea.xyz rewards"
+    recs = attach_grammar_labels([
+        _rec("t1", "ghsa", "GHSA-t1", True, description=tagged + "\n" + KAM),
+        _rec("t2", "osv", "MAL-t2", False, description=tagged + "\n" + AMZ),
+        _rec("b1", "ghsa", "GHSA-b1", False, description=BOILER),
+        _rec("x1", "ghsa", "GHSA-x1", False, description="steals x1 wallet keys", ecosystem="npm"),
+    ])
+    campaigns = collapse_to_campaign_level(recs)
+    path = tmp_path / "campaigns.csv"
+    rows = write_campaign_csv(campaigns, path)
+    with open(path, newline="", encoding="utf-8") as f:
+        read_back = list(csv.DictReader(f))
+    assert tuple(read_back[0]) == CAMPAIGN_CSV_COLUMNS
+    assert [{k: str(v) for k, v in r.items()} for r in rows] == read_back
+    assert rows == [
+        {"campaign_id": "C001", "ecosystem": "pypi", "member_packages": "t1;t2",
+         "signature_type": "campaign_tag", "grammar_flag": 0, "mechanism_label": 1,
+         "n_reporters": 2, "kam193": 1, "amazon_inspector": 1, "boilerplate": 0},
+        {"campaign_id": "C002", "ecosystem": "pypi", "member_packages": "b1",
+         "signature_type": "own_package", "grammar_flag": 0, "mechanism_label": 0,
+         "n_reporters": 1, "kam193": 0, "amazon_inspector": 0, "boilerplate": 1},
+        {"campaign_id": "C003", "ecosystem": "npm", "member_packages": "x1",
+         "signature_type": "text_prefix", "grammar_flag": 0, "mechanism_label": 0,
+         "n_reporters": 1, "kam193": 0, "amazon_inspector": 0, "boilerplate": 0},
+    ]
+
+
+@pytest.mark.skipif(not SNAPSHOT.exists(), reason="frozen snapshot not present")
+def test_snapshot_campaign_csv_matches_section_5_14():
+    from src.labeling.malware_labeler import label_batch
+
+    recs = [json.loads(l) for l in SNAPSHOT.read_text(encoding="utf-8").splitlines() if l.strip()]
+    rows = campaign_table_rows(collapse_to_campaign_level(attach_grammar_labels(label_batch(recs))))
+    assert len(rows) == 94
+    assert sum(r["ecosystem"] == "npm" for r in rows) == 22
+    members = [m for r in rows for m in r["member_packages"].split(";")]
+    assert len(members) == len(set(members)) == 200
+    assert sum(r["grammar_flag"] for r in rows) == 25
+    assert sum(r["mechanism_label"] for r in rows) == 51
+    flagged_pos = sum(r["grammar_flag"] and r["mechanism_label"] for r in rows)
+    assert flagged_pos == 13  # [[13, 12], [38, 31]]

@@ -26,6 +26,7 @@ violated by this step.
 
 from __future__ import annotations
 
+import csv
 import re
 from dataclasses import dataclass
 
@@ -668,3 +669,62 @@ def collapse_to_campaign_level(
     ]
 
     return campaign_level
+
+
+CAMPAIGN_CSV_COLUMNS = (
+    "campaign_id", "ecosystem", "member_packages", "signature_type", "grammar_flag",
+    "mechanism_label", "n_reporters", "kam193", "amazon_inspector", "boilerplate",
+)
+MEMBER_SEPARATOR = ";"
+
+
+def signature_type(campaign: dict, **signature_options) -> str:
+    """Which build_campaign_signature() rule keyed this campaign:
+    "campaign_tag" (kam193 Campaign id), "own_package" (GHSA boilerplate or
+    the GENERIC tag, so never merged) or "text_prefix" (masked description
+    prefix). A campaign record is its first member's record, so its
+    signature is the key it was grouped on; `signature_options` must match
+    the collapse."""
+    _, key = build_campaign_signature(campaign, **signature_options)
+    if key.startswith("__campaign__:"):
+        return "campaign_tag"
+    if key.startswith("__noboilerplate__:"):
+        return "own_package"
+    return "text_prefix"
+
+
+def campaign_table_rows(
+    campaigns: list[dict],
+    outcome_field: str = "malware_label",
+    outcome_key: str = "malware_payload_present_candidate",
+    **signature_options,
+) -> list[dict]:
+    """One row per campaign, in collapse order, with CAMPAIGN_CSV_COLUMNS.
+    Ids are C001.. in that order (stable for a fixed snapshot and settings);
+    flags and indicators are 0/1."""
+    rows = []
+    for i, c in enumerate(campaigns, start=1):
+        ind = reporter_indicators(c["reporters"])
+        rows.append({
+            "campaign_id": f"C{i:03d}",
+            "ecosystem": c["ecosystem"],
+            "member_packages": MEMBER_SEPARATOR.join(c["_member_package_names"]),
+            "signature_type": signature_type(c, **signature_options),
+            "grammar_flag": int(c["grammar_match"]["is_grammar_flagged"]),
+            "mechanism_label": int(c[outcome_field][outcome_key]),
+            "n_reporters": c["n_reporters"],
+            "kam193": int(ind["has_kam193"]),
+            "amazon_inspector": int(ind["has_amazon_inspector"]),
+            "boilerplate": int(ind["has_boilerplate"]),
+        })
+    return rows
+
+
+def write_campaign_csv(campaigns: list[dict], path, **signature_options) -> list[dict]:
+    """Writes campaign_table_rows() to `path` and returns the rows."""
+    rows = campaign_table_rows(campaigns, **signature_options)
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=CAMPAIGN_CSV_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+    return rows

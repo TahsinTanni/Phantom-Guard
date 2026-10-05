@@ -3,3 +3,8 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .DS_Store
+notes/
+paper_dib/*.aux
+paper_dib/*.log
+paper_dib/*.out
+paper_dib/*.spl
