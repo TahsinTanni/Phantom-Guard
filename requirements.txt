@@ -8,6 +8,7 @@ pandas>=2.0
 numpy>=1.24
 scipy>=1.11
 statsmodels>=0.14     # reporter-adjusted logistic regression (review.md D2)
+matplotlib>=3.8       # paper figures (src/visualization/paper_figures.py)
 pytest>=7.4
 pytest-asyncio>=0.21   # needed for tests/test_registry_clients.py
 requests>=2.31         # seed_lists.py (sync bulk-list fetches)
