@@ -80,14 +80,22 @@ def fetch_ghsa_advisories(
     config: IncidentFetchConfig,
     ecosystems: tuple[str, ...] = ("pip", "npm"),
     max_pages: int = 5,
+    max_records_per_ecosystem: Optional[int] = None,
 ) -> list[dict]:
     """
     Fetches GHSA advisories filtered to malware-relevant types, for the
-    given GHSA ecosystem identifiers ('pip', 'npm').
+    given GHSA ecosystem identifiers ('pip', 'npm'), newest first.
 
     `max_pages` bounds total volume for pilot runs — GHSA's advisory
     corpus is large; a pilot should NOT pull everything on first run.
     Each page is `config.per_page` records (GitHub's max is 100).
+    `max_records_per_ecosystem` stops an ecosystem at the end of the page
+    on which its distinct (advisory, package) count reaches that number.
+
+    Pagination follows the `after=` cursor in the Link header. The
+    advisories endpoint ignores `page=`: before research_log 5.17 this
+    function sent page=1..N and got page 1 back N times, so the v1
+    snapshot holds one page per ecosystem.
     """
     headers = {"Accept": "application/vnd.github+json"}
     if config.github_token:
@@ -97,20 +105,21 @@ def fetch_ghsa_advisories(
 
     for ecosystem in ecosystems:
         page = 1
-        while page <= max_pages:
-            params = {
-                "ecosystem": ecosystem,
-                "per_page": config.per_page,
-                "page": page,
-                "type": "malware",  # GHSA supports filtering advisory type;
-                # 'malware' is the category relevant to squatting/injection
-                # incidents, as opposed to ordinary CVE-style vuln reports.
-            }
+        eco_keys: set[tuple[str, str]] = set()  # (advisory, package) seen
+        url: Optional[str] = GHSA_API_URL
+        params: Optional[dict] = {
+            "ecosystem": ecosystem,
+            "per_page": config.per_page,
+            "type": "malware",  # GHSA supports filtering advisory type;
+            # 'malware' is the category relevant to squatting/injection
+            # incidents, as opposed to ordinary CVE-style vuln reports.
+        }
+        while page <= max_pages and url:
             resp = None
             for attempt in range(config.max_retries):
                 try:
                     resp = requests.get(
-                        GHSA_API_URL,
+                        url,
                         headers=headers,
                         params=params,
                         timeout=config.timeout_seconds,
@@ -123,7 +132,8 @@ def fetch_ghsa_advisories(
                         continue
                     break
                 except requests.RequestException:
-                    time.sleep(1)
+                    resp = None
+                    time.sleep(2**attempt)
             if resp is None or resp.status_code != 200:
                 print(
                     f"  GHSA fetch failed for ecosystem={ecosystem} page={page} "
@@ -169,7 +179,15 @@ def fetch_ghsa_advisories(
                             "fetched_at": _now_iso(),
                         }
                     )
+                    eco_keys.add((adv.get("ghsa_id", ""), pkg))
 
+            # An advisory can list one package once per affected version
+            # range; the cap counts distinct (advisory, package) pairs.
+            if max_records_per_ecosystem is not None and len(eco_keys) >= max_records_per_ecosystem:
+                break
+            links = getattr(resp, "links", None)
+            url = (links.get("next") or {}).get("url") if isinstance(links, dict) else None
+            params = None  # the cursor URL carries the query
             page += 1
             time.sleep(config.request_delay_seconds)
 

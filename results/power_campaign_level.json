@@ -1,5 +1,6 @@
 {
   "settings": {
+    "snapshot": "v1",
     "text_source": "any",
     "group_on": "any"
   },

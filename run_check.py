@@ -13,6 +13,10 @@ results/power_campaign_level__text-<x>__group-<y>.json.
 Also writes the per-campaign table results/campaigns.csv (non-default
 settings: results/campaigns__text-<x>__group-<y>.csv).
 
+--snapshot v1|v2 picks the frozen snapshot (default v1, the 401-record
+file every Section 5.14 number comes from). v2 (research_log 5.17) writes
+its outputs with a "__v2" suffix, e.g. results/power_campaign_level__v2.json.
+
 Reproduces research-log Section 5.14 (campaign-level Fisher / CMH; supersedes 5.13 and 5.6) from the
 frozen 401-record snapshot, then runs the power analysis that Section 7
 item 1 asks for. Writes results/power_campaign_level.json.
@@ -54,7 +58,10 @@ from src.statistics.h1_pilot_analysis import (  # noqa: E402
 )
 from src.statistics.power_analysis import logistic_regression_power  # noqa: E402
 
-SNAPSHOT = HERE / "data" / "frozen" / "incidents_snapshot.jsonl"
+SNAPSHOTS = {
+    "v1": HERE / "data" / "frozen" / "incidents_snapshot.jsonl",
+    "v2": HERE / "data" / "frozen" / "incidents_snapshot_v2.jsonl",
+}
 
 
 def fmt_ci(ci) -> str:
@@ -165,23 +172,27 @@ def parse_args(argv=None) -> argparse.Namespace:
                     help="advisory text used for the DV (default: any record positive, Section 5.6)")
     ap.add_argument("--group-on", choices=SOURCE_SETTINGS, default="any",
                     help="advisory text used for the campaign signature (default: first record, Section 5.6)")
+    ap.add_argument("--snapshot", choices=sorted(SNAPSHOTS), default="v1",
+                    help="frozen snapshot (default v1, which reproduces Section 5.14)")
     return ap.parse_args(argv)
 
 
 def main(argv=None) -> None:
     args = parse_args(argv)
     is_default = args.text_source == "any" and args.group_on == "any"
-    print(f"Settings: --text-source {args.text_source}  --group-on {args.group_on}"
-          + ("" if is_default else "   (non-default: 'log:' columns refer to any/any)"))
+    snapshot = SNAPSHOTS[args.snapshot]
+    suffix = "" if args.snapshot == "v1" else f"__{args.snapshot}"
+    print(f"Settings: --snapshot {args.snapshot}  --text-source {args.text_source}  --group-on {args.group_on}"
+          + ("" if is_default and not suffix else "   (non-default: 'log:' columns refer to v1 any/any)"))
 
     banner("0. Sanity: taxonomy pattern counts (npm patch present?)")
     for cat, d in TAXONOMY.items():
         print(f"  {cat.value:40s} {len(d.patterns):3d} patterns")
 
     banner("1. Load frozen snapshot")
-    if not SNAPSHOT.exists():
-        sys.exit(f"Snapshot not found at {SNAPSHOT} — put incidents_snapshot.jsonl there.")
-    with open(SNAPSHOT, encoding="utf-8") as f:
+    if not snapshot.exists():
+        sys.exit(f"Snapshot not found at {snapshot} — put {snapshot.name} there.")
+    with open(snapshot, encoding="utf-8") as f:
         records = [json.loads(line) for line in f if line.strip()]
     print(f"  records: {len(records)}   (research log: 401)")
 
@@ -212,7 +223,8 @@ def main(argv=None) -> None:
     print(f"  CMH     OR={cmh['common_odds_ratio']:.3f} {fmt_ci(cmh['common_odds_ratio_ci_95'])}  p={cmh['p_value']:.3f}   (log 5.14: OR 0.890, p 0.802)")
 
     banner("5. Power analysis at the campaign-level n (Section 7, item 1)")
-    out = {"settings": {"text_source": args.text_source, "group_on": args.group_on},
+    out = {"settings": {"snapshot": args.snapshot, "text_source": args.text_source,
+                        "group_on": args.group_on},
            "snapshot_records": len(records), "n_campaigns": len(campaigns),
            "section_5_6": {"pooled": fp, "by_ecosystem": {k: run_fisher_exact(v) for k, v in strata.items()},
                            "cmh": cmh},
@@ -224,13 +236,13 @@ def main(argv=None) -> None:
     out["reporters_d2"] = reporter_block(campaigns)
 
     Path("results").mkdir(exist_ok=True)
-    out_path = Path("results") / ("power_campaign_level.json" if is_default else
-                                  f"power_campaign_level__text-{args.text_source}__group-{args.group_on}.json")
+    out_path = Path("results") / ("power_campaign_level" + ("" if is_default else
+                                  f"__text-{args.text_source}__group-{args.group_on}") + suffix + ".json")
     with open(out_path, "w") as f:
         json.dump(out, f, indent=2, default=str)
     print(f"\nWritten: {out_path}")
-    csv_path = Path("results") / ("campaigns.csv" if is_default else
-                                  f"campaigns__text-{args.text_source}__group-{args.group_on}.csv")
+    csv_path = Path("results") / ("campaigns" + ("" if is_default else
+                                  f"__text-{args.text_source}__group-{args.group_on}") + suffix + ".csv")
     rows = write_campaign_csv(campaigns, csv_path)
     print(f"Written: {csv_path}  ({len(rows)} campaigns)")
 

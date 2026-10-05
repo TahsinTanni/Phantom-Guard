@@ -292,3 +292,48 @@ def test_count_reporters_counts_ghsa_malware_and_boilerplate_once():
     assert count_reporters(["amazon-inspector", "ghsa-malware", GHSA_BOILERPLATE_MARKER]) == 2
     assert count_reporters(["amazon-inspector", "kam193"]) == 2
     assert count_reporters([]) == 0
+
+
+def test_fetch_ghsa_advisories_follows_link_cursor():
+    """The endpoint ignores page=; the next page comes from the Link header."""
+    second = [dict(GHSA_SAMPLE_PAGE[0], ghsa_id="GHSA-2222-2222-2222")]
+    calls = []
+
+    def fake_get(url, *args, **kwargs):
+        calls.append((url, kwargs.get("params")))
+        if len(calls) == 1:
+            resp = _mock_response(200, GHSA_SAMPLE_PAGE)
+            resp.links = {"next": {"url": "https://api.github.com/advisories?after=CURSOR"}}
+        else:
+            resp = _mock_response(200, second)
+            resp.links = {}
+        return resp
+
+    with patch("src.data.incident_clients.requests.get", side_effect=fake_get):
+        config = IncidentFetchConfig(request_delay_seconds=0)
+        records = fetch_ghsa_advisories(config, ecosystems=("pip",), max_pages=5)
+
+    assert [r["advisory_id"] for r in records] == ["GHSA-xxxx-yyyy-zzzz", "GHSA-2222-2222-2222"]
+    assert "page" not in (calls[0][1] or {})
+    assert calls[1] == ("https://api.github.com/advisories?after=CURSOR", None)
+
+
+def test_fetch_ghsa_advisories_stops_at_record_cap():
+    n = {"i": 0}
+
+    def fake_get(url, *args, **kwargs):
+        n["i"] += 1
+        adv = dict(GHSA_SAMPLE_PAGE[0], ghsa_id=f"GHSA-{n['i']}")
+        # same package listed twice (two version ranges) counts once
+        adv["vulnerabilities"] = adv["vulnerabilities"] * 2
+        resp = _mock_response(200, [adv])
+        resp.links = {"next": {"url": "https://api.github.com/advisories?after=X"}}
+        return resp
+
+    with patch("src.data.incident_clients.requests.get", side_effect=fake_get) as mock_get:
+        config = IncidentFetchConfig(request_delay_seconds=0)
+        records = fetch_ghsa_advisories(config, ecosystems=("npm",), max_pages=10,
+                                        max_records_per_ecosystem=2)
+
+    assert len({r["advisory_id"] for r in records}) == 2
+    assert mock_get.call_count == 2

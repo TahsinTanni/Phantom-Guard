@@ -721,6 +721,107 @@ So for those 2 rows the FALSE verdict reflects the labeler matching the wrong ev
 
 **Note for the paper.** Section 3.4 of the draft calls 5/13 the rate for "boilerplate-only campaigns". 13 is the count of campaigns with *any* boilerplate reporter (`boilerplate` = 1). Campaigns whose only reporter is the boilerplate number 4, and all 4 are mechanism-negative (0/4).
 
+### 5.17 Corpus v2: backward GHSA fetch (994 records, 306 campaigns)
+
+**Why.** 5.8 and 5.14 put the design at 0.31 power for OR 2.0 with 94 campaigns. Section 7 item 1 asks for about 350 campaigns from about 1,000 raw records.
+
+**Pagination bug found first.**
+- `fetch_ghsa_advisories()` sent `page=1..N`. The `/advisories` endpoint ignores `page=` and pages only through the `after=` cursor in the `Link` header.
+- Checked live on 2026-10-05: `page=1` and `page=2` return the same 100 advisories.
+- So the v1 snapshot holds **one page (100 advisories) per ecosystem, not five**. Deduplication hid the four repeats. That is also why v1 has exactly 100 packages per ecosystem.
+- The paper and the DIB draft both say "five pages", which needs correcting. No v1 number changes, and v1 is untouched (SHA-256 `cb830db6…` still matches its manifest).
+
+**Change.**
+- `src/data/incident_clients.py`:
+  - `fetch_ghsa_advisories()` follows the `Link` `next` cursor.
+  - A new `max_records_per_ecosystem` cap stops an ecosystem at the end of the page where its distinct (advisory, package) count reaches the cap. An advisory can list one package once per affected version range: a first attempt counted those entries, hit the cap after two PyPI pages, and was discarded.
+  - Connection errors now back off exponentially. A first attempt lost npm page 2 to a dropped connection and was also discarded.
+- New `src/data/build_snapshot.py` does the following:
+  - fetches GHSA with a token, 50 per page, to a cap of 250 per ecosystem;
+  - queries OSV per package;
+  - deduplicates with the unchanged `deduplicate_incidents()`;
+  - writes the snapshot and a manifest;
+  - refuses to overwrite an existing snapshot.
+- `run_check.py --snapshot v1|v2`. The default is v1, which still reproduces 5.14 exactly. v2 writes `results/power_campaign_level__v2.json` and `results/campaigns__v2.csv`.
+- No regex pattern, token list or signature rule changed.
+
+**Snapshot** (`data/frozen/incidents_snapshot_v2.jsonl`, manifest `data/metadata/incidents_snapshot_v2.manifest.json`).
+- Fetched 2026-10-05 with a GitHub token.
+- Raw records: 1,191 GHSA package records plus 494 OSV records, 1,685 in all. After deduplication: **994 records** (500 GHSA, 494 OSV; 500 PyPI, 494 npm).
+- **498 packages** (250 PyPI, 248 npm).
+  - 5 packages have no OSV record.
+  - 2 have two GHSA advisories.
+  - 1 has two OSV records.
+- All 200 v1 packages are in v2.
+- Publication dates:
+  - GHSA: 2026-07-21 to 2026-10-05.
+  - npm GHSA covers only **2026-09-30 to 2026-10-05**, because npm publishes about 50–100 malware advisories a day.
+  - PyPI GHSA covers 2026-07-21 to 2026-10-04.
+  - OSV records span 2024-06-25 to 2026-10-05, because OSV keeps an advisory's original date.
+- Reporter mix per package (GHSA and OSV text combined):
+
+  | Reporter combination | npm | PyPI |
+  |---|---|---|
+  | Amazon Inspector only | 109 | 11 |
+  | Unattributed only | 84 | 12 |
+  | Amazon Inspector + boilerplate | 18 | — |
+  | Amazon Inspector + unattributed | 17 | 2 |
+  | Boilerplate only | 16 | — |
+  | Amazon Inspector + ossf-package-analysis | 3 | — |
+  | Boilerplate + unattributed | 1 | — |
+  | kam193 + Amazon Inspector | — | 152 |
+  | kam193 only | — | 66 |
+  | ossf-package-analysis with kam193 and/or Amazon Inspector | — | 6 |
+  | ossf-package-analysis only | — | 1 |
+  | kam193 + Amazon Inspector + unattributed | — | 1 |
+
+  96 of 498 packages are unattributed only.
+
+**Campaigns (any/any).**
+- **306 campaigns**: 141 npm, 165 PyPI.
+- Signature types: text_prefix 136 (npm 106, PyPI 30), campaign_tag 91 (all PyPI), own_package 79 (npm 35, PyPI 44).
+- Largest campaigns: 74 (npm Baileys forks, the v1 45-name family grown), 15, 11 (PyPI voxcpm/tts tag), 10, 10, 7, 6, 6, 6.
+- Grammar-flagged 81 (npm 36, PyPI 45). DV-positive 169 (npm 82, PyPI 87).
+
+**Main test (v2).**
+- Pooled `[[46,35],[123,102]]`: OR **1.090** [0.653, 1.819], p = 0.795.
+- npm (n = 141): OR 1.379 [0.631, 3.014], p = 0.441. PyPI (n = 165): OR 0.915 [0.461, 1.816], p = 0.862.
+- CMH by ecosystem: OR 1.096 [0.656, 1.830], p = 0.728.
+- CMH by ecosystem × reporter count: OR 0.871 [0.503, 1.508], p = 0.621.
+- Logit (d), `dv ~ grammar_flag + C(ecosystem) + n_reporters + has_amazon_inspector` (n = 306, LLR p < 0.0001, pseudo-R² 0.210):
+  - grammar_flag OR **0.757** [0.424, 1.354], p = 0.348;
+  - n_reporters 0.822 [0.410, 1.646], p = 0.580;
+  - amazon_inspector **27.75** [10.16, 75.84], p < 0.001.
+  - VIFs ≤ 1.93.
+- Sensitivity fits: grammar OR 0.995 (a), 0.760 (b), 0.685 (c). Every interval contains 1.
+- Reporter terms entered alone: n_reporters 3.84 (a); Amazon Inspector 24.0 (b).
+- Mechanism rate with Amazon Inspector coverage: 162/234 = 0.69, against 7/72 = 0.10 without.
+- Boilerplate among the reporters: 10/35 = 0.29.
+
+**Power (v2).** At n = 306 (p_control 0.547, flag prevalence 0.265), power is **0.76 at OR 2.0** and 0.99 at OR 3.0. About 339 campaigns would give 80% at OR 2.0. The null now rules out OR ≥ 3 and makes OR 2 unlikely. It is still under 0.80 at OR 2.0.
+
+**Interpretation.** The v1 null holds at about three times the n, and the point estimate stays near 1. The reporter effect is larger and cleaner in v2 because npm is now mostly Amazon Inspector-covered (147 of 248 packages, against 23 in v1). The npm side covers about six days, so it is a burst sample, not a time-representative one.
+
+**Collapse audit.** New `src/evaluation/collapse_audit.py` (signature rules unchanged) writes `reports/collapse_audit_v1.md` and `reports/collapse_audit_v2.md`. Each report holds:
+- the 25 largest campaigns;
+- under-merge pairs: masked prefixes equal on the first 120 characters and different within 200;
+- over-merge campaigns: some member pair with token Jaccard below 0.5.
+
+Each row has excerpts and a blank decision column.
+- v1: 1 under-merge pair (C090/C091, the known 10+3 npm families) and 4 over-merge candidates.
+- v2: **57 under-merge pairs**.
+  - 55 of them are all the pairs among 11 PyPI text_prefix singletons whose texts are identical up to about character 186, where an OSV link carries the package name inside a URL path (`…/pypi/<name>/MAL-….json`). The name mask deliberately skips names inside paths.
+  - The other 2 are npm: C300/C301 (the v1 10+3 families) and C271/C273.
+- v2: 8 over-merge candidates, 7 of them kam193 campaign tags whose members have different write-ups, plus the 15-name Baileys family.
+- The 306 above is therefore an upper bound on independent campaigns until the audit decisions are made. If the 11-singleton family merges, the count becomes 296.
+
+**Tests.** New tests:
+- `test_fetch_ghsa_advisories_follows_link_cursor`;
+- `test_fetch_ghsa_advisories_stops_at_record_cap`;
+- `tests/test_collapse_audit.py`.
+
+Suite: **167 passed**.
+
 ---
 
 ## 6. Novelty / Literature Positioning

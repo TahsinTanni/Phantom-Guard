@@ -1,0 +1,33 @@
+{
+  "checksum": "40ad8681eb164a6a4c28b40d13133bb1c15f473a33bff1e977d3ea285ac7b233",
+  "code_version": "2aa9a5b36b07a6288675056c34472c7094d49e33",
+  "data_generating_process": "real_world_observed",
+  "dataset_name": "incidents_snapshot_v2",
+  "download_timestamp": "2026-10-05T17:59:11.022180+00:00",
+  "exclusions": [],
+  "extra": {
+    "ecosystem_counts": {
+      "npm": 494,
+      "pypi": 500
+    },
+    "fetched_at_max": "2026-10-05T17:59:10.994218+00:00",
+    "fetched_at_min": "2026-10-05T17:54:32.592800+00:00",
+    "ghsa_records_per_ecosystem_target": 250,
+    "n_ghsa_raw": 1191,
+    "n_osv_raw": 494,
+    "published_at_max": "2026-10-05T17:31:00Z",
+    "published_at_min": "2024-06-25T13:44:29Z",
+    "source_counts": {
+      "ghsa": 500,
+      "osv": 494
+    },
+    "unique_packages": 498
+  },
+  "license": "GHSA records: CC-BY-4.0; OSV records: per upstream source (OpenSSF malicious-packages: Apache-2.0)",
+  "missing_value_policy": "not specified",
+  "preprocessing_version": "v2-cursor",
+  "random_seed": null,
+  "record_count": 994,
+  "source": "GitHub Security Advisories REST API (api.github.com/advisories, type=malware, ecosystems pip/npm, Link-cursor pagination) + OSV.dev v1 query API (per-package)",
+  "source_version": "live API pull; see extra.fetched_at_min/max"
+}
