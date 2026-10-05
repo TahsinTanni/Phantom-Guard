@@ -21,6 +21,7 @@
 \journal{Data in Brief}
 
 \begin{document}
+\sloppy
 
 \begin{frontmatter}
 
@@ -150,7 +151,7 @@ The two-stage collapse described in Section~4.3 assigns every package to one of 
 
 \subsection*{3.4 Reporter-coverage annotations}
 
-For every package, the \texttt{\#\# Source:} headers of both texts are parsed (\texttt{extract\_reporters} in \texttt{src/data/incident\_clients.py}) into a reporter count (\texttt{n\_reporters}) and three indicators: \texttt{kam193}, \texttt{amazon\_inspector} and \texttt{boilerplate} (GHSA's generic ``should be considered fully compromised'' text, which OSV mirrors as a \texttt{ghsa-malware} section; the two count as one reporter). Headerless text without boilerplate is marked \texttt{<unattributed>} (73 of 200 packages). Among campaigns, the described-mechanism rate is 0.65 (46/71) with Amazon Inspector coverage against 0.22 (5/23) without, and 0.38 (5/13) for boilerplate-only campaigns.
+For every package, the \texttt{\#\# Source:} headers of both texts are parsed (\texttt{extract\_reporters} in \texttt{src/data/incident\_clients.py}) into a reporter count (\texttt{n\_reporters}) and three indicators: \texttt{kam193}, \texttt{amazon\_inspector} and \texttt{boilerplate} (GHSA's generic ``should be considered fully compromised'' text, which OSV mirrors as a \texttt{ghsa-malware} section; the two count as one reporter). Headerless text without boilerplate is marked \texttt{<unattributed>} (73 of 200 packages). Among campaigns, the described-mechanism rate is 0.65 (46/71) with Amazon Inspector coverage against 0.22 (5/23) without, and 0.38 (5/13) for campaigns in which the GHSA boilerplate is one of the reporters; the 4 campaigns whose only reporter is the boilerplate are all mechanism-negative (0/4).
 
 \subsection*{3.5 Naming-grammar flag and its validation}
 
@@ -206,7 +207,7 @@ Reporter sections were parsed from the \texttt{\#\# Source:} headers of both tex
 
 \subsection*{4.7 Software}
 
-Python 3.14; pandas, scipy, statsmodels, requests. The test suite (\texttt{tests/}, 158 tests) covers the clients, deduplication, manifest generation, grammar, labeler (including the name-blindness and boilerplate rules), collapse and reporter extraction. \texttt{run\_check.py} reproduces the campaign-level tables and the power analysis from the frozen snapshot in one command.
+Python 3.14; pandas, scipy, statsmodels, requests. The test suite (\texttt{tests/}, 160 tests) covers the clients, deduplication, manifest generation, grammar, labeler (including the name-blindness and boilerplate rules), collapse and reporter extraction. \texttt{run\_check.py} reproduces the campaign-level tables and the power analysis from the frozen snapshot in one command.
 
 % ---------------------------------------------------------------------
 \section*{Limitations}
@@ -228,11 +229,6 @@ The authors have read and follow the ethical requirements for publication in \em
 
 This work received no external funding.
 
-\section*{Declaration of generative AI and AI-assisted technologies in the writing process}
-
-During the preparation of this work the authors used Claude (Anthropic) to assist with code development and with drafting text. After using this tool, the authors reviewed and edited the content as needed and take full responsibility for the content of the publication.
-
-% ---------------------------------------------------------------------
 \section*{Declaration of Competing Interest}
 
 The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
@@ -243,7 +239,15 @@ The authors declare that they have no known competing financial interests or per
 Phantom Guard: frozen GHSA/OSV malware-advisory snapshot and campaign-level derived data (Original data) (Zenodo), \url{https://doi.org/10.5281/zenodo.XXXXXXX}. % TODO
 
 % ---------------------------------------------------------------------
+\section*{Declaration of generative AI and AI-assisted technologies in the manuscript preparation process}
+
+During the preparation of this work the authors used Claude (Anthropic) to assist with code development and with drafting text. After using this tool, the authors reviewed and edited the content as needed and take full responsibility for the content of the publication.
+
+% ---------------------------------------------------------------------
 \begin{thebibliography}{9}
+
+\bibitem{churilov2026}
+A.~Churilov, The range shrinks, the threat remains: Re-evaluating LLM package hallucinations on the 2026 frontier-model cohort, arXiv:2605.17062 (2026). Data: \url{https://doi.org/10.5281/zenodo.19859120}
 
 \bibitem{akhavani2025}
 S.~A. Akhavani, B.~Ousat, A.~Kharraz, Open source, open threats? Investigating security challenges in open-source software, arXiv:2506.12995 (2025). \url{https://doi.org/10.48550/arXiv.2506.12995}
@@ -253,12 +257,6 @@ J.~Spracklen, R.~Wijewickrama, A.~H.~M.~N. Sakib, A.~Maiti, B.~Viswanath, M.~Jad
 
 \bibitem{huang2026}
 Z.~Huang, C.~Liu, Z.~Wang, X.~Cui, X.~Deng, M.~Xu, Package hallucinations as phantoms in open-source software supply chains: An empirical security analysis, ACM Trans. Softw. Eng. Methodol. (2026). % TODO: add DOI
-
-\bibitem{churilov2026}
-A.~Churilov, The range shrinks, the threat remains: Re-evaluating LLM package hallucinations on the 2026 frontier-model cohort, arXiv:2605.17062 (2026). Data: \url{https://doi.org/10.5281/zenodo.19859120}
-
-\bibitem{guo2026}
-W.~Guo, Z.~Chen, Z.~Xu, C.~Liu, M.~Kang, S.~Song, C.~Liu, Y.~Xu, W.~Sun, Y.~Liu, How effective are NPM malicious package detectors? A large-scale empirical study, arXiv:2603.27549 (2026).
 
 \end{thebibliography}
 

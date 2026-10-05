@@ -8,3 +8,6 @@ paper_dib/*.aux
 paper_dib/*.log
 paper_dib/*.out
 paper_dib/*.spl
+paper/*.aux
+paper/*.log
+paper/*.out
