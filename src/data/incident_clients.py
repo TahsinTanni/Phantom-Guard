@@ -334,3 +334,53 @@ def count_reporters(reporters: list[str]) -> int:
     """Number of distinct reporters, counting GHSA_BOILERPLATE_ALIASES as
     one (they are the same text under two labels)."""
     return len({GHSA_BOILERPLATE_MARKER if r in GHSA_BOILERPLATE_ALIASES else r for r in reporters})
+
+
+# ---------------------------------------------------------------------------
+# No-text advisories (research_log 5.18)
+# ---------------------------------------------------------------------------
+# Some OpenSSF-imported advisories carry no analysis at all: the GHSA text is
+# only the OpenSSF credit link and the OSV text only the "Per source details"
+# separator (v2 snapshot: 11 PyPI packages, e.g. ztasimb). Such text is
+# identical across unrelated packages apart from the link, so it must never
+# key a campaign, and it can never describe a mechanism.
+
+_OPENSSF_CREDIT_LINE = re.compile(
+    r"^[ \t]*Credit:[ \t]*\[OpenSSF\]\(https://github\.com/ossf/malicious-packages\)"
+    r"[ \t]*\(\[source\]\([^)\s]*\)\)[ \t]*$",
+    re.MULTILINE,
+)
+_OSV_SOURCE_SEPARATOR = re.compile(
+    r"^[ \t]*_-= Per source details\. Do not edit below this line\.=-_[ \t]*$", re.MULTILINE
+)
+_HORIZONTAL_RULE = re.compile(r"^[ \t]*-{3,}[ \t]*$", re.MULTILINE)
+
+
+def is_no_text(text: str) -> bool:
+    """True if `text` holds nothing but the OpenSSF credit link, the OSV
+    "Per source details" separator and horizontal rules. Empty text is not
+    no-text (it has no OpenSSF marker; callers fall back to the summary)."""
+    if not (text or "").strip():
+        return False
+    rest = _HORIZONTAL_RULE.sub("", _OSV_SOURCE_SEPARATOR.sub("", _OPENSSF_CREDIT_LINE.sub("", text)))
+    return not rest.strip()
+
+
+# Amazon Inspector's one-line verdict (research_log 5.18): "The package <name>
+# was found to contain malicious code." with nothing else but the OpenSSF
+# credit link / OSV separator. Identical across unrelated packages, so like
+# the GHSA boilerplate it must never key a campaign.
+_INSPECTOR_ONE_LINER = re.compile(
+    r"The package \S+ was found to contain malicious code\.?", re.IGNORECASE
+)
+_SOURCE_HEADER = re.compile(r"^[ \t]*## Source:.*$", re.MULTILINE)
+
+
+def is_inspector_template(text: str) -> bool:
+    """True if `text`, once "## Source:" headers, the OpenSSF credit link,
+    the OSV separator and `---` lines are removed, is only Amazon
+    Inspector's one-line "was found to contain malicious code" verdict."""
+    rest = _HORIZONTAL_RULE.sub("", _OSV_SOURCE_SEPARATOR.sub("", _OPENSSF_CREDIT_LINE.sub(
+        "", _SOURCE_HEADER.sub("", text or ""))))
+    return bool(_INSPECTOR_ONE_LINER.fullmatch(rest.strip()))
+

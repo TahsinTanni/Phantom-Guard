@@ -35,6 +35,8 @@ from src.data.incident_clients import (
     GHSA_BOILERPLATE_PHRASE,
     count_reporters,
     extract_reporters,
+    is_inspector_template,
+    is_no_text,
     union_reporters,
 )
 from src.data.naming_grammar import classify_naming_grammar
@@ -104,8 +106,9 @@ def n_reporters_stratum(n: int) -> str:
 
 
 def add_reporter_covariates(campaigns: list[dict]) -> list[dict]:
-    """Adds the four reporter indicators, `n_reporters_stratum`, and
-    `ecosystem_x_n_reporters` (for the two-way CMH) to each campaign."""
+    """Adds the four reporter indicators, `n_reporters_stratum`,
+    `ecosystem_x_n_reporters` (for the two-way CMH) and `no_text` (every
+    member text is a no-text advisory, research_log 5.18) to each campaign."""
     out = []
     for c in campaigns:
         stratum = n_reporters_stratum(c["n_reporters"])
@@ -114,6 +117,7 @@ def add_reporter_covariates(campaigns: list[dict]) -> list[dict]:
             **reporter_indicators(c["reporters"]),
             "n_reporters_stratum": stratum,
             "ecosystem_x_n_reporters": f"{c['ecosystem']}|{stratum}",
+            "no_text": bool(c.get("_no_text", False)),
         })
     return out
 
@@ -447,6 +451,8 @@ def build_campaign_signature(
     use_campaign_tag: bool = True,
     mask_package_name: bool = True,
     exclude_generic_tag: bool = True,
+    strip_urls: bool = True,
+    exclude_inspector_template: bool = True,
 ) -> tuple[str, str]:
     """
     Groups records likely belonging to the same attack campaign: GHSA and
@@ -466,13 +472,24 @@ def build_campaign_signature(
        (the GENERIC part is `exclude_generic_tag`).
     2. A specific kam193 "Campaign: <id>" tag groups on (ecosystem, id)
        (`use_campaign_tag`).
+    No-text advisories (only the OpenSSF credit link and the OSV separator,
+    see is_no_text) and Amazon Inspector's one-line "was found to contain
+    malicious code" verdict (see is_inspector_template;
+    `exclude_inspector_template`) also keep their own package-keyed
+    signature, like the GHSA boilerplate (research_log 5.18).
     3. Otherwise the first `sig_len` characters of the text, after
        "## Source: <reporter> (<hash>)" header lines are stripped (the hash
        is unique per report) and the record's own package name is replaced
        by PACKAGE_NAME_MASK (`mask_package_name`; texts that open with the
-       package name would otherwise never match).
-    The defaults are the research_log 5.14 behaviour; all three switches
-    off gives the 5.13 behaviour.
+       package name would otherwise never match), and every URL is replaced
+       by URL_MASK (`strip_urls`, research_log 5.18; OSV links carry the
+       package name inside the path, where the name mask cannot reach). See
+       signature_text().
+    The defaults are the research_log 5.18 behaviour (105 v1 campaigns).
+    exclude_inspector_template=False gives the intermediate 5.18 grouping
+    (93); with strip_urls=False as well it gives 5.14 (94); all five
+    switches off gives 5.13 (106). v1 has no no-text records, so that rule
+    has no switch.
     """
     text = (record.get("description") or record.get("summary") or "").strip()
     ecosystem = record.get("ecosystem", "")
@@ -480,12 +497,23 @@ def build_campaign_signature(
     specific = sorted(t for t in tags if t not in GENERIC_CAMPAIGN_TAGS)
     if use_campaign_tag and specific:
         return (ecosystem, "__campaign__:" + "|".join(specific))
-    if GHSA_BOILERPLATE_PHRASE in text or (exclude_generic_tag and tags and not specific):
+    if (GHSA_BOILERPLATE_PHRASE in text or is_no_text(text)
+            or (exclude_inspector_template and is_inspector_template(text))
+            or (exclude_generic_tag and tags and not specific)):
         return (ecosystem, f"__noboilerplate__:{record['package_name']}")
+    return (ecosystem, signature_text(record, mask_package_name, strip_urls)[:sig_len])
+
+
+def signature_text(record: dict, mask_package_name: bool = True, strip_urls: bool = True) -> str:
+    """The text whose prefix is a text-prefix campaign signature: headers
+    stripped, own name masked, then URLs masked (in that order)."""
+    text = (record.get("description") or record.get("summary") or "").strip()
     text = SOURCE_HEADER_LINE.sub("", text).strip()
     if mask_package_name:
         text = mask_name(text, record["package_name"])
-    return (ecosystem, text[:sig_len])
+    if strip_urls:
+        text = URL_PATTERN.sub(URL_MASK, text)
+    return text
 
 
 SOURCE_HEADER_LINE = re.compile(r"^[ \t]*## Source:.*(?:\r?\n|$)", flags=re.MULTILINE)
@@ -496,6 +524,10 @@ CAMPAIGN_TAG_LINE = re.compile(r"^[ \t]*Campaign:[ \t]*(\S+)", flags=re.MULTILIN
 # 15-name false merge).
 GENERIC_CAMPAIGN_TAGS = frozenset({"GENERIC-standard-pypi-install-pentest"})
 PACKAGE_NAME_MASK = "<PKG>"
+# research_log 5.18: a URL runs to the next whitespace (markdown closing
+# brackets included), so "([source](https://.../MAL-1.json))" -> "([source](<URL>".
+URL_PATTERN = re.compile(r"https?://\S+")
+URL_MASK = "<URL>"
 # Characters that may be part of a package name or path; the name is only
 # masked when neither neighbour is one of these ("urc" is not masked inside
 # "source", "foo" not inside "foo-bar" or "@scope/foo").
@@ -522,6 +554,8 @@ def _collapse_group(members: list[dict], outcome_field: str, outcome_key: str) -
     arbitrary tie-breaking (e.g. 'longest text') which has no principled
     connection to which record is more representative."""
     rep = members[0]
+    # no_text: every member text is a no-text advisory (is_no_text).
+    all_no_text = all(m.get("_no_text", is_no_text(m.get("description", ""))) for m in members)
     any_flagged = any(m["grammar_match"]["is_grammar_flagged"] for m in members)
     any_outcome = any(m[outcome_field][outcome_key] for m in members)
     merged = {
@@ -530,6 +564,7 @@ def _collapse_group(members: list[dict], outcome_field: str, outcome_key: str) -
         outcome_field: {**rep[outcome_field], outcome_key: any_outcome},
         "_member_count": len(members),
         "_member_package_names": [m["package_name"] for m in members],
+        "_no_text": all_no_text,
     }
     return _with_reporter_union(merged, members)
 
@@ -610,6 +645,8 @@ def _name_level_record(
         "_member_count": len(members),
         "_member_package_names": [m["package_name"] for m in members],
         "_text_advisory_ids": [m.get("advisory_id") for m in text_members],
+        # Like reporters, a property of the package: all of its texts.
+        "_no_text": all(is_no_text(m.get("description", "")) for m in members),
         "_group_advisory_id": rep.get("advisory_id"),
     }, members)
 
@@ -671,17 +708,67 @@ def collapse_to_campaign_level(
     return campaign_level
 
 
+def load_manual_merges(path) -> list[dict]:
+    """The "merges" list of data/manual_merges.json: package sets judged one
+    campaign on name evidence (research_log 5.18). Each entry has id,
+    ecosystem, packages and reason."""
+    import json
+
+    with open(path, encoding="utf-8") as f:
+        merges = json.load(f)["merges"]
+    for m in merges:
+        if not (m.get("id") and m.get("ecosystem") and m.get("packages") and m.get("reason")):
+            raise ValueError(f"manual merge entry needs id, ecosystem, packages and reason: {m}")
+    return merges
+
+
+def apply_manual_merges(
+    campaigns: list[dict],
+    merges: list[dict],
+    outcome_field: str = "malware_label",
+    outcome_key: str = "malware_payload_present_candidate",
+) -> tuple[list[dict], list[dict]]:
+    """Merges, for each entry, every campaign of its ecosystem that contains
+    one of its packages into one campaign ('any member positive', as in
+    _collapse_group), placed where its first constituent was. Whole
+    campaigns are merged, never split. Returns (campaigns, report); the
+    report lists per entry the campaigns merged and any listed package
+    absent from the corpus. Sensitivity analysis only: the main analysis
+    runs without manual merges."""
+    out = list(campaigns)
+    report = []
+    for m in merges:
+        names = set(m["packages"])
+        idx = [i for i, c in enumerate(out)
+               if c["ecosystem"] == m["ecosystem"] and names & set(c["_member_package_names"])]
+        present = {n for i in idx for n in out[i]["_member_package_names"]}
+        report.append({"id": m["id"], "campaigns_merged": len(idx),
+                       "packages_merged": len(present), "missing": sorted(names - present)})
+        if len(idx) < 2:
+            continue
+        group = [out[i] for i in idx]
+        merged = _collapse_group(group, outcome_field, outcome_key)
+        merged["_member_package_names"] = [n for c in group for n in c["_member_package_names"]]
+        merged["_member_count"] = len(merged["_member_package_names"])
+        merged["_manual_merge"] = m["id"]
+        out[idx[0]] = merged
+        for i in reversed(idx[1:]):
+            del out[i]
+    return out, report
+
+
 CAMPAIGN_CSV_COLUMNS = (
     "campaign_id", "ecosystem", "member_packages", "signature_type", "grammar_flag",
-    "mechanism_label", "n_reporters", "kam193", "amazon_inspector", "boilerplate",
+    "mechanism_label", "n_reporters", "kam193", "amazon_inspector", "boilerplate", "no_text",
 )
 MEMBER_SEPARATOR = ";"
 
 
 def signature_type(campaign: dict, **signature_options) -> str:
     """Which build_campaign_signature() rule keyed this campaign:
-    "campaign_tag" (kam193 Campaign id), "own_package" (GHSA boilerplate or
-    the GENERIC tag, so never merged) or "text_prefix" (masked description
+    "campaign_tag" (kam193 Campaign id), "own_package" (GHSA boilerplate,
+    the GENERIC tag, a no-text advisory or the Amazon Inspector one-liner,
+    so never merged) or "text_prefix" (masked description
     prefix). A campaign record is its first member's record, so its
     signature is the key it was grouped on; `signature_options` must match
     the collapse."""
@@ -716,6 +803,7 @@ def campaign_table_rows(
             "kam193": int(ind["has_kam193"]),
             "amazon_inspector": int(ind["has_amazon_inspector"]),
             "boilerplate": int(ind["has_boilerplate"]),
+            "no_text": int(c.get("_no_text", False)),
         })
     return rows
 

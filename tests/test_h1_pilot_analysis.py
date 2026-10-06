@@ -493,13 +493,22 @@ def test_default_settings_reproduce_section_5_6_and_any_group_equals_ghsa():
     recs = [json.loads(l) for l in SNAPSHOT.read_text(encoding="utf-8").splitlines() if l.strip()]
     joined = attach_grammar_labels(label_batch(recs))
     default = collapse_to_campaign_level(joined)
-    # Section 5.14 (Campaign tag, GENERIC exclusion, name mask, narrowed negation);
-    # 5.13 was 106 / [[19, 12], [43, 32]], 5.6 was 142 / [[20, 17], [61, 44]].
-    assert len(default) == 94
-    assert build_contingency_table(default).as_2x2() == [[13, 12], [38, 31]]
+    # Section 5.18 (5.14 + no-text rule + Amazon Inspector template + URL
+    # strip); 5.14 was 94 / [[13, 12], [38, 31]], 5.13 was 106 /
+    # [[19, 12], [43, 32]], 5.6 was 142 / [[20, 17], [61, 44]].
+    assert len(default) == 105
+    assert build_contingency_table(default).as_2x2() == [[13, 16], [38, 38]]
+    # Superseded groupings stay reproducible (v1 has no no-text records):
+    # URL strip without the template rule gives the intermediate 93, and
+    # neither gives 5.14.
+    mid = collapse_to_campaign_level(joined, exclude_inspector_template=False)
+    assert len(mid) == 93 and build_contingency_table(mid).as_2x2() == [[13, 11], [38, 31]]
+    old = collapse_to_campaign_level(joined, exclude_inspector_template=False, strip_urls=False)
+    assert len(old) == 94 and build_contingency_table(old).as_2x2() == [[13, 12], [38, 31]]
     # All three signature switches off is the 5.13 grouping.
     off = collapse_to_campaign_level(joined, use_campaign_tag=False, mask_package_name=False,
-                                     exclude_generic_tag=False)
+                                     exclude_generic_tag=False, strip_urls=False,
+                                     exclude_inspector_template=False)
     assert len(off) == 106 and build_contingency_table(off).as_2x2() == [[19, 12], [43, 32]]
     # In this snapshot GHSA is always the first record per package, so
     # group_on="any" and group_on="ghsa" are the same grouping.
@@ -629,10 +638,12 @@ def test_snapshot_reporter_counts_section_5_10():
     assert len(packages) == 200
     assert Counter(r["n_reporters"] for r in packages.values()) == Counter({1: 114, 2: 83, 3: 3})
     campaigns = add_reporter_covariates(collapse_to_campaign_level(joined))
-    assert build_contingency_table(campaigns).as_2x2() == [[13, 12], [38, 31]]  # 5.14
+    assert build_contingency_table(campaigns).as_2x2() == [[13, 16], [38, 38]]  # 5.18
     strata = build_stratified_tables(campaigns, "n_reporters_stratum")
+    # 5.14 had "1": [[5, 6], [4, 17]]; the 13 template packages each have
+    # one reporter (Amazon Inspector) and are now single campaigns.
     assert {k: t.as_2x2() for k, t in strata.items()} == {
-        "1": [[5, 6], [4, 17]], "2+": [[8, 6], [34, 14]]}
+        "1": [[5, 10], [4, 24]], "2+": [[8, 6], [34, 14]]}
 
 
 # --- Sensitivity fits, VIFs, OR confidence intervals (5.10 / 5.11) ----------
@@ -720,27 +731,170 @@ def test_campaign_csv_rows_signature_types_flags_and_reporters(tmp_path):
     assert rows == [
         {"campaign_id": "C001", "ecosystem": "pypi", "member_packages": "t1;t2",
          "signature_type": "campaign_tag", "grammar_flag": 0, "mechanism_label": 1,
-         "n_reporters": 2, "kam193": 1, "amazon_inspector": 1, "boilerplate": 0},
+         "n_reporters": 2, "kam193": 1, "amazon_inspector": 1, "boilerplate": 0, "no_text": 0},
         {"campaign_id": "C002", "ecosystem": "pypi", "member_packages": "b1",
          "signature_type": "own_package", "grammar_flag": 0, "mechanism_label": 0,
-         "n_reporters": 1, "kam193": 0, "amazon_inspector": 0, "boilerplate": 1},
+         "n_reporters": 1, "kam193": 0, "amazon_inspector": 0, "boilerplate": 1, "no_text": 0},
         {"campaign_id": "C003", "ecosystem": "npm", "member_packages": "x1",
          "signature_type": "text_prefix", "grammar_flag": 0, "mechanism_label": 0,
-         "n_reporters": 1, "kam193": 0, "amazon_inspector": 0, "boilerplate": 0},
+         "n_reporters": 1, "kam193": 0, "amazon_inspector": 0, "boilerplate": 0, "no_text": 0},
     ]
 
 
 @pytest.mark.skipif(not SNAPSHOT.exists(), reason="frozen snapshot not present")
-def test_snapshot_campaign_csv_matches_section_5_14():
+def test_snapshot_campaign_csv_matches_section_5_18():
     from src.labeling.malware_labeler import label_batch
 
     recs = [json.loads(l) for l in SNAPSHOT.read_text(encoding="utf-8").splitlines() if l.strip()]
     rows = campaign_table_rows(collapse_to_campaign_level(attach_grammar_labels(label_batch(recs))))
-    assert len(rows) == 94
-    assert sum(r["ecosystem"] == "npm" for r in rows) == 22
+    # 5.18; 5.14 was 94 rows, 22 npm, 25 flagged, table [[13, 12], [38, 31]].
+    assert len(rows) == 105
+    assert sum(r["ecosystem"] == "npm" for r in rows) == 33
     members = [m for r in rows for m in r["member_packages"].split(";")]
     assert len(members) == len(set(members)) == 200
-    assert sum(r["grammar_flag"] for r in rows) == 25
+    assert sum(r["grammar_flag"] for r in rows) == 29
     assert sum(r["mechanism_label"] for r in rows) == 51
     flagged_pos = sum(r["grammar_flag"] and r["mechanism_label"] for r in rows)
-    assert flagged_pos == 13  # [[13, 12], [38, 31]]
+    assert flagged_pos == 13  # [[13, 16], [38, 38]]
+    assert sum(r["no_text"] for r in rows) == 0
+
+
+# research_log 5.18: no-text advisories. Texts are the v2 snapshot's ztasimb
+# records (GHSA-9qv9-fv8w-mxh3, MAL-2024-6262) and a second package of the
+# same OpenSSF import (MAL-2024-6258).
+ZTASIMB_GHSA = (
+    "---\n\nCredit: [OpenSSF](https://github.com/ossf/malicious-packages) "
+    "([source](https://github.com/ossf/malicious-packages/blob/49d0cfba3689ed9b195d101d3a2a964c6a77f767"
+    "/osv/malicious/pypi/ztasimb/MAL-2024-6262.json))"
+)
+ZNOMIG_GHSA = ZTASIMB_GHSA.replace("ztasimb/MAL-2024-6262", "znomig/MAL-2024-6258")
+OSV_NO_TEXT = "\n---\n_-= Per source details. Do not edit below this line.=-_\n"
+
+
+def test_is_no_text_on_ztasimb_texts():
+    from src.data.incident_clients import is_no_text
+
+    assert is_no_text(ZTASIMB_GHSA)
+    assert is_no_text(OSV_NO_TEXT)
+    assert is_no_text(ZTASIMB_GHSA + "\n" + OSV_NO_TEXT)
+    assert not is_no_text("")  # empty text falls back to the summary instead
+    assert not is_no_text("The package steals SSH keys.\n\n" + ZTASIMB_GHSA)
+    assert not is_no_text(OSV_NO_TEXT + "## Source: kam193 (" + "a" * 64 + ")\nsteals keys")
+
+
+def test_no_text_packages_stay_own_units_and_carry_indicator():
+    recs = attach_grammar_labels([
+        _rec("ztasimb", "ghsa", "GHSA-9qv9-fv8w-mxh3", False, description=ZTASIMB_GHSA),
+        _rec("ztasimb", "osv", "MAL-2024-6262", False, description=OSV_NO_TEXT),
+        _rec("znomig", "ghsa", "GHSA-zn", False, description=ZNOMIG_GHSA),
+        _rec("znomig", "osv", "MAL-2024-6258", False, description=OSV_NO_TEXT),
+        _rec("real", "ghsa", "GHSA-r", False, description="steals real wallet keys\n" + ZTASIMB_GHSA),
+    ])
+    # At the default 200 characters the two credit links already differ (the
+    # name sits in the URL path); at 60 they are identical, so only the
+    # no-text rule keeps the packages apart.
+    for kwargs in ({}, {"sig_len": 60}):
+        campaigns = collapse_to_campaign_level(recs, **kwargs)
+        assert sorted(c["_member_package_names"] for c in campaigns) == [["real"], ["znomig"], ["ztasimb"]]
+    rows = {r["member_packages"]: r for r in campaign_table_rows(campaigns, sig_len=60)}
+    assert rows["ztasimb"]["signature_type"] == rows["znomig"]["signature_type"] == "own_package"
+    assert (rows["ztasimb"]["no_text"], rows["znomig"]["no_text"], rows["real"]["no_text"]) == (1, 1, 0)
+    assert all(c["no_text"] == (c["_member_package_names"] != ["real"])
+               for c in add_reporter_covariates(campaigns))
+
+
+# research_log 5.18: URL strip. GHSA texts of set-egs-backend (v1 C090, 10
+# names) and mms-ref-dedserver (v1 C091, 3 names), verbatim from the frozen
+# snapshot: identical apart from the OpenSSF commit hash and the package name
+# inside the credit-link path.
+def _inspector_template(name, commit, mal, digest):
+    return (
+        f"## Source: amazon-inspector ({digest})\n"
+        f"The package {name} was found to contain malicious code.\n\n---\n\n"
+        "Credit: [OpenSSF](https://github.com/ossf/malicious-packages) "
+        f"([source](https://github.com/ossf/malicious-packages/blob/{commit}"
+        f"/osv/malicious/npm/{name}/{mal}.json))"
+    )
+
+
+SET_EGS_BACKEND = _inspector_template(
+    "set-egs-backend", "69aefe746e04eebf6da81a0607bae7ad381c7e4c", "MAL-2025-49237",
+    "bbceb6929d59ced3a4df01c1d61f7da54d4d0a85e467329fecd5f44e59d43f32")
+MMS_REF_DEDSERVER = _inspector_template(
+    "mms-ref-dedserver", "42f23034303701eb78d0a10c70cc3c99bc8034bb", "MAL-2025-49228",
+    "93da1778cc346bce6d2f674c1b600f0b6d8ea31cd2ee84b0f5d2f22df220ce3a")
+
+
+def test_inspector_template_is_never_a_key():
+    """The two C300 texts above are Amazon Inspector's one-liner plus the
+    credit link: they stay their own units, with or without the link."""
+    from src.data.incident_clients import is_inspector_template
+
+    bare = "## Source: amazon-inspector (" + "b" * 64 + ")\nThe package mms-tools was found to contain malicious code."
+    assert is_inspector_template(SET_EGS_BACKEND) and is_inspector_template(MMS_REF_DEDSERVER)
+    assert is_inspector_template(bare)
+    assert not is_inspector_template(SET_EGS_BACKEND.replace(
+        "malicious code.", "malicious code. It POSTs ~/.npmrc to a remote host."))
+    recs = attach_grammar_labels([
+        _rec("set-egs-backend", "ghsa", "GHSA-a", False, description=SET_EGS_BACKEND, ecosystem="npm"),
+        _rec("mms-ref-dedserver", "ghsa", "GHSA-b", False, description=MMS_REF_DEDSERVER, ecosystem="npm"),
+        _rec("mms-tools", "ghsa", "GHSA-c", False, description=bare, ecosystem="npm"),
+    ])
+    rows = campaign_table_rows(collapse_to_campaign_level(recs))
+    assert len(rows) == 3 and {r["signature_type"] for r in rows} == {"own_package"}
+    # Without the rule, the URL strip merges the two texts that differ only in their links.
+    assert sorted(len(c["_member_package_names"]) for c in
+                  collapse_to_campaign_level(recs, exclude_inspector_template=False)) == [1, 2]
+
+
+def test_url_strip_masks_links_before_the_prefix():
+    from src.statistics.h1_pilot_analysis import signature_text
+
+    def text(name, commit):
+        return (f"{name} reads ~/.aws/credentials on install and POSTs it to a webhook.\n\n"
+                f"Credit: [OpenSSF](https://github.com/ossf/malicious-packages) ([source](https://github.com/"
+                f"ossf/malicious-packages/blob/{commit}/osv/malicious/npm/{name}/MAL-1.json))")
+
+    a = signature_text({"package_name": "aws-helper-x", "description": text("aws-helper-x", "1" * 40)})
+    assert "http" not in a and a.count("<URL>") == 2 and a.startswith("<PKG> reads")
+    recs = attach_grammar_labels([
+        _rec("aws-helper-x", "ghsa", "GHSA-a", False, description=text("aws-helper-x", "1" * 40), ecosystem="npm"),
+        _rec("aws-helper-y", "ghsa", "GHSA-b", False, description=text("aws-helper-y", "2" * 40), ecosystem="npm"),
+    ])
+    assert len(collapse_to_campaign_level(recs)) == 1
+    assert len(collapse_to_campaign_level(recs, strip_urls=False)) == 2  # 5.14 rule
+
+
+def test_manual_merges_join_whole_campaigns(tmp_path):
+    import json as _json
+
+    from src.statistics.h1_pilot_analysis import apply_manual_merges, load_manual_merges
+
+    recs = attach_grammar_labels([
+        _rec("mms-a", "ghsa", "GHSA-1", False, description=SET_EGS_BACKEND, ecosystem="npm"),
+        _rec("mms-b", "ghsa", "GHSA-2", True, description=MMS_REF_DEDSERVER, ecosystem="npm"),
+        _rec("other", "ghsa", "GHSA-3", False, description="steals keys", ecosystem="npm"),
+    ])
+    path = tmp_path / "m.json"
+    path.write_text(_json.dumps({"merges": [{"id": "fam", "ecosystem": "npm", "packages": ["mms-a", "mms-b", "gone"],
+                                             "reason": "names"}]}))
+    campaigns = collapse_to_campaign_level(recs)
+    merged, report = apply_manual_merges(campaigns, load_manual_merges(path))
+    assert len(campaigns) == 3 and len(merged) == 2
+    fam = next(c for c in merged if c.get("_manual_merge") == "fam")
+    assert sorted(fam["_member_package_names"]) == ["mms-a", "mms-b"] and fam["_member_count"] == 2
+    assert fam["malware_label"]["malware_payload_present_candidate"]  # any member positive
+    assert report == [{"id": "fam", "campaigns_merged": 2, "packages_merged": 2, "missing": ["gone"]}]
+    bad = tmp_path / "bad.json"
+    bad.write_text(_json.dumps({"merges": [{"id": "x", "packages": ["a"]}]}))
+    with pytest.raises(ValueError):
+        load_manual_merges(bad)
+
+
+def test_repo_manual_merges_file_restores_url_strip_grouping():
+    """data/manual_merges.json lists exactly the 13 template packages."""
+    from src.statistics.h1_pilot_analysis import load_manual_merges
+
+    merges = load_manual_merges(Path(__file__).resolve().parents[1] / "data" / "manual_merges.json")
+    assert [len(m["packages"]) for m in merges] == [13]
+    assert "generator-epic-react" in merges[0]["packages"]

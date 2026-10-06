@@ -1,0 +1,153 @@
+{
+  "description": "Confirmed missed categories for the recall-sheet rows adjudicated PRESENT (reports/annotation_recall_v2.md), decided by T. Tanni on 2026-10-06 after the read-only prose check (research_log 5.18.1). Borderline rows stay PRESENT; the miss rate is also reported without them. Rows 34, 35, 36, 38, 39 stay ABSENT: their install-command phrase is only in the kam193 Reasons tag list.",
+  "rows": [
+    {
+      "row": 1,
+      "package": "@angulaar/core",
+      "categories": [
+        "hidden_install_hook",
+        "remote_payload_retrieval",
+        "brand_impersonation_narrative"
+      ],
+      "borderline": false
+    },
+    {
+      "row": 2,
+      "package": "@qngular/core",
+      "categories": [
+        "hidden_install_hook",
+        "brand_impersonation_narrative",
+        "remote_payload_retrieval"
+      ],
+      "borderline": false
+    },
+    {
+      "row": 3,
+      "package": "@smwebserver/static",
+      "categories": [
+        "remote_payload_retrieval"
+      ],
+      "borderline": false
+    },
+    {
+      "row": 4,
+      "package": "css-hgwctv-polyfill",
+      "categories": [
+        "brand_impersonation_narrative"
+      ],
+      "borderline": false
+    },
+    {
+      "row": 5,
+      "package": "css-mpmdds-polyfill",
+      "categories": [
+        "brand_impersonation_narrative"
+      ],
+      "borderline": false
+    },
+    {
+      "row": 7,
+      "package": "pf23727",
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "borderline": false
+    },
+    {
+      "row": 8,
+      "package": "pflag29424",
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "borderline": true,
+      "borderline_reason": "token may be a CTF flag (DGA{...}); prose never calls it a credential"
+    },
+    {
+      "row": 9,
+      "package": "ph-common",
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "borderline": false
+    },
+    {
+      "row": 11,
+      "package": "promises-dotenv3",
+      "categories": [
+        "obfuscated_payload_execution",
+        "brand_impersonation_narrative"
+      ],
+      "borderline": false
+    },
+    {
+      "row": 12,
+      "package": "risk-detection",
+      "categories": [
+        "remote_payload_retrieval"
+      ],
+      "borderline": false
+    },
+    {
+      "row": 15,
+      "package": "turbo-ws",
+      "categories": [
+        "remote_payload_retrieval",
+        "hidden_install_hook"
+      ],
+      "borderline": false
+    },
+    {
+      "row": 24,
+      "package": "cleanup-string",
+      "categories": [
+        "obfuscated_payload_execution"
+      ],
+      "borderline": true,
+      "borderline_reason": "VMProtect-packed native code; no decode-then-exec step"
+    },
+    {
+      "row": 25,
+      "package": "cli-anything-ai-market",
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "borderline": false
+    },
+    {
+      "row": 26,
+      "package": "dbt-sa-cli",
+      "categories": [
+        "hidden_install_hook",
+        "brand_impersonation_narrative"
+      ],
+      "borderline": false
+    },
+    {
+      "row": 29,
+      "package": "nvtorch-oot-nightly",
+      "categories": [
+        "hidden_install_hook",
+        "brand_impersonation_narrative"
+      ],
+      "borderline": false
+    },
+    {
+      "row": 30,
+      "package": "telegram-helper",
+      "categories": [
+        "credential_or_wallet_exfiltration",
+        "remote_backdoor_access"
+      ],
+      "borderline": false
+    },
+    {
+      "row": 40,
+      "package": "zmaker",
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "borderline": true,
+      "borderline_reason": "'user data' from Telegram Desktop, not explicitly credentials"
+    }
+  ]
+}

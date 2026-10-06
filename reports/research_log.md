@@ -822,6 +822,326 @@ Each row has excerpts and a blank decision column.
 
 Suite: **167 passed**.
 
+### 5.18 Audit decisions; no-text, Amazon Inspector template and URL-strip rules; manual merges; annotation sheets. Supersedes 5.14 (v1 94 → 105 campaigns)
+
+**Audit decisions** (filled in `reports/collapse_audit_v2.md` and `reports/collapse_audit_v1.md`; the reports were not regenerated).
+- v2 under-merge rows 1–55 (C151–C165): **keep**. The shared text is not a campaign and must never be a key; see the no-text rule.
+- v2 row 56 (C271/C273): keep. Same host (gitflic.ru), different analyses.
+- v2 row 57 (C300/C301) and v1 row 1 (C090/C091), the same 10+3 npm pair: **merge**. Same dependency-confusion family, with text identical up to the OSV link. As the template rule below shows, this decision rests on name evidence, so it is carried out by a manual merge, not by a text rule.
+- v2 over-merge rows 1–7 (kam193 `Campaign:` tags): keep. The tag is the reporter's own grouping.
+- v2 over-merge row 8 (C285): keep. The members share 453 characters before diverging.
+- v1 over-merge rows 1–4: keep.
+
+**No-text rule.** The C151–C165 texts were checked before any change. Example: `ztasimb`, GHSA-9qv9-fv8w-mxh3 and MAL-2024-6262.
+- The GHSA text has no `## Source:` header. It consists only of `---` plus the OpenSSF credit link, 213 characters in all.
+- The OSV text is only the 61-character "Per source details" separator.
+- The other 10 packages have the same form: there is no advisory text at all.
+
+What changed:
+- `incident_clients.is_no_text()` is true for text with nothing but the OpenSSF credit link, the OSV separator and `---` lines. Empty text is not no-text; it falls back to the summary, as before.
+- `build_campaign_signature()` gives such a package its own key, like the GHSA boilerplate (`signature_type` own_package).
+- Each campaign carries a `no_text` indicator (all member texts are no-text), with the reporter covariates and as a CSV column.
+- Effect on the data:
+  - v1 has no no-text records.
+  - v2 has 22 no-text records, which are the 11 PyPI packages and 11 campaigns.
+  - These packages were already separate units, because the credit links differ in their URL paths. Now they are separate by rule, and the URL strip below cannot merge them.
+
+**Amazon Inspector template rule.** The 13 packages of v1 C090 + C091 (v2 C300 + C301) are exactly the 13 packages in each corpus whose GHSA text is only Amazon Inspector's one-line verdict, "The package <PKG> was found to contain malicious code.", plus the OpenSSF credit link.
+- Under 5.14 they formed a 10-name and a 3-name group only because the links point at two OpenSSF commits (69aefe… and 42f230…).
+- The URL strip, applied first, merged them on that template.
+- No other text_prefix campaign in v1 or v2 is keyed by the template. C283 (v1 C073, 10 names) is keyed by a specific write-up ("<PKG> is a dependency-confusion package: … inflated version (100.0.0) … runs `node setup.js || true` as a preinstall script") and is unaffected.
+
+The rule as applied:
+- `incident_clients.is_inspector_template()` is true when the text, after removing `## Source:` headers, the credit link, the OSV separator and `---` lines, is only that sentence (with or without the link).
+- `build_campaign_signature(exclude_inspector_template=True)` then gives a package-keyed signature, like the GHSA boilerplate, the kam193 GENERIC tag and no-text.
+- The 13 packages are now 13 single-package campaigns in both corpora.
+
+**URL strip.**
+- `signature_text()` masks every `https?://\S+` as `<URL>`. It runs after the header strip and the name mask, and only on the text-prefix path, so after the no-text, template and boilerplate checks.
+- `build_campaign_signature(strip_urls=True)`.
+- `collapse_audit.masked_text()` now uses `signature_text()`.
+- With the template rule in place, the strip merges nothing in v1 or v2. Partitions were compared with and without it. It stays as the rule for future texts that differ only in links.
+
+**Manual merges** (`data/manual_merges.json`, `load_manual_merges()`, `apply_manual_merges()`):
+- The file lists package sets judged one campaign on name evidence, each with an id, ecosystem, packages and a reason string.
+- It holds one entry, `npm-epic-dependency-confusion`: the 13 names (`mms-*`, `*-egs-*`, `generator-epic-react`, store/player/mod tooling) with the reason recorded.
+- `apply_manual_merges()` joins whole campaigns, never splitting one, by "any member positive". It reports any listed package missing from the corpus; none are missing in v1 or v2.
+- **The main analysis runs without it.** `run_check.py` section 7 has a "with manual merges" sensitivity row.
+- C283 is not listed: its text already merges it, so an entry would change nothing.
+
+**Grouping history (v1).** 142 (5.6) → 106 (5.13) → 94 (5.14) → 93 (URL strip alone, intermediate 5.18) → **105** (5.18).
+- The template packages are each grammar-split (6 flagged, 7 not) and all DV-negative. That is why the flagged-negative cell grows from 11 to 16.
+- The superseded groupings stay reproducible:
+  - `exclude_inspector_template=False` gives 93;
+  - adding `strip_urls=False` gives 94;
+  - all switches off gives 106.
+
+**Why 5.14 no longer reproduces.** The template rule splits v1 C090/C091 (10 + 3) into 13 singletons.
+
+| v1 (401 records) | 5.14, superseded | URL strip only, superseded | **5.18 main** | 5.18 with manual merges |
+|---|---|---|---|---|
+| Campaigns (npm / PyPI) | 94 (22 / 72) | 93 (21 / 72) | **105 (33 / 72)** | 93 (21 / 72) |
+| Grammar-flagged / DV-positive | 25 / 51 | 24 / 51 | 29 / 51 | 24 / 51 |
+| Signature types (tag / own / prefix) | 42 / 30 / 22 | 42 / 30 / 21 | 42 / 43 / 20 | — |
+| Pooled table | [[13,12],[38,31]] | [[13,11],[38,31]] | **[[13,16],[38,38]]** | [[13,11],[38,31]] |
+| Pooled Fisher OR | 0.884 [0.353, 2.211], p 0.818 | 0.964 [0.379, 2.450], p 1.000 | **0.812 [0.344, 1.918], p 0.668** | 0.964 [0.379, 2.450], p 1.000 |
+| npm Fisher | 2.200, p 0.624 | 3.300, p 0.325 | 1.543 [0.289, 8.250], p 0.673 | 3.300, p 0.325 |
+| PyPI Fisher | 0.673, p 0.587 | same | same | same |
+| CMH by ecosystem | 0.890 [0.355, 2.232], p 0.802 | 0.945 [0.374, 2.387], p 0.904 | **0.851 [0.347, 2.085], p 0.723** | 0.945, p 0.904 |
+| CMH by ecosystem × reporter count | 1.067, p 0.891 | 1.102, p 0.835 | 1.102, p 0.837 | — |
+| Logit (d), grammar | 0.912 [0.331, 2.515], p 0.858 | 0.981 [0.352, 2.737], p 0.971 | **0.926 [0.339, 2.531], p 0.880** | 0.981, p 0.971 |
+| Logit (d), Amazon Inspector | 3.388 [0.701, 16.372] | 3.998 [0.797, 20.053] | 1.455 [0.335, 6.323] | 3.998 |
+| Logit (d), n_reporters | 1.862 [0.528, 6.568], p 0.334 | 1.629, p 0.458 | 3.859 [1.168, 12.751], p 0.027 | 1.629 |
+| Reporter term alone: n_reporters (a) / Amazon Inspector (b) | 3.898 / 5.857 | 3.816 / 6.196 | 4.742 / 4.314 | — |
+| Power at OR 2.0 / n for 80% | 0.31 / 339 | 0.31 / 345 | **0.355** / 327 | — |
+| GHSA-text-only Fisher | 2.851 [1.107, 7.341], p 0.047 | 3.110, p 0.025 | 2.438 [0.994, 5.979], p 0.060 | — |
+| GHSA-text-only CMH | 2.907, p 0.023 | 2.951, p 0.019 | 2.869 [1.085, 7.583], p 0.027 | — |
+
+In v1 the mechanism rate with Amazon Inspector coverage is now 46/82, against 5/23 without. In the full model (d), coverage and reporter count split the effect differently than under 5.14, but each is still strong when entered alone.
+
+| v2 (994 records) | 5.17, superseded | URL strip only, superseded | **5.18 main** | 5.18 without no-text | 5.18 with manual merges |
+|---|---|---|---|---|---|
+| Campaigns (npm / PyPI) | 306 (141 / 165) | 305 (140 / 165) | **317 (152 / 165)** | 306 (−11 campaigns, −11 packages) | 305 |
+| Grammar-flagged / DV-positive | 81 / 169 | 80 / 169 | 85 / 169 | — | 80 / 169 |
+| Signature types (tag / own / prefix) | 91 / 79 / 136 | 91 / 90 / 124 | 91 / 103 / 123 | — | — |
+| Pooled table | [[46,35],[123,102]] | [[46,34],[123,102]] | **[[46,39],[123,109]]** | [[46,38],[123,99]] | [[46,34],[123,102]] |
+| Pooled Fisher OR | 1.090 [0.653, 1.819], p 0.795 | 1.122 [0.670, 1.878], p 0.696 | **1.045 [0.635, 1.721], p 0.899** | 0.974 [0.588, 1.614], p 1.000 | 1.122 [0.670, 1.878], p 0.696 |
+| npm / PyPI Fisher | 1.379, p 0.441 / 0.915, p 0.862 | 1.494, p 0.428 / same | 1.215, p 0.712 / same | — | — |
+| CMH by ecosystem | 1.096, p 0.728 | 1.130, p 0.643 | **1.046 [0.635, 1.722], p 0.860** | 0.972 [0.587, 1.608], p 0.911 | 1.130 [0.674, 1.895], p 0.643 |
+| CMH by ecosystem × reporter count | 0.871, p 0.621 | 0.899, p 0.705 | 0.849, p 0.544 | — | — |
+| Logit (d), grammar | 0.757 [0.424, 1.354], p 0.348 | 0.788, p 0.425 | **0.741 [0.424, 1.294], p 0.292** | 0.733 [0.420, 1.280], p 0.275 | 0.788 [0.439, 1.415], p 0.425 |
+| Logit (d), Amazon Inspector | 27.75 | 28.06 | 23.09 [8.53, 62.55] | 19.19 | 28.06 |
+| Power at OR 2.0 / n for 80% | 0.76 / 339 | 0.755 / 341 | **0.779** / 335 | — | — |
+
+**Non-default text and grouping settings** (`results/power_campaign_level__text-*.json` and the eight `results/campaigns__text-*.csv`, which are kept) were rerun under the 5.18 grouping:
+- The GHSA-only rows are in the v1 table.
+- The pooled GHSA-only OR no longer reaches p < 0.05 (p 0.060); the CMH does (p 0.027).
+- The papers still cite the 5.14 numbers.
+
+**Papers.** "Five pages" is corrected to one page of 100 advisories per ecosystem, as found in 5.17:
+- `paper/main.tex` §III-A;
+- `paper_dib/dib_main.tex` Specifications Table, §4.1 and Limitations.
+
+The main paper's body still ends on page 4. All other paper numbers, and the DIB figures, still use the 5.14 grouping (94 campaigns), and those are now superseded.
+
+**Annotation sheets** (`src/evaluation/annotation_sheets.py`, `results/annotation_sample_v2.json`). Built from the v2 5.18 main campaigns, in the format of `reports/labeler_spot_check.md`, with its rule text. Strata are ecosystem × Amazon Inspector coverage, with proportional largest-remainder allocation and `random.Random(20261006)` per sheet.
+- **(a) Precision**, `reports/annotation_precision_v2.md`: 60 of the 130 DV-positive campaigns that contain none of the 51 v1 packages. The draw per stratum is npm-covered 34/74, PyPI-covered 23/50, PyPI-not-covered 3/6, with 216 matches. The verdicts are REAL / FALSE / UNSURE.
+- **(b) Recall**, `reports/annotation_recall_v2.md`: 40 of the 137 DV-negative campaigns that are not no-text. The draw per stratum is npm-covered 15/51, npm-not-covered 6/19, PyPI-covered 9/32, PyPI-not-covered 10/35.
+  - The sheet shows the full text of every record.
+  - The verdicts are PRESENT / ABSENT / UNSURE, with the same tag-list rule.
+- **(c)** Blank `*_annotator2.md` copies of both.
+- The sheets were redrawn after the template rule. Precision is unchanged. In recall, the npm-covered frame grew from 39 to 51, so 17 of the 40 rows carried over. No sheet had been annotated.
+
+**Agreement** (`src/evaluation/agreement.py`, which writes `results/agreement_v2.json`):
+- Cohen's κ per sheet, plus percentage agreement and a disagreement list with both notes.
+- Precision per annotator: UNSURE excluded, and UNSURE counted as FALSE.
+- Miss rate on the recall sheet.
+- A recall estimate, `N_pos·precision / (N_pos·precision + N_neg·miss rate)`; no-text campaigns add no misses.
+- All proportions have Wilson 95% CIs. The recall interval is built from the Wilson bounds and is conservative.
+- The parser ignores fenced advisory text, and reproduces 44 / 3 / 4 on the v1 sheet.
+
+**Tests.**
+- No-text: `test_is_no_text_on_ztasimb_texts` and `test_no_text_packages_stay_own_units_and_carry_indicator`. The second fails with the rule disabled.
+- Template: `test_inspector_template_is_never_a_key`, built from the set-egs-backend and mms-ref-dedserver texts of C300.
+- `test_url_strip_masks_links_before_the_prefix`.
+- `test_manual_merges_join_whole_campaigns` and `test_repo_manual_merges_file_restores_url_strip_grouping`.
+- The v1 snapshot tests are pinned to 105 / [[13,16],[38,38]], and still check 93 and 94 under the switches.
+- `tests/test_agreement.py` (7 tests).
+
+Suite: **180 passed**.
+
+#### 5.18.1 Labeler agreement and accuracy on the v2 annotation sheets
+
+**Inputs.**
+- Annotator 1 (T. Tanni): `reports/annotation_precision_v2.md`, `reports/annotation_recall_v2.md`. These sheets also carry the adjudication.
+- Annotator 2 (N. Khan): the `_annotator2.md` copies.
+- Computed by `python -m src.evaluation.agreement`, which writes `results/labeler_agreement_v2.json`. No sheet, regex or labeler was changed.
+
+**Extension to `agreement.py`.**
+- It now reads `Adjudicated:` and `Adjudication note:` lines.
+- `labeler_report()` reports:
+  - κ on the first-pass `Verdict:` lines;
+  - precision and miss rate on the adjudicated lines;
+  - precision per category and miss counts per stratum;
+  - disagreements with the adjudicated verdict;
+  - the spans of the FALSE rows, with the 5.15 tag-list check (labeler rerun on the frozen v2 snapshot);
+  - the categories named in the notes of the PRESENT rows;
+  - ABSENT rows whose adjudication note gives host-fingerprint sending.
+
+| | Precision sheet (60 rows) | Recall sheet (40 rows) |
+|---|---|---|
+| First-pass κ (UNSURE as a third category; no blank rows) | **0.783** | **0.658** |
+| Raw first-pass agreement | 58/60 = 96.7% | 33/40 = 82.5% |
+| First-pass counts, annotator 1 / 2 | REAL 56, FALSE 4 / REAL 54, FALSE 6 | PRESENT 13, ABSENT 26, UNSURE 1 / PRESENT 18, ABSENT 21, UNSURE 1 |
+| Adjudicated | REAL 55, FALSE 5 | PRESENT 17, ABSENT 23 |
+| Labeler metric (Wilson 95%) | precision **55/60 = 0.917 [0.819, 0.964]** | miss rate PRESENT/all **17/40 = 0.425 [0.285, 0.578]** |
+
+**Row 37 (`boto4`).** It had no `Adjudicated:` line in the first run. It now carries "Adjudicated: REAL", added by annotator 1. On the rerun precision is unchanged at 55/60, and there are no resolution flags.
+
+**Precision per category.** A row's verdict is attributed to every category matched on it.
+- 1.00 for brand_impersonation (22/22), credential_or_wallet_exfiltration (23/23), hidden_install_hook (13/13), remote_backdoor_access (8/8) and obfuscated_payload_execution (4/4).
+- **remote_payload_retrieval 4/9 = 0.444 [0.189, 0.733]**, and 0/5 on rows where it is the only category.
+
+**FALSE rows.** All five are remote_payload_retrieval matches, and every match lies in a "Reasons (based on the campaign):" tag list:
+- rows 39 `cfgzen`, 54 `rc4-secure`, 56 `syswatch`, 59 `pytablute`, 60 `requests-cache-utils`;
+- the matched spans are "Downloads and executes a remote" and "Downloads and executes a remote executable", in both the GHSA and the OSV record.
+
+This is the same tag-line failure as in v1 (5.15). It comes from one kam193 tag phrase.
+
+**Miss counts per stratum** (PRESENT / drawn, with the frame size):
+- npm Amazon-covered: 11/15 (frame 51).
+- npm not covered: 0/6 (frame 19).
+- PyPI Amazon-covered: 5/9 (frame 32).
+- PyPI not covered: 1/10 (frame 35).
+
+**Disagreements (9).** Each lists annotator 1 / annotator 2 → adjudicated.
+- Precision 52 `psbt-helpers`: REAL / FALSE → REAL.
+- Precision 60 `requests-cache-utils`: REAL / FALSE → FALSE.
+- Recall 23 `azure-langchain-example`: ABSENT / PRESENT → ABSENT.
+- Recall 24 `cleanup-string`: PRESENT / UNSURE → PRESENT.
+- Recall 25 `cli-anything-ai-market`: ABSENT / PRESENT → PRESENT.
+- Recall 26 `dbt-sa-cli`: ABSENT / PRESENT → PRESENT.
+- Recall 28 `mcp-search-server`: ABSENT / PRESENT → ABSENT.
+- Recall 29 `nvtorch-oot-nightly`: ABSENT / PRESENT → PRESENT.
+- Recall 40 `zmaker`: UNSURE / PRESENT → PRESENT.
+
+**Missed categories (recall PRESENT rows), confirmed** (`data/recall_categories_v2.json`, decided after a read-only check of the prose with the tag-list rule):
+- 1 `@angulaar/core` and 2 `@qngular/core`: hidden_install_hook + remote_payload_retrieval + brand_impersonation_narrative.
+- 3 `@smwebserver/static` and 12 `risk-detection`: remote_payload_retrieval.
+- 4 `css-hgwctv-polyfill` and 5 `css-mpmdds-polyfill`: brand_impersonation_narrative. Their host-recon payload fits no category, but the prose narrates mimicry of internal Wix thunderbolt modules. *(Corrects the first version of this section, which said no category fits rows 4 and 5.)*
+- 7 `pf23727`: credential_or_wallet_exfiltration.
+- 8 `pflag29424`: credential_or_wallet_exfiltration (**borderline**).
+- 9 `ph-common` and 25 `cli-anything-ai-market`: hidden_install_hook.
+- 11 `promises-dotenv3`: obfuscated_payload_execution + brand_impersonation_narrative.
+- 15 `turbo-ws`: remote_payload_retrieval + hidden_install_hook.
+- 24 `cleanup-string`: obfuscated_payload_execution (**borderline**).
+- 26 `dbt-sa-cli` and 29 `nvtorch-oot-nightly`: hidden_install_hook + brand_impersonation_narrative.
+- 30 `telegram-helper`: credential_or_wallet_exfiltration + remote_backdoor_access.
+- 40 `zmaker`: credential_or_wallet_exfiltration (**borderline**).
+
+The three borderline rows stay PRESENT. In each, the prose supports PRESENT only loosely:
+- row 8: the token may be a CTF flag;
+- row 24: packed native code, with no decode-then-execute step;
+- row 40: "user data", not explicitly credentials.
+
+| Missed category (rows; a row counts once per category) | All 17 PRESENT rows | Excluding borderline (14) |
+|---|---|---|
+| hidden_install_hook | 7 | 7 |
+| brand_impersonation_narrative | 7 | 7 |
+| remote_payload_retrieval | 5 | 5 |
+| credential_or_wallet_exfiltration | 4 | 2 |
+| obfuscated_payload_execution | 2 | 1 |
+| remote_backdoor_access | 1 | 1 |
+
+Of the 17 rows, 10 have one missed category, 5 have two and 2 have three.
+
+**Miss rate (Wilson 95%).**
+- Main: **17/40 = 0.425 [0.285, 0.578]**.
+- Excluding borderline rows: **14/40 = 0.350 [0.221, 0.505]**.
+
+**Host-fingerprint exfiltration — no category.** **2** rows are adjudicated ABSENT for host-fingerprint sending only: 23 `azure-langchain-example` and 28 `mcp-search-server`.
+
+Rows 34 `dlmm`, 35 `flyteplugins-agento11y`, 36 `flyteplugins-echo`, 38 `rce-test` and 39 `walmart-genai-trace` **stay ABSENT** (decision of 2026-10-06). Their install-command phrase ("overrides the install command in setup.py") appears only in the kam193 Reasons tag list, and tag-list text does not count. They differ from rows 25, 26 and 29, whose install-time execution is in Amazon Inspector prose.
+
+**Adjudication change.** Recall rows 25 `cli-anything-ai-market`, 26 `dbt-sa-cli` and 29 `nvtorch-oot-nightly` were changed from ABSENT to PRESENT (hidden_install_hook) at adjudication, for consistency with the precision sheet (`my-private-pkg`, `speed-hashes`: setup.py running code on pip install). Host-information sending alone is still not counted as credential exfiltration.
+
+**Tests.** New tests in `tests/test_agreement.py`:
+- adjudicated parsing and resolution;
+- the tag-list check;
+- the CLI on the v2 sheets;
+- confirmed-category counts and validation (5.19).
+
+Suite after 5.19: **187 passed**.
+
+### 5.19 Full v2 analysis, v1-vs-v2 comparison, misclassification-corrected OR
+
+**Setup.**
+- Grouping: 5.18 main, with no-text, Amazon Inspector template and URL-strip rules, and no manual merges.
+- Commands: `run_check.py` for v1 and v2, each in the main any/any setting and with `--text-source ghsa`.
+- `src/evaluation/corpus_report.py` assembles everything into `results/analysis_v2.json`. It reads the run_check outputs and computes nothing new except the misclassification correction.
+- Figures from v2: `python -m src.visualization.paper_figures --snapshot v2` writes `results/figures/v2/`, which holds units, dv_by_reporter, grammar, forest, power, timeline, mechanisms and reporters. The paper figure folders are unchanged, because both papers still report v1 (5.14).
+- No regex, labeler, sheet or frozen file was changed.
+
+**Table I equivalent (grammar flag rate by set).**
+
+| Set | Flagged / n | Rate [Wilson 95%] |
+|---|---|---|
+| LLM-hallucinated names | 7 / 139 | 0.050 [0.025, 0.100] |
+| Benign top-5,000 PyPI | 821 / 5,000 | 0.164 [0.154, 0.175] |
+| Benign top-5,000 npm | 1,031 / 5,000 | 0.206 [0.195, 0.218] |
+| Malware campaigns v1 | 29 / 105 | 0.276 [0.200, 0.368] |
+| Malware campaigns v2 | 85 / 317 | 0.268 [0.222, 0.319] |
+
+**Table II equivalent and v1-vs-v2 comparison** (campaign level; logit models as defined in 5.10):
+
+| Specification | v1 n | v1 OR [95% CI], p | v2 n | v2 OR [95% CI], p |
+|---|---|---|---|---|
+| Pooled, Fisher | 105 | 0.812 [0.344, 1.918], p 0.668 | 317 | 1.045 [0.635, 1.721], p 0.899 |
+| npm, Fisher | 33 | 1.543 [0.289, 8.250], p 0.673 | 152 | 1.215 [0.587, 2.518], p 0.712 |
+| PyPI, Fisher | 72 | 0.673 [0.234, 1.940], p 0.587 | 165 | 0.915 [0.461, 1.816], p 0.862 |
+| CMH by ecosystem | 105 | 0.851 [0.347, 2.085], p 0.723 | 317 | 1.046 [0.635, 1.722], p 0.860 |
+| CMH by ecosystem × reporter count | 105 | 1.102 [0.418, 2.902], p 0.837 | 317 | 0.849 [0.498, 1.445], p 0.544 |
+| Logit (d), grammar | 105 | 0.926 [0.339, 2.531], p 0.880 | 317 | 0.741 [0.424, 1.294], p 0.292 |
+| Logit (a), grammar | 105 | 0.950 [0.348, 2.593], p 0.920 | 317 | 0.956 [0.568, 1.609], p 0.866 |
+| Logit (b), grammar | 105 | 0.807 [0.314, 2.072], p 0.656 | 317 | 0.741 [0.424, 1.294], p 0.292 |
+| Logit (c), grammar | 105 | 0.967 [0.334, 2.793], p 0.950 | 317 | 0.689 [0.394, 1.206], p 0.192 |
+| GHSA text only, Fisher | 105 | 2.438 [0.994, 5.979], p 0.060 | 317 | 1.541 [0.934, 2.542], p 0.096 |
+| GHSA text only, CMH | 105 | 2.869 [1.085, 7.583], p 0.027 | 317 | 1.557 [0.941, 2.578], p 0.085 |
+
+| Reporter terms (v2) | OR [95% CI], p |
+|---|---|
+| (d) n_reporters | 0.987 [0.500, 1.947], p 0.969 |
+| (d) has_amazon_inspector | 23.092 [8.525, 62.551], p < 0.001 |
+| (a) n_reporters | 4.047 [2.336, 7.011], p < 0.001 |
+| (b) has_amazon_inspector | 22.863 [9.688, 53.956], p < 0.001 |
+| (c) n_reporters | 12.158 [5.328, 27.746], p < 0.001 |
+| (c) has_boilerplate | 0.044 [0.014, 0.139], p < 0.001 |
+| (c) has_kam193 | 0.379 [0.125, 1.150], p 0.087 |
+
+In v2 the Amazon Inspector term is significant in both models that include it; reporter count alone is also significant. The two terms compete in (d).
+
+**Power at the achieved n** (Hsieh et al.):
+
+- v1: n 105, baseline DV rate 0.500, flagged 0.276; power at OR 1.5 / 2.0 / 3.0 = 0.15 / 0.35 / 0.71; n for 80% at OR 2.0 = 327.
+- v2: n 317, baseline DV rate 0.530, flagged 0.268; power at OR 1.5 / 2.0 / 3.0 = 0.36 / 0.78 / 0.99; n for 80% at OR 2.0 = 335.
+
+**Campaign-size distribution.**
+
+- v1: 105 campaigns (33 npm, 72 PyPI) from 200 packages; singletons 87; size counts {'1': 87, '2': 8, '3': 4, '4': 1, '5': 1, '6': 1, '10': 1, '15': 1, '45': 1}; largest [45, 15, 10, 6, 5, 4].
+- v2: 317 campaigns (152 npm, 165 PyPI) from 498 packages; singletons 277; size counts {'1': 277, '2': 19, '3': 6, '4': 5, '5': 2, '6': 3, '7': 1, '10': 1, '11': 1, '15': 1, '74': 1}; largest [74, 15, 11, 10, 7, 6].
+
+
+**Outcome-misclassification correction** (`src/statistics/misclassification.py`, tests in `tests/test_misclassification.py`).
+
+The method is predictive-value back-calculation of the 2×2 table (Lash, Fox & Fink, *Applying Quantitative Bias Analysis to Epidemiologic Data*, 2nd ed., 2021, ch. 6). It is the simple bias analysis that matches this validation design, which measured predictive values, not sensitivity and specificity:
+- In each grammar row, true positives = labeler positives × precision + eligible labeler negatives × miss rate.
+- The 11 no-text campaigns (1 flagged, 10 unflagged) were outside the recall frame and have no text, so their miss rate is 0.
+- The method assumes equal predictive values for flagged and unflagged campaigns. The validation samples are consistent with that, though small:
+  - precision: flagged 19/20 = 0.95, unflagged 36/40 = 0.90;
+  - miss rate: flagged 5/13 = 0.38, unflagged 12/27 = 0.44.
+- A probabilistic version gives an interval. It draws precision and miss rate from Jeffreys Beta(k+½, n−k+½) posteriors and adds random error on the corrected log OR (Woolf SE), with 20,000 draws and seed 20261006.
+
+| v2 pooled grammar OR | Table | OR | 95% interval |
+|---|---|---|---|
+| Observed | [[46,39],[123,109]] | 1.045 | [0.635, 1.721] (Fisher) |
+| Corrected, precision 55/60, miss rate 17/40 | [[58.3,26.7],[154.8,77.2]] | **1.089** | [0.639, 1.857] Woolf on the corrected table; probabilistic median 1.087 [0.637, 1.869] |
+| Corrected, precision 55/60, miss rate 14/40 (borderline rows excluded) | [[55.5,29.5],[147.4,84.6]] | **1.078** | [0.641, 1.814] Woolf; probabilistic median 1.078 [0.640, 1.826] |
+
+Correcting for the measured labeler error moves the OR by less than 0.05 and leaves it null. Because the labeler's errors are similar for flagged and unflagged campaigns, they dilute any effect only slightly and cannot hide a large one.
+
+**Reading.**
+- v2 has three times v1's n: 317 campaigns, 152 npm and 165 PyPI.
+- The grammar flag shows no association in any specification (pooled OR 1.045, p 0.899; adjusted (d) 0.741, p 0.292).
+- At n = 317 the design has 0.78 power at OR 2.0, so an effect of OR 2 is now unlikely though not excluded. OR 3 is excluded (power 0.99).
+- The v1 GHSA-only signal does not replicate in v2 (Fisher 1.541, p 0.096; CMH 1.557, p 0.085).
+- Reporter coverage remains the dominant predictor of the label.
+
+**Tests.** New tests:
+- `tests/test_misclassification.py` (4);
+- `test_confirmed_categories_counts_and_validation`.
+
+Suite: **187 passed**.
+
 ---
 
 ## 6. Novelty / Literature Positioning

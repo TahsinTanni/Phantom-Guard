@@ -1,0 +1,210 @@
+{
+  "agreement": {
+    "precision_sheet": {
+      "n_rows": 60,
+      "n_both_filled": 60,
+      "percent_agreement": 0.9666666666666667,
+      "cohen_kappa": 0.782608695652174,
+      "disagreements": [
+        {
+          "row": 52,
+          "package": "psbt-helpers",
+          "annotator1": "REAL",
+          "annotator2": "FALSE",
+          "note1": "The prose describes cloud-token and other sensitive-data exfiltration, persistence, and downloading a remote malicious script",
+          "note2": "mostly Reasons-tag hits; persistence line is borderline but the rest are pure tags"
+        },
+        {
+          "row": 60,
+          "package": "requests-cache-utils",
+          "annotator1": "REAL",
+          "annotator2": "FALSE",
+          "note1": "The matched phrase occurs in the campaign Reasons list; the surrounding text shown does not independently describe the remote executable download.",
+          "note2": "Reasons tags only"
+        }
+      ]
+    },
+    "recall_sheet": {
+      "n_rows": 40,
+      "n_both_filled": 40,
+      "percent_agreement": 0.825,
+      "cohen_kappa": 0.658119658119658,
+      "disagreements": [
+        {
+          "row": 23,
+          "package": "azure-langchain-example",
+          "annotator1": "ABSENT",
+          "annotator2": "PRESENT",
+          "note1": "The prose describes exfiltration of basic host information such as IP or username, not credentials, wallet data, or another listed mechanism.",
+          "note2": "import fires a GET with hostname/IP to litellm.adversarylabx.com"
+        },
+        {
+          "row": 24,
+          "package": "cleanup-string",
+          "annotator1": "PRESENT",
+          "annotator2": "UNSURE",
+          "note1": "The imported native module is protected with VMProtect/high-entropy obfuscation and executes its payload on import.",
+          "note2": "1.3MB VMProtect pyd, no clear payload story in the text \u2014 could be obfuscated but fuzzy"
+        },
+        {
+          "row": 25,
+          "package": "cli-anything-ai-market",
+          "annotator1": "ABSENT",
+          "annotator2": "PRESENT",
+          "note1": "The text reports malicious code but does not describe a specific behavior matching any of the six mechanisms.",
+          "note2": "setup.py posts OS/user/hostname to a bare IP on install"
+        },
+        {
+          "row": 26,
+          "package": "dbt-sa-cli",
+          "annotator1": "ABSENT",
+          "annotator2": "PRESENT",
+          "note1": "The description reports malicious code but gives no concrete mechanism beyond the general finding.",
+          "note2": "rce_poc() at top level of setup.py, DNS + HTTPS to oast.fun"
+        },
+        {
+          "row": 28,
+          "package": "mcp-search-server",
+          "annotator1": "ABSENT",
+          "annotator2": "PRESENT",
+          "note1": "The package silently phones home, but the text does not describe one of the six listed mechanisms.",
+          "note2": "silent swarm beacon on import to bare IP + search queries go there too"
+        },
+        {
+          "row": 29,
+          "package": "nvtorch-oot-nightly",
+          "annotator1": "ABSENT",
+          "annotator2": "PRESENT",
+          "note1": "The installation request leaks source IP and network metadata; it does not involve credentials, wallets, or the other listed mechanisms.",
+          "note2": "setup.py hits bare-IP callback on install, dependency-confusion shape"
+        },
+        {
+          "row": 40,
+          "package": "zmaker",
+          "annotator1": "UNSURE",
+          "annotator2": "PRESENT",
+          "note1": "The prose describes Telegram Desktop data being archived and exfiltrated, but it does not specify credentials, tokens, or wallet data, so the category is uncertain.",
+          "note2": "multi-package campaign that archives Telegram Desktop folders and ships them out"
+        }
+      ]
+    }
+  },
+  "by_annotator": {
+    "annotator1": {
+      "precision": {
+        "counts": {
+          "REAL": 56,
+          "FALSE": 4
+        },
+        "n_filled": 60,
+        "n_rows": 60,
+        "excluding_unsure": {
+          "k": 56,
+          "n": 60,
+          "p": 0.9333333333333333,
+          "wilson95": [
+            0.8407464268680283,
+            0.9737713012754938
+          ]
+        },
+        "unsure_as_false": {
+          "k": 56,
+          "n": 60,
+          "p": 0.9333333333333333,
+          "wilson95": [
+            0.8407464268680283,
+            0.9737713012754938
+          ]
+        }
+      },
+      "miss_rate": {
+        "counts": {
+          "PRESENT": 13,
+          "ABSENT": 26,
+          "UNSURE": 1
+        },
+        "n_filled": 40,
+        "n_rows": 40,
+        "excluding_unsure": {
+          "k": 13,
+          "n": 39,
+          "p": 0.3333333333333333,
+          "wilson95": [
+            0.20632956189598373,
+            0.4902260560065401
+          ]
+        }
+      },
+      "recall": {
+        "recall": 0.7754834480498198,
+        "interval": [
+          0.6790351474534724,
+          0.8534123821458489
+        ],
+        "est_true_positives": 157.73333333333335,
+        "est_false_negatives": 45.666666666666664,
+        "n_pos": 169,
+        "n_neg": 137,
+        "interval_method": "Wilson bounds of precision and miss rate combined (conservative)"
+      }
+    },
+    "annotator2": {
+      "precision": {
+        "counts": {
+          "REAL": 54,
+          "FALSE": 6
+        },
+        "n_filled": 60,
+        "n_rows": 60,
+        "excluding_unsure": {
+          "k": 54,
+          "n": 60,
+          "p": 0.9,
+          "wilson95": [
+            0.7985053527602123,
+            0.9533571655261158
+          ]
+        },
+        "unsure_as_false": {
+          "k": 54,
+          "n": 60,
+          "p": 0.9,
+          "wilson95": [
+            0.7985053527602123,
+            0.9533571655261158
+          ]
+        }
+      },
+      "miss_rate": {
+        "counts": {
+          "PRESENT": 18,
+          "ABSENT": 21,
+          "UNSURE": 1
+        },
+        "n_filled": 40,
+        "n_rows": 40,
+        "excluding_unsure": {
+          "k": 18,
+          "n": 39,
+          "p": 0.46153846153846156,
+          "wilson95": [
+            0.31566885606727846,
+            0.6143055172948425
+          ]
+        }
+      },
+      "recall": {
+        "recall": 0.7063551602186261,
+        "interval": [
+          0.6158965445381894,
+          0.7883842824718552
+        ],
+        "est_true_positives": 152.1,
+        "est_false_negatives": 63.23076923076923,
+        "n_pos": 169,
+        "n_neg": 137,
+        "interval_method": "Wilson bounds of precision and miss rate combined (conservative)"
+      }
+    }
+  }
+}

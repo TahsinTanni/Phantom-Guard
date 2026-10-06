@@ -13,7 +13,7 @@ so they match results/campaigns.csv for the same snapshot.
 
 Candidates:
 - under-merge: two campaigns of one ecosystem whose masked text prefixes
-  (headers stripped, own name masked, as in build_campaign_signature) agree
+  (signature_text: headers stripped, own name and URLs masked) agree
   on the first UNDER_SHORT characters but not on the first UNDER_LONG;
 - over-merge: a campaign with 2+ members in which some pair of members'
   texts has token Jaccard below OVER_JACCARD (the worst pair is shown).
@@ -32,13 +32,12 @@ from pathlib import Path
 
 from src.labeling.malware_labeler import label_batch
 from src.statistics.h1_pilot_analysis import (
-    SOURCE_HEADER_LINE,
     _name_level_record,
     attach_grammar_labels,
     build_campaign_signature,
     campaign_table_rows,
     collapse_to_campaign_level,
-    mask_name,
+    signature_text,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -54,10 +53,9 @@ _TOKEN = re.compile(r"\w+")
 
 
 def masked_text(record: dict) -> str:
-    """The text build_campaign_signature() slices for a text-prefix key."""
-    text = (record.get("description") or record.get("summary") or "").strip()
-    text = SOURCE_HEADER_LINE.sub("", text).strip()
-    return mask_name(text, record["package_name"])
+    """The text build_campaign_signature() slices for a text-prefix key
+    (signature_text: headers stripped, name masked, URLs masked)."""
+    return signature_text(record)
 
 
 def tokens(text: str) -> set[str]:

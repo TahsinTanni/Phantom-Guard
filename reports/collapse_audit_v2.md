@@ -43,63 +43,63 @@ Excerpts start at the first differing character. *Diverge at* is that character'
 
 | # | Campaign A | Campaign B | Ecosystem | Signatures | Sizes | Diverge at | Excerpt A | Excerpt B | Decision |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | C151 | C152 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | lsrc/MAL-2025-6626.json)) | |
-| 2 | C151 | C153 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | proxy/MAL-2024-6260.json)) | |
-| 3 | C151 | C156 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | ydnitro/MAL-2024-6263.json)) | |
-| 4 | C151 | C158 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | orosnitro/MAL-2024-6259.json)) | |
-| 5 | C151 | C159 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | yqnuutupjerllnbxaeq/MAL-2024-6264.json)) | |
-| 6 | C151 | C160 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | nomig/MAL-2024-6258.json)) | |
-| 7 | C151 | C161 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | proxy2/MAL-2024-6261.json)) | |
-| 8 | C151 | C163 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | lib1g-dev/MAL-2025-41804.json)) | |
-| 9 | C151 | C164 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | elixnitro/MAL-2024-6255.json)) | |
-| 10 | C151 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | hpt1cscoe/MAL-2024-6257.json)) | |
-| 11 | C152 | C153 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lsrc/MAL-2025-6626.json)) | proxy/MAL-2024-6260.json)) | |
-| 12 | C152 | C156 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lsrc/MAL-2025-6626.json)) | ydnitro/MAL-2024-6263.json)) | |
-| 13 | C152 | C158 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lsrc/MAL-2025-6626.json)) | orosnitro/MAL-2024-6259.json)) | |
-| 14 | C152 | C159 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lsrc/MAL-2025-6626.json)) | yqnuutupjerllnbxaeq/MAL-2024-6264.json)) | |
-| 15 | C152 | C160 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lsrc/MAL-2025-6626.json)) | nomig/MAL-2024-6258.json)) | |
-| 16 | C152 | C161 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lsrc/MAL-2025-6626.json)) | proxy2/MAL-2024-6261.json)) | |
-| 17 | C152 | C163 | pypi | text_prefix / text_prefix | 1 / 1 | 187 | src/MAL-2025-6626.json)) | ib1g-dev/MAL-2025-41804.json)) | |
-| 18 | C152 | C164 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lsrc/MAL-2025-6626.json)) | elixnitro/MAL-2024-6255.json)) | |
-| 19 | C152 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lsrc/MAL-2025-6626.json)) | hpt1cscoe/MAL-2024-6257.json)) | |
-| 20 | C153 | C156 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy/MAL-2024-6260.json)) | ydnitro/MAL-2024-6263.json)) | |
-| 21 | C153 | C158 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy/MAL-2024-6260.json)) | orosnitro/MAL-2024-6259.json)) | |
-| 22 | C153 | C159 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy/MAL-2024-6260.json)) | yqnuutupjerllnbxaeq/MAL-2024-6264.json)) | |
-| 23 | C153 | C160 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy/MAL-2024-6260.json)) | nomig/MAL-2024-6258.json)) | |
-| 24 | C153 | C161 | pypi | text_prefix / text_prefix | 1 / 1 | 191 | /MAL-2024-6260.json)) | 2/MAL-2024-6261.json)) | |
-| 25 | C153 | C163 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy/MAL-2024-6260.json)) | lib1g-dev/MAL-2025-41804.json)) | |
-| 26 | C153 | C164 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy/MAL-2024-6260.json)) | elixnitro/MAL-2024-6255.json)) | |
-| 27 | C153 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy/MAL-2024-6260.json)) | hpt1cscoe/MAL-2024-6257.json)) | |
-| 28 | C156 | C158 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | ydnitro/MAL-2024-6263.json)) | orosnitro/MAL-2024-6259.json)) | |
-| 29 | C156 | C159 | pypi | text_prefix / text_prefix | 1 / 1 | 187 | dnitro/MAL-2024-6263.json)) | qnuutupjerllnbxaeq/MAL-2024-6264.json)) | |
-| 30 | C156 | C160 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | ydnitro/MAL-2024-6263.json)) | nomig/MAL-2024-6258.json)) | |
-| 31 | C156 | C161 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | ydnitro/MAL-2024-6263.json)) | proxy2/MAL-2024-6261.json)) | |
-| 32 | C156 | C163 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | ydnitro/MAL-2024-6263.json)) | lib1g-dev/MAL-2025-41804.json)) | |
-| 33 | C156 | C164 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | ydnitro/MAL-2024-6263.json)) | elixnitro/MAL-2024-6255.json)) | |
-| 34 | C156 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | ydnitro/MAL-2024-6263.json)) | hpt1cscoe/MAL-2024-6257.json)) | |
-| 35 | C158 | C159 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | orosnitro/MAL-2024-6259.json)) | yqnuutupjerllnbxaeq/MAL-2024-6264.json)) | |
-| 36 | C158 | C160 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | orosnitro/MAL-2024-6259.json)) | nomig/MAL-2024-6258.json)) | |
-| 37 | C158 | C161 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | orosnitro/MAL-2024-6259.json)) | proxy2/MAL-2024-6261.json)) | |
-| 38 | C158 | C163 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | orosnitro/MAL-2024-6259.json)) | lib1g-dev/MAL-2025-41804.json)) | |
-| 39 | C158 | C164 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | orosnitro/MAL-2024-6259.json)) | elixnitro/MAL-2024-6255.json)) | |
-| 40 | C158 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | orosnitro/MAL-2024-6259.json)) | hpt1cscoe/MAL-2024-6257.json)) | |
-| 41 | C159 | C160 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | yqnuutupjerllnbxaeq/MAL-2024-6264.json)) | nomig/MAL-2024-6258.json)) | |
-| 42 | C159 | C161 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | yqnuutupjerllnbxaeq/MAL-2024-6264.json)) | proxy2/MAL-2024-6261.json)) | |
-| 43 | C159 | C163 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | yqnuutupjerllnbxaeq/MAL-2024-6264.json)) | lib1g-dev/MAL-2025-41804.json)) | |
-| 44 | C159 | C164 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | yqnuutupjerllnbxaeq/MAL-2024-6264.json)) | elixnitro/MAL-2024-6255.json)) | |
-| 45 | C159 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | yqnuutupjerllnbxaeq/MAL-2024-6264.json)) | hpt1cscoe/MAL-2024-6257.json)) | |
-| 46 | C160 | C161 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | nomig/MAL-2024-6258.json)) | proxy2/MAL-2024-6261.json)) | |
-| 47 | C160 | C163 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | nomig/MAL-2024-6258.json)) | lib1g-dev/MAL-2025-41804.json)) | |
-| 48 | C160 | C164 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | nomig/MAL-2024-6258.json)) | elixnitro/MAL-2024-6255.json)) | |
-| 49 | C160 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | nomig/MAL-2024-6258.json)) | hpt1cscoe/MAL-2024-6257.json)) | |
-| 50 | C161 | C163 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy2/MAL-2024-6261.json)) | lib1g-dev/MAL-2025-41804.json)) | |
-| 51 | C161 | C164 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy2/MAL-2024-6261.json)) | elixnitro/MAL-2024-6255.json)) | |
-| 52 | C161 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy2/MAL-2024-6261.json)) | hpt1cscoe/MAL-2024-6257.json)) | |
-| 53 | C163 | C164 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lib1g-dev/MAL-2025-41804.json)) | elixnitro/MAL-2024-6255.json)) | |
-| 54 | C163 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lib1g-dev/MAL-2025-41804.json)) | hpt1cscoe/MAL-2024-6257.json)) | |
-| 55 | C164 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | elixnitro/MAL-2024-6255.json)) | hpt1cscoe/MAL-2024-6257.json)) | |
-| 56 | C271 | C273 | npm | text_prefix / text_prefix | 1 / 1 | 173 | an unpinned, unverified JavaScript payload from a third-party repository (gitflic.ru user `hellscrip | JavaScript from an unrelated third-party host (gitflic.ru, proxied via web.archive.org) and piping i | |
-| 57 | C300 | C301 | npm | text_prefix / text_prefix | 10 / 3 | 181 | 69aefe746e04eebf6da81a0607bae7ad381c7e4c/osv/malicious/npm/set-egs-backend/MAL-2025-49237.json)) | 42f23034303701eb78d0a10c70cc3c99bc8034bb/osv/malicious/npm/mms-ref-dedserver/MAL-2025-49228.json)) | |
+| 1 | C151 | C152 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | lsrc/MAL-2025-6626.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 2 | C151 | C153 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | proxy/MAL-2024-6260.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 3 | C151 | C156 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | ydnitro/MAL-2024-6263.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 4 | C151 | C158 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | orosnitro/MAL-2024-6259.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 5 | C151 | C159 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | yqnuutupjerllnbxaeq/MAL-2024-6264.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 6 | C151 | C160 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | nomig/MAL-2024-6258.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 7 | C151 | C161 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | proxy2/MAL-2024-6261.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 8 | C151 | C163 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | lib1g-dev/MAL-2025-41804.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 9 | C151 | C164 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | elixnitro/MAL-2024-6255.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 10 | C151 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | tasimb/MAL-2024-6262.json)) | hpt1cscoe/MAL-2024-6257.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 11 | C152 | C153 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lsrc/MAL-2025-6626.json)) | proxy/MAL-2024-6260.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 12 | C152 | C156 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lsrc/MAL-2025-6626.json)) | ydnitro/MAL-2024-6263.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 13 | C152 | C158 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lsrc/MAL-2025-6626.json)) | orosnitro/MAL-2024-6259.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 14 | C152 | C159 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lsrc/MAL-2025-6626.json)) | yqnuutupjerllnbxaeq/MAL-2024-6264.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 15 | C152 | C160 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lsrc/MAL-2025-6626.json)) | nomig/MAL-2024-6258.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 16 | C152 | C161 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lsrc/MAL-2025-6626.json)) | proxy2/MAL-2024-6261.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 17 | C152 | C163 | pypi | text_prefix / text_prefix | 1 / 1 | 187 | src/MAL-2025-6626.json)) | ib1g-dev/MAL-2025-41804.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 18 | C152 | C164 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lsrc/MAL-2025-6626.json)) | elixnitro/MAL-2024-6255.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 19 | C152 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lsrc/MAL-2025-6626.json)) | hpt1cscoe/MAL-2024-6257.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 20 | C153 | C156 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy/MAL-2024-6260.json)) | ydnitro/MAL-2024-6263.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 21 | C153 | C158 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy/MAL-2024-6260.json)) | orosnitro/MAL-2024-6259.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 22 | C153 | C159 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy/MAL-2024-6260.json)) | yqnuutupjerllnbxaeq/MAL-2024-6264.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 23 | C153 | C160 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy/MAL-2024-6260.json)) | nomig/MAL-2024-6258.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 24 | C153 | C161 | pypi | text_prefix / text_prefix | 1 / 1 | 191 | /MAL-2024-6260.json)) | 2/MAL-2024-6261.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 25 | C153 | C163 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy/MAL-2024-6260.json)) | lib1g-dev/MAL-2025-41804.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 26 | C153 | C164 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy/MAL-2024-6260.json)) | elixnitro/MAL-2024-6255.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 27 | C153 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy/MAL-2024-6260.json)) | hpt1cscoe/MAL-2024-6257.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 28 | C156 | C158 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | ydnitro/MAL-2024-6263.json)) | orosnitro/MAL-2024-6259.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 29 | C156 | C159 | pypi | text_prefix / text_prefix | 1 / 1 | 187 | dnitro/MAL-2024-6263.json)) | qnuutupjerllnbxaeq/MAL-2024-6264.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 30 | C156 | C160 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | ydnitro/MAL-2024-6263.json)) | nomig/MAL-2024-6258.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 31 | C156 | C161 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | ydnitro/MAL-2024-6263.json)) | proxy2/MAL-2024-6261.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 32 | C156 | C163 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | ydnitro/MAL-2024-6263.json)) | lib1g-dev/MAL-2025-41804.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 33 | C156 | C164 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | ydnitro/MAL-2024-6263.json)) | elixnitro/MAL-2024-6255.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 34 | C156 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | ydnitro/MAL-2024-6263.json)) | hpt1cscoe/MAL-2024-6257.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 35 | C158 | C159 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | orosnitro/MAL-2024-6259.json)) | yqnuutupjerllnbxaeq/MAL-2024-6264.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 36 | C158 | C160 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | orosnitro/MAL-2024-6259.json)) | nomig/MAL-2024-6258.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 37 | C158 | C161 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | orosnitro/MAL-2024-6259.json)) | proxy2/MAL-2024-6261.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 38 | C158 | C163 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | orosnitro/MAL-2024-6259.json)) | lib1g-dev/MAL-2025-41804.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 39 | C158 | C164 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | orosnitro/MAL-2024-6259.json)) | elixnitro/MAL-2024-6255.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 40 | C158 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | orosnitro/MAL-2024-6259.json)) | hpt1cscoe/MAL-2024-6257.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 41 | C159 | C160 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | yqnuutupjerllnbxaeq/MAL-2024-6264.json)) | nomig/MAL-2024-6258.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 42 | C159 | C161 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | yqnuutupjerllnbxaeq/MAL-2024-6264.json)) | proxy2/MAL-2024-6261.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 43 | C159 | C163 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | yqnuutupjerllnbxaeq/MAL-2024-6264.json)) | lib1g-dev/MAL-2025-41804.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 44 | C159 | C164 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | yqnuutupjerllnbxaeq/MAL-2024-6264.json)) | elixnitro/MAL-2024-6255.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 45 | C159 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | yqnuutupjerllnbxaeq/MAL-2024-6264.json)) | hpt1cscoe/MAL-2024-6257.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 46 | C160 | C161 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | nomig/MAL-2024-6258.json)) | proxy2/MAL-2024-6261.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 47 | C160 | C163 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | nomig/MAL-2024-6258.json)) | lib1g-dev/MAL-2025-41804.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 48 | C160 | C164 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | nomig/MAL-2024-6258.json)) | elixnitro/MAL-2024-6255.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 49 | C160 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | nomig/MAL-2024-6258.json)) | hpt1cscoe/MAL-2024-6257.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 50 | C161 | C163 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy2/MAL-2024-6261.json)) | lib1g-dev/MAL-2025-41804.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 51 | C161 | C164 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy2/MAL-2024-6261.json)) | elixnitro/MAL-2024-6255.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 52 | C161 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | proxy2/MAL-2024-6261.json)) | hpt1cscoe/MAL-2024-6257.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 53 | C163 | C164 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lib1g-dev/MAL-2025-41804.json)) | elixnitro/MAL-2024-6255.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 54 | C163 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | lib1g-dev/MAL-2025-41804.json)) | hpt1cscoe/MAL-2024-6257.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 55 | C164 | C165 | pypi | text_prefix / text_prefix | 1 / 1 | 186 | elixnitro/MAL-2024-6255.json)) | hpt1cscoe/MAL-2024-6257.json)) | keep — shared text is a generic reporter template, not a campaign; exclude as key |
+| 56 | C271 | C273 | npm | text_prefix / text_prefix | 1 / 1 | 173 | an unpinned, unverified JavaScript payload from a third-party repository (gitflic.ru user `hellscrip | JavaScript from an unrelated third-party host (gitflic.ru, proxied via web.archive.org) and piping i | keep — same host (gitflic.ru), different analyses |
+| 57 | C300 | C301 | npm | text_prefix / text_prefix | 10 / 3 | 181 | 69aefe746e04eebf6da81a0607bae7ad381c7e4c/osv/malicious/npm/set-egs-backend/MAL-2025-49237.json)) | 42f23034303701eb78d0a10c70cc3c99bc8034bb/osv/malicious/npm/mms-ref-dedserver/MAL-2025-49228.json)) | merge — same dependency-confusion family, text identical up to the OSV link |
 
 ## 3. Over-merge candidates
 
@@ -107,11 +107,11 @@ The worst-matching member pair is shown; *low pairs* counts member pairs below t
 
 | # | Campaign | Ecosystem | Signature | Members | Worst Jaccard | Low pairs | Member A | Member B | Diverge at | Excerpt A | Excerpt B | Decision |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | C006 | pypi | campaign_tag | 2 | 0.29 | 1/1 | `friendly-tools` | `friendly-greeting-tools` | 12 | The package contains obfuscated code to exfiltrate data from the environment, targeting primarily Sn | The package presents itself as a harmless greeting demo but src/friendly_greeting/main.py ships two | |
-| 2 | C044 | pypi | campaign_tag | 5 | 0.46 | 4/10 | `chroma-client` | `transfomers` | 1 | This package does not carry any malicious payload yet, but uses exactly the same technique as other | Typosquatting package planting a malicious PTH file that during loading Python downloads the next st | |
-| 3 | C061 | pypi | campaign_tag | 3 | 0.27 | 2/3 | `minecraftmodes` | `discordnv` | 0 | The package exfiltrates Roblox cookies from the victim machine. --- Category: MALICIOUS - The cam | On `import <PKG>`, __init__.py invokes main_entry() which hides the console window, walks Discord/Ch | |
-| 4 | C072 | pypi | campaign_tag | 2 | 0.38 | 1/1 | `telemetry-helper` | `env-validator-tool` | 0 | On `import telemetry_helper`, top-level code starts a daemon thread that sleeps 30 seconds and then | In this campaign, one package contains malicious code exfiltrating environment variables during impo | |
-| 5 | C097 | pypi | campaign_tag | 4 | 0.41 | 3/6 | `requests-crypt` | `reqcrypt` | 0 | The package contains a hidden backdoor. The promised functionality is an HTTP request library with s | <PKG> presents itself as a general-purpose HTTP client, but its internal PayloadProcessor unconditio | |
-| 6 | C120 | pypi | campaign_tag | 6 | 0.49 | 4/15 | `speed-hashes` | `pydanticc` | 0 | setup.py defines a custom install command (NativeInstall) that runs on pip install. After the normal | Package imitates name of a popula library. During installation, obfuscated code downloads a maliciou | |
-| 7 | C121 | pypi | campaign_tag | 2 | 0.31 | 1/1 | `alphalend-layouts` | `alphalend-abi` | 0 | The package harvests installer-side secrets and uploads them to an attacker-controlled GitHub reposi | During import, the package exfiltrates sensitive files with SUI private keys to a private GitHub rep | |
-| 8 | C285 | npm | text_prefix | 15 | 0.45 | 18/105 | `wailib` | `@celestial-community/baileys` | 453 | `package/lib/Socket/messages-recv.js` lines 45-72 define a char-code decoder (`qvnr`) and use it to | The package carries three independent follow routines, all unconditional and undocumented: 1. `pack | |
+| 1 | C006 | pypi | campaign_tag | 2 | 0.29 | 1/1 | `friendly-tools` | `friendly-greeting-tools` | 12 | The package contains obfuscated code to exfiltrate data from the environment, targeting primarily Sn | The package presents itself as a harmless greeting demo but src/friendly_greeting/main.py ships two | keep — kam193 Campaign tag is the reporter's own grouping |
+| 2 | C044 | pypi | campaign_tag | 5 | 0.46 | 4/10 | `chroma-client` | `transfomers` | 1 | This package does not carry any malicious payload yet, but uses exactly the same technique as other | Typosquatting package planting a malicious PTH file that during loading Python downloads the next st | keep — kam193 Campaign tag is the reporter's own grouping |
+| 3 | C061 | pypi | campaign_tag | 3 | 0.27 | 2/3 | `minecraftmodes` | `discordnv` | 0 | The package exfiltrates Roblox cookies from the victim machine. --- Category: MALICIOUS - The cam | On `import <PKG>`, __init__.py invokes main_entry() which hides the console window, walks Discord/Ch | keep — kam193 Campaign tag is the reporter's own grouping |
+| 4 | C072 | pypi | campaign_tag | 2 | 0.38 | 1/1 | `telemetry-helper` | `env-validator-tool` | 0 | On `import telemetry_helper`, top-level code starts a daemon thread that sleeps 30 seconds and then | In this campaign, one package contains malicious code exfiltrating environment variables during impo | keep — kam193 Campaign tag is the reporter's own grouping |
+| 5 | C097 | pypi | campaign_tag | 4 | 0.41 | 3/6 | `requests-crypt` | `reqcrypt` | 0 | The package contains a hidden backdoor. The promised functionality is an HTTP request library with s | <PKG> presents itself as a general-purpose HTTP client, but its internal PayloadProcessor unconditio | keep — kam193 Campaign tag is the reporter's own grouping |
+| 6 | C120 | pypi | campaign_tag | 6 | 0.49 | 4/15 | `speed-hashes` | `pydanticc` | 0 | setup.py defines a custom install command (NativeInstall) that runs on pip install. After the normal | Package imitates name of a popula library. During installation, obfuscated code downloads a maliciou | keep — kam193 Campaign tag is the reporter's own grouping |
+| 7 | C121 | pypi | campaign_tag | 2 | 0.31 | 1/1 | `alphalend-layouts` | `alphalend-abi` | 0 | The package harvests installer-side secrets and uploads them to an attacker-controlled GitHub reposi | During import, the package exfiltrates sensitive files with SUI private keys to a private GitHub rep | keep — kam193 Campaign tag is the reporter's own grouping |
+| 8 | C285 | npm | text_prefix | 15 | 0.45 | 18/105 | `wailib` | `@celestial-community/baileys` | 453 | `package/lib/Socket/messages-recv.js` lines 45-72 define a char-code decoder (`qvnr`) and use it to | The package carries three independent follow routines, all unconditional and undocumented: 1. `pack | keep — 453 shared characters before divergence |

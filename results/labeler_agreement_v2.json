@@ -1,0 +1,884 @@
+{
+  "inputs": {
+    "annotator1": [
+      "annotation_precision_v2.md",
+      "annotation_recall_v2.md"
+    ],
+    "annotator2": [
+      "annotation_precision_v2_annotator2.md",
+      "annotation_recall_v2_annotator2.md"
+    ],
+    "adjudication": "annotator 1's sheets (Adjudicated / Adjudication note lines)"
+  },
+  "kappa_first_pass": {
+    "precision_sheet": {
+      "n_rows_used": 60,
+      "n_rows": 60,
+      "raw_agreement": 0.9666666666666667,
+      "cohen_kappa": 0.782608695652174,
+      "first_pass_counts": {
+        "annotator1": {
+          "REAL": 56,
+          "FALSE": 4
+        },
+        "annotator2": {
+          "REAL": 54,
+          "FALSE": 6
+        }
+      },
+      "unsure_handling": "UNSURE is a third category in kappa; rows blank on either sheet are excluded."
+    },
+    "recall_sheet": {
+      "n_rows_used": 40,
+      "n_rows": 40,
+      "raw_agreement": 0.825,
+      "cohen_kappa": 0.658119658119658,
+      "first_pass_counts": {
+        "annotator1": {
+          "PRESENT": 13,
+          "ABSENT": 26,
+          "UNSURE": 1
+        },
+        "annotator2": {
+          "PRESENT": 18,
+          "ABSENT": 21,
+          "UNSURE": 1
+        }
+      },
+      "unsure_handling": "UNSURE is a third category in kappa; rows blank on either sheet are excluded."
+    }
+  },
+  "labeler_precision": {
+    "overall": {
+      "k": 55,
+      "n": 60,
+      "p": 0.9166666666666666,
+      "wilson95": [
+        0.8193105798166558,
+        0.9638795433982692
+      ]
+    },
+    "counts": {
+      "REAL": 55,
+      "FALSE": 5
+    },
+    "per_category": {
+      "brand_impersonation_narrative": {
+        "rows_with_category": {
+          "k": 22,
+          "n": 22,
+          "p": 1.0,
+          "wilson95": [
+            0.8513451253913791,
+            1.0
+          ]
+        },
+        "single_category_rows": {
+          "k": 15,
+          "n": 15,
+          "p": 1.0,
+          "wilson95": [
+            0.7961166989641515,
+            1.0
+          ]
+        }
+      },
+      "credential_or_wallet_exfiltration": {
+        "rows_with_category": {
+          "k": 23,
+          "n": 23,
+          "p": 1.0,
+          "wilson95": [
+            0.8568833815495731,
+            1.0
+          ]
+        },
+        "single_category_rows": {
+          "k": 15,
+          "n": 15,
+          "p": 1.0,
+          "wilson95": [
+            0.7961166989641515,
+            1.0
+          ]
+        }
+      },
+      "hidden_install_hook": {
+        "rows_with_category": {
+          "k": 13,
+          "n": 13,
+          "p": 1.0,
+          "wilson95": [
+            0.7719046276458016,
+            0.9999999999999999
+          ]
+        },
+        "single_category_rows": {
+          "k": 7,
+          "n": 7,
+          "p": 1.0,
+          "wilson95": [
+            0.6456695649333126,
+            1.0
+          ]
+        }
+      },
+      "obfuscated_payload_execution": {
+        "rows_with_category": {
+          "k": 4,
+          "n": 4,
+          "p": 1.0,
+          "wilson95": [
+            0.5101091635454027,
+            1.0
+          ]
+        },
+        "single_category_rows": {
+          "k": 1,
+          "n": 1,
+          "p": 1.0,
+          "wilson95": [
+            0.20654931437723745,
+            1.0
+          ]
+        }
+      },
+      "remote_backdoor_access": {
+        "rows_with_category": {
+          "k": 8,
+          "n": 8,
+          "p": 1.0,
+          "wilson95": [
+            0.6755924351161198,
+            1.0
+          ]
+        },
+        "single_category_rows": {
+          "k": 3,
+          "n": 3,
+          "p": 1.0,
+          "wilson95": [
+            0.4385029682449546,
+            1.0
+          ]
+        }
+      },
+      "remote_payload_retrieval": {
+        "rows_with_category": {
+          "k": 4,
+          "n": 9,
+          "p": 0.4444444444444444,
+          "wilson95": [
+            0.18877852109766452,
+            0.733348706504507
+          ]
+        },
+        "single_category_rows": {
+          "k": 0,
+          "n": 5,
+          "p": 0.0,
+          "wilson95": [
+            0.0,
+            0.43448246478317476
+          ]
+        }
+      }
+    },
+    "per_category_note": "Verdicts are per row; a row's verdict is attributed to every category matched on it (rows_with_category). single_category_rows uses only rows with one category.",
+    "false_rows": [
+      {
+        "row": 39,
+        "package": "cfgzen",
+        "adjudication_note": "agree",
+        "matches": [
+          {
+            "advisory_id": "GHSA-r2w6-7pgv-644h",
+            "source": "ghsa",
+            "category": "remote_payload_retrieval",
+            "span": "Downloads and executes a remote",
+            "in_tag_list": true
+          },
+          {
+            "advisory_id": "GHSA-r2w6-7pgv-644h",
+            "source": "ghsa",
+            "category": "remote_payload_retrieval",
+            "span": "Downloads and executes a remote executable",
+            "in_tag_list": true
+          },
+          {
+            "advisory_id": "MAL-2026-11094",
+            "source": "osv",
+            "category": "remote_payload_retrieval",
+            "span": "Downloads and executes a remote",
+            "in_tag_list": true
+          },
+          {
+            "advisory_id": "MAL-2026-11094",
+            "source": "osv",
+            "category": "remote_payload_retrieval",
+            "span": "Downloads and executes a remote executable",
+            "in_tag_list": true
+          }
+        ],
+        "all_matches_in_tag_list": true
+      },
+      {
+        "row": 54,
+        "package": "rc4-secure",
+        "adjudication_note": "agree",
+        "matches": [
+          {
+            "advisory_id": "GHSA-q3mh-hmf4-7c8m",
+            "source": "ghsa",
+            "category": "remote_payload_retrieval",
+            "span": "Downloads and executes a remote",
+            "in_tag_list": true
+          },
+          {
+            "advisory_id": "GHSA-q3mh-hmf4-7c8m",
+            "source": "ghsa",
+            "category": "remote_payload_retrieval",
+            "span": "Downloads and executes a remote executable",
+            "in_tag_list": true
+          },
+          {
+            "advisory_id": "MAL-2026-14306",
+            "source": "osv",
+            "category": "remote_payload_retrieval",
+            "span": "Downloads and executes a remote",
+            "in_tag_list": true
+          },
+          {
+            "advisory_id": "MAL-2026-14306",
+            "source": "osv",
+            "category": "remote_payload_retrieval",
+            "span": "Downloads and executes a remote executable",
+            "in_tag_list": true
+          }
+        ],
+        "all_matches_in_tag_list": true
+      },
+      {
+        "row": 56,
+        "package": "syswatch",
+        "adjudication_note": "agree",
+        "matches": [
+          {
+            "advisory_id": "GHSA-mpch-m5gg-4894",
+            "source": "ghsa",
+            "category": "remote_payload_retrieval",
+            "span": "Downloads and executes a remote",
+            "in_tag_list": true
+          },
+          {
+            "advisory_id": "GHSA-mpch-m5gg-4894",
+            "source": "ghsa",
+            "category": "remote_payload_retrieval",
+            "span": "Downloads and executes a remote executable",
+            "in_tag_list": true
+          },
+          {
+            "advisory_id": "MAL-2026-15811",
+            "source": "osv",
+            "category": "remote_payload_retrieval",
+            "span": "Downloads and executes a remote",
+            "in_tag_list": true
+          },
+          {
+            "advisory_id": "MAL-2026-15811",
+            "source": "osv",
+            "category": "remote_payload_retrieval",
+            "span": "Downloads and executes a remote executable",
+            "in_tag_list": true
+          }
+        ],
+        "all_matches_in_tag_list": true
+      },
+      {
+        "row": 59,
+        "package": "pytablute",
+        "adjudication_note": "agree",
+        "matches": [
+          {
+            "advisory_id": "GHSA-p4h7-5jh2-3rpc",
+            "source": "ghsa",
+            "category": "remote_payload_retrieval",
+            "span": "Downloads and executes a remote",
+            "in_tag_list": true
+          },
+          {
+            "advisory_id": "MAL-2026-13685",
+            "source": "osv",
+            "category": "remote_payload_retrieval",
+            "span": "Downloads and executes a remote",
+            "in_tag_list": true
+          }
+        ],
+        "all_matches_in_tag_list": true
+      },
+      {
+        "row": 60,
+        "package": "requests-cache-utils",
+        "adjudication_note": "all matches sit in Reasons tag list; no prose description of the remote download",
+        "matches": [
+          {
+            "advisory_id": "GHSA-mc8h-7wqw-2mcf",
+            "source": "ghsa",
+            "category": "remote_payload_retrieval",
+            "span": "Downloads and executes a remote",
+            "in_tag_list": true
+          },
+          {
+            "advisory_id": "GHSA-mc8h-7wqw-2mcf",
+            "source": "ghsa",
+            "category": "remote_payload_retrieval",
+            "span": "Downloads and executes a remote executable",
+            "in_tag_list": true
+          },
+          {
+            "advisory_id": "MAL-2026-17191",
+            "source": "osv",
+            "category": "remote_payload_retrieval",
+            "span": "Downloads and executes a remote",
+            "in_tag_list": true
+          },
+          {
+            "advisory_id": "MAL-2026-17191",
+            "source": "osv",
+            "category": "remote_payload_retrieval",
+            "span": "Downloads and executes a remote executable",
+            "in_tag_list": true
+          }
+        ],
+        "all_matches_in_tag_list": true
+      }
+    ]
+  },
+  "labeler_miss_rate": {
+    "overall": {
+      "k": 17,
+      "n": 40,
+      "p": 0.425,
+      "wilson95": [
+        0.28509392559950375,
+        0.5780493145800892
+      ]
+    },
+    "definition": "PRESENT / all recall rows (adjudicated)",
+    "counts": {
+      "PRESENT": 17,
+      "ABSENT": 23
+    },
+    "per_stratum": {
+      "npm|amazon": {
+        "PRESENT": 11,
+        "ABSENT": 4,
+        "UNSURE": 0,
+        "n": 15,
+        "frame": 51
+      },
+      "npm|no-amazon": {
+        "PRESENT": 0,
+        "ABSENT": 6,
+        "UNSURE": 0,
+        "n": 6,
+        "frame": 19
+      },
+      "pypi|amazon": {
+        "PRESENT": 5,
+        "ABSENT": 4,
+        "UNSURE": 0,
+        "n": 9,
+        "frame": 32
+      },
+      "pypi|no-amazon": {
+        "PRESENT": 1,
+        "ABSENT": 9,
+        "UNSURE": 0,
+        "n": 10,
+        "frame": 35
+      }
+    },
+    "present_rows": [
+      {
+        "row": 1,
+        "package": "@angulaar/core",
+        "stratum": "npm|amazon",
+        "categories_named_on_sheet": [],
+        "adjudication_note": "agree",
+        "note1": "The postinstall script fetches JavaScript from an unrelated host and pipes it to node during npm install.",
+        "note2": "postinstall pulls remote JS from gitflic and pipes to node; also typosquat of @angular/core"
+      },
+      {
+        "row": 2,
+        "package": "@qngular/core",
+        "stratum": "npm|amazon",
+        "categories_named_on_sheet": [],
+        "adjudication_note": "agree",
+        "note1": "The package uses a postinstall script to fetch remote JavaScript and execute it during installation.",
+        "note2": "same pattern \u2014 postinstall curl | node from archive.org/gitflic; one-char typosquat"
+      },
+      {
+        "row": 3,
+        "package": "@smwebserver/static",
+        "stratum": "npm|amazon",
+        "categories_named_on_sheet": [],
+        "adjudication_note": "agree",
+        "note1": "The dependency points to an arbitrary remote tarball, which npm retrieves and installs rather than using the normal registry package.",
+        "note2": "empty package, real payload is the off-registry tarball dep that can run scripts"
+      },
+      {
+        "row": 4,
+        "package": "css-hgwctv-polyfill",
+        "stratum": "npm|amazon",
+        "categories_named_on_sheet": [],
+        "adjudication_note": "agree",
+        "note1": "On require, the package collects host and network information and transmits the results to a hardcoded external endpoint.",
+        "note2": "on require it shells out for id/whoami/ifconfig and posts to dxpoc.gt.tc"
+      },
+      {
+        "row": 5,
+        "package": "css-mpmdds-polyfill",
+        "stratum": "npm|amazon",
+        "categories_named_on_sheet": [],
+        "adjudication_note": "agree",
+        "note1": "The module-load payload gathers host information with shell commands and sends the collected data to an external endpoint.",
+        "note2": "same Wix-thunderbolt style recon + fetch exfil as the other css-*-polyfill ones"
+      },
+      {
+        "row": 7,
+        "package": "pf23727",
+        "stratum": "npm|amazon",
+        "categories_named_on_sheet": [],
+        "adjudication_note": "agree",
+        "note1": "The code reads document.cookie and an authenticated response and sends the captured data to a collector.",
+        "note2": "reads cookies + profile response, sendBeacon to webhook.site"
+      },
+      {
+        "row": 8,
+        "package": "pflag29424",
+        "stratum": "npm|amazon",
+        "categories_named_on_sheet": [],
+        "adjudication_note": "agree",
+        "note1": "The package scans a response for a token and sends the token to an external collector.",
+        "note2": "fetches /profile, scrapes token, dumps to webhook.site"
+      },
+      {
+        "row": 9,
+        "package": "ph-common",
+        "stratum": "npm|amazon",
+        "categories_named_on_sheet": [],
+        "adjudication_note": "agree",
+        "note1": "The postinstall behavior sends a beacon automatically when the package is installed.",
+        "note2": "beacon.cjs posts hostname/path on postinstall and again on require"
+      },
+      {
+        "row": 11,
+        "package": "promises-dotenv3",
+        "stratum": "npm|amazon",
+        "categories_named_on_sheet": [],
+        "adjudication_note": "agree",
+        "note1": "A large obfuscated payload is loaded at import time and executes through the module's startup path.",
+        "note2": "payload hidden in JPEG APP13, drops VBS, launches encoded powershell"
+      },
+      {
+        "row": 12,
+        "package": "risk-detection",
+        "stratum": "npm|amazon",
+        "categories_named_on_sheet": [],
+        "adjudication_note": "agree",
+        "note1": "The package depends on an off-registry tarball, so npm retrieves remote package contents before installation.",
+        "note2": "manifest points at a mutable GCS tarball \u2014 install runs whatever is there"
+      },
+      {
+        "row": 15,
+        "package": "turbo-ws",
+        "stratum": "npm|amazon",
+        "categories_named_on_sheet": [],
+        "adjudication_note": "agree",
+        "note1": "The package depends on a remote GitHub tarball and its postinstall script executes code during installation.",
+        "note2": "dep is a GitHub tarball from an unrelated account; postinstall requires it"
+      },
+      {
+        "row": 24,
+        "package": "cleanup-string",
+        "stratum": "pypi|amazon",
+        "categories_named_on_sheet": [
+          "obfuscated_payload_execution"
+        ],
+        "adjudication_note": "VMProtect-packed native module with no legitimate reason \u2014 counts as obfuscated_payload_execution",
+        "note1": "The imported native module is protected with VMProtect/high-entropy obfuscation and executes its payload on import.",
+        "note2": "1.3MB VMProtect pyd, no clear payload story in the text \u2014 could be obfuscated but fuzzy"
+      },
+      {
+        "row": 25,
+        "package": "cli-anything-ai-market",
+        "stratum": "pypi|amazon",
+        "categories_named_on_sheet": [
+          "hidden_install_hook"
+        ],
+        "adjudication_note": "hidden_install_hook \u2014 setup.py runs code automatically on pip install; same rule as precision sheet (my-private-pkg, speed-hashes). Host-info sending is still not counted as credential exfiltration.",
+        "note1": "The text reports malicious code but does not describe a specific behavior matching any of the six mechanisms.",
+        "note2": "setup.py posts OS/user/hostname to a bare IP on install"
+      },
+      {
+        "row": 26,
+        "package": "dbt-sa-cli",
+        "stratum": "pypi|amazon",
+        "categories_named_on_sheet": [
+          "hidden_install_hook"
+        ],
+        "adjudication_note": "hidden_install_hook \u2014 setup.py runs code automatically on pip install; same rule as precision sheet (my-private-pkg, speed-hashes). Host-info sending is still not counted as credential exfiltration.",
+        "note1": "The description reports malicious code but gives no concrete mechanism beyond the general finding.",
+        "note2": "rce_poc() at top level of setup.py, DNS + HTTPS to oast.fun"
+      },
+      {
+        "row": 29,
+        "package": "nvtorch-oot-nightly",
+        "stratum": "pypi|amazon",
+        "categories_named_on_sheet": [
+          "hidden_install_hook"
+        ],
+        "adjudication_note": "hidden_install_hook \u2014 setup.py runs code automatically on pip install; same rule as precision sheet (my-private-pkg, speed-hashes). Host-info sending is still not counted as credential exfiltration.",
+        "note1": "The installation request leaks source IP and network metadata; it does not involve credentials, wallets, or the other listed mechanisms.",
+        "note2": "setup.py hits bare-IP callback on install, dependency-confusion shape"
+      },
+      {
+        "row": 30,
+        "package": "telegram-helper",
+        "stratum": "pypi|amazon",
+        "categories_named_on_sheet": [],
+        "adjudication_note": "agree",
+        "note1": "The package searches for Telegram session files and cookies, uploads them, and exposes Telegram bot commands for remote control.",
+        "note2": "full Telegram session/cookie stealer + bot commands for remote control"
+      },
+      {
+        "row": 40,
+        "package": "zmaker",
+        "stratum": "pypi|no-amazon",
+        "categories_named_on_sheet": [],
+        "adjudication_note": "Telegram Desktop folders/sessions archived and exfiltrated \u2014 sessions are credentials",
+        "note1": "The prose describes Telegram Desktop data being archived and exfiltrated, but it does not specify credentials, tokens, or wallet data, so the category is uncertain.",
+        "note2": "multi-package campaign that archives Telegram Desktop folders and ships them out"
+      }
+    ],
+    "host_fingerprint_absent": [
+      {
+        "row": 23,
+        "package": "azure-langchain-example",
+        "adjudication_note": "host fingerprint (hostname/IP) only \u2014 not credential or wallet; no six category fits"
+      },
+      {
+        "row": 28,
+        "package": "mcp-search-server",
+        "adjudication_note": "silent host-id beacon on import \u2014 phone-home, not credential/wallet or other listed mechanism"
+      }
+    ],
+    "host_fingerprint_label": "host-fingerprint exfiltration \u2014 no category",
+    "absent_rows_mentioning_host_info_in_notes": [
+      {
+        "row": 34,
+        "package": "dlmm",
+        "note1": "The package is described as collecting basic host information and overriding installation behavior, but not as one of the six mechanisms.",
+        "note2": "same"
+      },
+      {
+        "row": 35,
+        "package": "flyteplugins-agento11y",
+        "note1": "The prose describes basic host-information exfiltration and an install-command override, without a listed mechanism.",
+        "note2": "same"
+      },
+      {
+        "row": 36,
+        "package": "flyteplugins-echo",
+        "note1": "The text describes basic host-information exfiltration and an installation command override, but not one of the six categories.",
+        "note2": "same"
+      },
+      {
+        "row": 38,
+        "package": "rce-test",
+        "note1": "The description reports host-information exfiltration and an install-command override, but neither is one of the six mechanisms as described.",
+        "note2": "generic kam193 line only"
+      },
+      {
+        "row": 39,
+        "package": "walmart-genai-trace",
+        "note1": "The text describes basic host-information exfiltration and installation-time command execution, without a listed mechanism.",
+        "note2": "same"
+      }
+    ],
+    "confirmed_categories": {
+      "rows": [
+        {
+          "row": 1,
+          "package": "@angulaar/core",
+          "categories": [
+            "hidden_install_hook",
+            "remote_payload_retrieval",
+            "brand_impersonation_narrative"
+          ],
+          "borderline": false
+        },
+        {
+          "row": 2,
+          "package": "@qngular/core",
+          "categories": [
+            "hidden_install_hook",
+            "brand_impersonation_narrative",
+            "remote_payload_retrieval"
+          ],
+          "borderline": false
+        },
+        {
+          "row": 3,
+          "package": "@smwebserver/static",
+          "categories": [
+            "remote_payload_retrieval"
+          ],
+          "borderline": false
+        },
+        {
+          "row": 4,
+          "package": "css-hgwctv-polyfill",
+          "categories": [
+            "brand_impersonation_narrative"
+          ],
+          "borderline": false
+        },
+        {
+          "row": 5,
+          "package": "css-mpmdds-polyfill",
+          "categories": [
+            "brand_impersonation_narrative"
+          ],
+          "borderline": false
+        },
+        {
+          "row": 7,
+          "package": "pf23727",
+          "categories": [
+            "credential_or_wallet_exfiltration"
+          ],
+          "borderline": false
+        },
+        {
+          "row": 8,
+          "package": "pflag29424",
+          "categories": [
+            "credential_or_wallet_exfiltration"
+          ],
+          "borderline": true,
+          "borderline_reason": "token may be a CTF flag (DGA{...}); prose never calls it a credential"
+        },
+        {
+          "row": 9,
+          "package": "ph-common",
+          "categories": [
+            "hidden_install_hook"
+          ],
+          "borderline": false
+        },
+        {
+          "row": 11,
+          "package": "promises-dotenv3",
+          "categories": [
+            "obfuscated_payload_execution",
+            "brand_impersonation_narrative"
+          ],
+          "borderline": false
+        },
+        {
+          "row": 12,
+          "package": "risk-detection",
+          "categories": [
+            "remote_payload_retrieval"
+          ],
+          "borderline": false
+        },
+        {
+          "row": 15,
+          "package": "turbo-ws",
+          "categories": [
+            "remote_payload_retrieval",
+            "hidden_install_hook"
+          ],
+          "borderline": false
+        },
+        {
+          "row": 24,
+          "package": "cleanup-string",
+          "categories": [
+            "obfuscated_payload_execution"
+          ],
+          "borderline": true,
+          "borderline_reason": "VMProtect-packed native code; no decode-then-exec step"
+        },
+        {
+          "row": 25,
+          "package": "cli-anything-ai-market",
+          "categories": [
+            "hidden_install_hook"
+          ],
+          "borderline": false
+        },
+        {
+          "row": 26,
+          "package": "dbt-sa-cli",
+          "categories": [
+            "hidden_install_hook",
+            "brand_impersonation_narrative"
+          ],
+          "borderline": false
+        },
+        {
+          "row": 29,
+          "package": "nvtorch-oot-nightly",
+          "categories": [
+            "hidden_install_hook",
+            "brand_impersonation_narrative"
+          ],
+          "borderline": false
+        },
+        {
+          "row": 30,
+          "package": "telegram-helper",
+          "categories": [
+            "credential_or_wallet_exfiltration",
+            "remote_backdoor_access"
+          ],
+          "borderline": false
+        },
+        {
+          "row": 40,
+          "package": "zmaker",
+          "categories": [
+            "credential_or_wallet_exfiltration"
+          ],
+          "borderline": true,
+          "borderline_reason": "'user data' from Telegram Desktop, not explicitly credentials"
+        }
+      ],
+      "per_category_miss_counts": {
+        "obfuscated_payload_execution": 2,
+        "hidden_install_hook": 7,
+        "credential_or_wallet_exfiltration": 4,
+        "remote_backdoor_access": 1,
+        "remote_payload_retrieval": 5,
+        "brand_impersonation_narrative": 7
+      },
+      "per_category_miss_counts_excluding_borderline": {
+        "obfuscated_payload_execution": 1,
+        "hidden_install_hook": 7,
+        "credential_or_wallet_exfiltration": 2,
+        "remote_backdoor_access": 1,
+        "remote_payload_retrieval": 5,
+        "brand_impersonation_narrative": 7
+      },
+      "n_rows_with_k_categories": {
+        "1": 10,
+        "2": 5,
+        "3": 2
+      },
+      "borderline_rows": [
+        8,
+        24,
+        40
+      ],
+      "per_category_note": "Counts rows; a row with several missed categories counts once for each."
+    },
+    "excluding_borderline": {
+      "k": 14,
+      "n": 40,
+      "p": 0.35,
+      "wilson95": [
+        0.2213452887317629,
+        0.5049411916274231
+      ]
+    },
+    "excluding_borderline_definition": "borderline PRESENT rows counted as not missed: (PRESENT - borderline) / all recall rows"
+  },
+  "disagreements": [
+    {
+      "sheet": "precision",
+      "row": 52,
+      "package": "psbt-helpers",
+      "annotator1": "REAL",
+      "annotator2": "FALSE",
+      "adjudicated": "REAL",
+      "adjudication_note": "persistence via scheduled task / LaunchAgent is in the narrative prose, not only in Reasons tags"
+    },
+    {
+      "sheet": "precision",
+      "row": 60,
+      "package": "requests-cache-utils",
+      "annotator1": "REAL",
+      "annotator2": "FALSE",
+      "adjudicated": "FALSE",
+      "adjudication_note": "all matches sit in Reasons tag list; no prose description of the remote download"
+    },
+    {
+      "sheet": "recall",
+      "row": 23,
+      "package": "azure-langchain-example",
+      "annotator1": "ABSENT",
+      "annotator2": "PRESENT",
+      "adjudicated": "ABSENT",
+      "adjudication_note": "host fingerprint (hostname/IP) only \u2014 not credential or wallet; no six category fits"
+    },
+    {
+      "sheet": "recall",
+      "row": 24,
+      "package": "cleanup-string",
+      "annotator1": "PRESENT",
+      "annotator2": "UNSURE",
+      "adjudicated": "PRESENT",
+      "adjudication_note": "VMProtect-packed native module with no legitimate reason \u2014 counts as obfuscated_payload_execution"
+    },
+    {
+      "sheet": "recall",
+      "row": 25,
+      "package": "cli-anything-ai-market",
+      "annotator1": "ABSENT",
+      "annotator2": "PRESENT",
+      "adjudicated": "PRESENT",
+      "adjudication_note": "hidden_install_hook \u2014 setup.py runs code automatically on pip install; same rule as precision sheet (my-private-pkg, speed-hashes). Host-info sending is still not counted as credential exfiltration."
+    },
+    {
+      "sheet": "recall",
+      "row": 26,
+      "package": "dbt-sa-cli",
+      "annotator1": "ABSENT",
+      "annotator2": "PRESENT",
+      "adjudicated": "PRESENT",
+      "adjudication_note": "hidden_install_hook \u2014 setup.py runs code automatically on pip install; same rule as precision sheet (my-private-pkg, speed-hashes). Host-info sending is still not counted as credential exfiltration."
+    },
+    {
+      "sheet": "recall",
+      "row": 28,
+      "package": "mcp-search-server",
+      "annotator1": "ABSENT",
+      "annotator2": "PRESENT",
+      "adjudicated": "ABSENT",
+      "adjudication_note": "silent host-id beacon on import \u2014 phone-home, not credential/wallet or other listed mechanism"
+    },
+    {
+      "sheet": "recall",
+      "row": 29,
+      "package": "nvtorch-oot-nightly",
+      "annotator1": "ABSENT",
+      "annotator2": "PRESENT",
+      "adjudicated": "PRESENT",
+      "adjudication_note": "hidden_install_hook \u2014 setup.py runs code automatically on pip install; same rule as precision sheet (my-private-pkg, speed-hashes). Host-info sending is still not counted as credential exfiltration."
+    },
+    {
+      "sheet": "recall",
+      "row": 40,
+      "package": "zmaker",
+      "annotator1": "UNSURE",
+      "annotator2": "PRESENT",
+      "adjudicated": "PRESENT",
+      "adjudication_note": "Telegram Desktop folders/sessions archived and exfiltrated \u2014 sessions are credentials"
+    }
+  ],
+  "resolution_flags": []
+}

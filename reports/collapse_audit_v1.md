@@ -43,7 +43,7 @@ Excerpts start at the first differing character. *Diverge at* is that character'
 
 | # | Campaign A | Campaign B | Ecosystem | Signatures | Sizes | Diverge at | Excerpt A | Excerpt B | Decision |
 |---|---|---|---|---|---|---|---|---|---|
-| 1 | C090 | C091 | npm | text_prefix / text_prefix | 10 / 3 | 181 | 69aefe746e04eebf6da81a0607bae7ad381c7e4c/osv/malicious/npm/set-egs-backend/MAL-2025-49237.json)) | 42f23034303701eb78d0a10c70cc3c99bc8034bb/osv/malicious/npm/mms-ref-dedserver/MAL-2025-49228.json)) | |
+| 1 | C090 | C091 | npm | text_prefix / text_prefix | 10 / 3 | 181 | 69aefe746e04eebf6da81a0607bae7ad381c7e4c/osv/malicious/npm/set-egs-backend/MAL-2025-49237.json)) | 42f23034303701eb78d0a10c70cc3c99bc8034bb/osv/malicious/npm/mms-ref-dedserver/MAL-2025-49228.json)) | merge — same dependency-confusion family, text identical up to the OSV link |
 
 ## 3. Over-merge candidates
 
@@ -51,7 +51,7 @@ The worst-matching member pair is shown; *low pairs* counts member pairs below t
 
 | # | Campaign | Ecosystem | Signature | Members | Worst Jaccard | Low pairs | Member A | Member B | Diverge at | Excerpt A | Excerpt B | Decision |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | C003 | pypi | campaign_tag | 2 | 0.29 | 1/1 | `friendly-tools` | `friendly-greeting-tools` | 12 | The package contains obfuscated code to exfiltrate data from the environment, targeting primarily Sn | The package presents itself as a harmless greeting demo but src/friendly_greeting/main.py ships two | |
-| 2 | C041 | pypi | campaign_tag | 5 | 0.46 | 4/10 | `chroma-client` | `transfomers` | 1 | This package does not carry any malicious payload yet, but uses exactly the same technique as other | Typosquatting package planting a malicious PTH file that during loading Python downloads the next st | |
-| 3 | C069 | pypi | campaign_tag | 2 | 0.38 | 1/1 | `telemetry-helper` | `env-validator-tool` | 0 | On `import telemetry_helper`, top-level code starts a daemon thread that sleeps 30 seconds and then | In this campaign, one package contains malicious code exfiltrating environment variables during impo | |
-| 4 | C075 | npm | text_prefix | 15 | 0.45 | 18/105 | `wailib` | `@celestial-community/baileys` | 453 | `package/lib/Socket/messages-recv.js` lines 45-72 define a char-code decoder (`qvnr`) and use it to | The package carries three independent follow routines, all unconditional and undocumented: 1. `pack | |
+| 1 | C003 | pypi | campaign_tag | 2 | 0.29 | 1/1 | `friendly-tools` | `friendly-greeting-tools` | 12 | The package contains obfuscated code to exfiltrate data from the environment, targeting primarily Sn | The package presents itself as a harmless greeting demo but src/friendly_greeting/main.py ships two | keep |
+| 2 | C041 | pypi | campaign_tag | 5 | 0.46 | 4/10 | `chroma-client` | `transfomers` | 1 | This package does not carry any malicious payload yet, but uses exactly the same technique as other | Typosquatting package planting a malicious PTH file that during loading Python downloads the next st | keep |
+| 3 | C069 | pypi | campaign_tag | 2 | 0.38 | 1/1 | `telemetry-helper` | `env-validator-tool` | 0 | On `import telemetry_helper`, top-level code starts a daemon thread that sleeps 30 seconds and then | In this campaign, one package contains malicious code exfiltrating environment variables during impo | keep |
+| 4 | C075 | npm | text_prefix | 15 | 0.45 | 18/105 | `wailib` | `@celestial-community/baileys` | 453 | `package/lib/Socket/messages-recv.js` lines 45-72 define a char-code decoder (`qvnr`) and use it to | The package carries three independent follow routines, all unconditional and undocumented: 1. `pack | keep |

@@ -1,0 +1,1382 @@
+{
+  "snapshot": "data/frozen/incidents_snapshot_v2.jsonl",
+  "seed": 20261006,
+  "rng": "random.Random(seed).sample per stratum, strata sorted, frame sorted by displayed package; one Random(seed) per sheet",
+  "strata": "ecosystem x amazon_inspector coverage",
+  "n_campaigns": 317,
+  "n_dv_positive": 169,
+  "n_dv_negative": 148,
+  "n_no_text": 11,
+  "precision": {
+    "frame": 130,
+    "excluded_v1_campaigns": 39,
+    "stratum_sizes": {
+      "npm|amazon": 74,
+      "pypi|amazon": 50,
+      "pypi|no-amazon": 6
+    },
+    "allocation": {
+      "npm|amazon": 34,
+      "pypi|amazon": 23,
+      "pypi|no-amazon": 3
+    }
+  },
+  "recall": {
+    "frame": 137,
+    "excluded_no_text": 11,
+    "stratum_sizes": {
+      "npm|amazon": 51,
+      "npm|no-amazon": 19,
+      "pypi|amazon": 32,
+      "pypi|no-amazon": 35
+    },
+    "allocation": {
+      "npm|amazon": 15,
+      "npm|no-amazon": 6,
+      "pypi|amazon": 9,
+      "pypi|no-amazon": 10
+    }
+  },
+  "precision_rows": [
+    {
+      "row": 1,
+      "ecosystem": "npm",
+      "package_name": "@anfular/core",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "@anfular/core"
+      ],
+      "categories": [
+        "brand_impersonation_narrative",
+        "hidden_install_hook"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 2,
+      "ecosystem": "npm",
+      "package_name": "@angjlar/core",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "@angjlar/core"
+      ],
+      "categories": [
+        "brand_impersonation_narrative"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 3,
+      "ecosystem": "npm",
+      "package_name": "@angularr/cli",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "@angularr/cli"
+      ],
+      "categories": [
+        "brand_impersonation_narrative"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 4,
+      "ecosystem": "npm",
+      "package_name": "@angularr/router",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "@angularr/router"
+      ],
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 5,
+      "ecosystem": "npm",
+      "package_name": "@angulr/core",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "@angulr/core"
+      ],
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 6,
+      "ecosystem": "npm",
+      "package_name": "@angulra/cli",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "@angulra/cli"
+      ],
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 7,
+      "ecosystem": "npm",
+      "package_name": "@angulra/core",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "@angulra/core"
+      ],
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 8,
+      "ecosystem": "npm",
+      "package_name": "@angupar/core",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "@angupar/core"
+      ],
+      "categories": [
+        "brand_impersonation_narrative",
+        "hidden_install_hook"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 9,
+      "ecosystem": "npm",
+      "package_name": "@anuglar/core",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "@anuglar/core"
+      ],
+      "categories": [
+        "brand_impersonation_narrative"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 10,
+      "ecosystem": "npm",
+      "package_name": "@inpeek/odata-angular",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "@inpeek/odata-angular"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 11,
+      "ecosystem": "npm",
+      "package_name": "@nagular/router",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "@nagular/router"
+      ],
+      "categories": [
+        "brand_impersonation_narrative"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 12,
+      "ecosystem": "npm",
+      "package_name": "botmaker-cli",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "botmaker-cli"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration",
+        "hidden_install_hook"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 13,
+      "ecosystem": "npm",
+      "package_name": "core-js-gnz",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "core-js-gnz"
+      ],
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 14,
+      "ecosystem": "npm",
+      "package_name": "css-at-scope-polyfill",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "css-at-scope-polyfill"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 15,
+      "ecosystem": "npm",
+      "package_name": "css-display-reading-polyfill",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "css-display-reading-polyfill"
+      ],
+      "categories": [
+        "brand_impersonation_narrative"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 16,
+      "ecosystem": "npm",
+      "package_name": "css-env-function-shim",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "css-env-function-shim"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 17,
+      "ecosystem": "npm",
+      "package_name": "css-field-sizing-polyfill",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "css-field-sizing-polyfill"
+      ],
+      "categories": [
+        "brand_impersonation_narrative"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 18,
+      "ecosystem": "npm",
+      "package_name": "css-nbanqq-polyfill",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "css-nbanqq-polyfill"
+      ],
+      "categories": [
+        "brand_impersonation_narrative"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 19,
+      "ecosystem": "npm",
+      "package_name": "css-snap-target-polyfill",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "css-snap-target-polyfill"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 20,
+      "ecosystem": "npm",
+      "package_name": "express-enhanced",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "express-enhanced"
+      ],
+      "categories": [
+        "brand_impersonation_narrative",
+        "hidden_install_hook"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 21,
+      "ecosystem": "npm",
+      "package_name": "focus-visible-polyfill-lite",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "focus-visible-polyfill-lite"
+      ],
+      "categories": [
+        "brand_impersonation_narrative"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 22,
+      "ecosystem": "npm",
+      "package_name": "hardhat-jsx",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "hardhat-jsx"
+      ],
+      "categories": [
+        "brand_impersonation_narrative",
+        "obfuscated_payload_execution"
+      ],
+      "n_matches": 6
+    },
+    {
+      "row": 23,
+      "ecosystem": "npm",
+      "package_name": "hardhat-roof",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "hardhat-roof"
+      ],
+      "categories": [
+        "obfuscated_payload_execution"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 24,
+      "ecosystem": "npm",
+      "package_name": "internallib_v275",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "internallib_v275"
+      ],
+      "categories": [
+        "remote_backdoor_access"
+      ],
+      "n_matches": 6
+    },
+    {
+      "row": 25,
+      "ecosystem": "npm",
+      "package_name": "lite-mater",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "lite-mater"
+      ],
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 26,
+      "ecosystem": "npm",
+      "package_name": "monitoring-agent",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "monitoring-agent"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 27,
+      "ecosystem": "npm",
+      "package_name": "online-header",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "online-header"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "n_matches": 1
+    },
+    {
+      "row": 28,
+      "ecosystem": "npm",
+      "package_name": "popover-anchor-polyfill",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "popover-anchor-polyfill"
+      ],
+      "categories": [
+        "brand_impersonation_narrative"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 29,
+      "ecosystem": "npm",
+      "package_name": "postcss-gap-fallback-util",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "postcss-gap-fallback-util"
+      ],
+      "categories": [
+        "brand_impersonation_narrative"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 30,
+      "ecosystem": "npm",
+      "package_name": "studiocode_eligibility",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "studiocode_eligibility"
+      ],
+      "categories": [
+        "hidden_install_hook"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 31,
+      "ecosystem": "npm",
+      "package_name": "tailwindcss-forms-styles",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "tailwindcss-forms-styles"
+      ],
+      "categories": [
+        "brand_impersonation_narrative"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 32,
+      "ecosystem": "npm",
+      "package_name": "tiny-css-token-parser",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "tiny-css-token-parser"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 33,
+      "ecosystem": "npm",
+      "package_name": "tiny-dom-focus-trap",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "tiny-dom-focus-trap"
+      ],
+      "categories": [
+        "brand_impersonation_narrative",
+        "credential_or_wallet_exfiltration"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 34,
+      "ecosystem": "npm",
+      "package_name": "tiny-focusgroup-helper",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "tiny-focusgroup-helper"
+      ],
+      "categories": [
+        "brand_impersonation_narrative"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 35,
+      "ecosystem": "pypi",
+      "package_name": "CalcBoxLite",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "CalcBoxLite"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 36,
+      "ecosystem": "pypi",
+      "package_name": "anthropic-sdk",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "anthropic-sdk"
+      ],
+      "categories": [
+        "brand_impersonation_narrative",
+        "credential_or_wallet_exfiltration",
+        "remote_payload_retrieval"
+      ],
+      "n_matches": 6
+    },
+    {
+      "row": 37,
+      "ecosystem": "pypi",
+      "package_name": "boto4",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "boto4"
+      ],
+      "categories": [
+        "remote_backdoor_access"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 38,
+      "ecosystem": "pypi",
+      "package_name": "cdktn-provider-azurerm",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "cdktn-provider-azurerm"
+      ],
+      "categories": [
+        "brand_impersonation_narrative"
+      ],
+      "n_matches": 3
+    },
+    {
+      "row": 39,
+      "ecosystem": "pypi",
+      "package_name": "cfgzen",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "cfgzen"
+      ],
+      "categories": [
+        "remote_payload_retrieval"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 40,
+      "ecosystem": "pypi",
+      "package_name": "coldcard-helpers",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "coldcard-helpers"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "n_matches": 1
+    },
+    {
+      "row": 41,
+      "ecosystem": "pypi",
+      "package_name": "cryptgraphy",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "cryptgraphy",
+        "mlflow-otel-instrumentor"
+      ],
+      "categories": [
+        "brand_impersonation_narrative",
+        "remote_backdoor_access",
+        "remote_payload_retrieval"
+      ],
+      "n_matches": 11
+    },
+    {
+      "row": 42,
+      "ecosystem": "pypi",
+      "package_name": "deepface-weight",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "deepface-weight",
+        "deepface-weights"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 43,
+      "ecosystem": "pypi",
+      "package_name": "discordnv",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "minecraftmodes",
+        "decoris",
+        "discordnv"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "n_matches": 8
+    },
+    {
+      "row": 44,
+      "ecosystem": "pypi",
+      "package_name": "dlmm-sdk",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "dlmm-sdk"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 45,
+      "ecosystem": "pypi",
+      "package_name": "flask-header-guard",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "flask-header-guard",
+        "pygame-renderkit"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration",
+        "obfuscated_payload_execution",
+        "remote_backdoor_access"
+      ],
+      "n_matches": 13
+    },
+    {
+      "row": 46,
+      "ecosystem": "pypi",
+      "package_name": "joule-sbx-poc",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "joule-sbx-poc",
+        "joule-btp-extension"
+      ],
+      "categories": [
+        "remote_backdoor_access"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 47,
+      "ecosystem": "pypi",
+      "package_name": "kb-ai",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "kb-ai"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 48,
+      "ecosystem": "pypi",
+      "package_name": "marketing-mcp",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "marketing-mcp"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 49,
+      "ecosystem": "pypi",
+      "package_name": "multyproccess",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "multyproccess"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration",
+        "remote_backdoor_access"
+      ],
+      "n_matches": 3
+    },
+    {
+      "row": 50,
+      "ecosystem": "pypi",
+      "package_name": "my-private-pkg",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "my-private-pkg"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration",
+        "hidden_install_hook"
+      ],
+      "n_matches": 5
+    },
+    {
+      "row": 51,
+      "ecosystem": "pypi",
+      "package_name": "olympuslib",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "olympuslib",
+        "pymaas",
+        "tpu-raiden-jax"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 52,
+      "ecosystem": "pypi",
+      "package_name": "psbt-helpers",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "psbt-helpers",
+        "psbt-utils"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration",
+        "remote_backdoor_access",
+        "remote_payload_retrieval"
+      ],
+      "n_matches": 5
+    },
+    {
+      "row": 53,
+      "ecosystem": "pypi",
+      "package_name": "py-2equests",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "py-2equests",
+        "py-1requests",
+        "0requests",
+        "py-0requests"
+      ],
+      "categories": [
+        "credential_or_wallet_exfiltration",
+        "remote_backdoor_access"
+      ],
+      "n_matches": 5
+    },
+    {
+      "row": 54,
+      "ecosystem": "pypi",
+      "package_name": "rc4-secure",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "rc4-secure"
+      ],
+      "categories": [
+        "remote_payload_retrieval"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 55,
+      "ecosystem": "pypi",
+      "package_name": "speed-hashes",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "speed-hashes",
+        "pydanticc",
+        "flasq",
+        "idnna",
+        "fastapii",
+        "fast-hashes"
+      ],
+      "categories": [
+        "hidden_install_hook",
+        "obfuscated_payload_execution",
+        "remote_payload_retrieval"
+      ],
+      "n_matches": 16
+    },
+    {
+      "row": 56,
+      "ecosystem": "pypi",
+      "package_name": "syswatch",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "syswatch",
+        "envprovision"
+      ],
+      "categories": [
+        "remote_payload_retrieval"
+      ],
+      "n_matches": 4
+    },
+    {
+      "row": 57,
+      "ecosystem": "pypi",
+      "package_name": "telebot-pro",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "telebot-pro"
+      ],
+      "categories": [
+        "brand_impersonation_narrative"
+      ],
+      "n_matches": 1
+    },
+    {
+      "row": 58,
+      "ecosystem": "pypi",
+      "package_name": "faiss-cpu-avx512",
+      "stratum": "pypi|no-amazon",
+      "campaign_members": [
+        "faiss-cpu-avx512"
+      ],
+      "categories": [
+        "brand_impersonation_narrative"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 59,
+      "ecosystem": "pypi",
+      "package_name": "pytablute",
+      "stratum": "pypi|no-amazon",
+      "campaign_members": [
+        "pytablute"
+      ],
+      "categories": [
+        "remote_payload_retrieval"
+      ],
+      "n_matches": 2
+    },
+    {
+      "row": 60,
+      "ecosystem": "pypi",
+      "package_name": "requests-cache-utils",
+      "stratum": "pypi|no-amazon",
+      "campaign_members": [
+        "requests-cache-utils"
+      ],
+      "categories": [
+        "remote_payload_retrieval"
+      ],
+      "n_matches": 4
+    }
+  ],
+  "recall_rows": [
+    {
+      "row": 1,
+      "ecosystem": "npm",
+      "package_name": "@angulaar/core",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "@angulaar/core"
+      ],
+      "advisory_ids": [
+        "GHSA-h45p-4h47-vgjq",
+        "MAL-2026-17537"
+      ]
+    },
+    {
+      "row": 2,
+      "ecosystem": "npm",
+      "package_name": "@qngular/core",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "@qngular/core"
+      ],
+      "advisory_ids": [
+        "GHSA-rwv8-8xgx-7c3r",
+        "MAL-2026-17544"
+      ]
+    },
+    {
+      "row": 3,
+      "ecosystem": "npm",
+      "package_name": "@smwebserver/static",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "@smwebserver/static"
+      ],
+      "advisory_ids": [
+        "GHSA-xh7x-r46x-g84q",
+        "MAL-2026-17456"
+      ]
+    },
+    {
+      "row": 4,
+      "ecosystem": "npm",
+      "package_name": "css-hgwctv-polyfill",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "css-hgwctv-polyfill"
+      ],
+      "advisory_ids": [
+        "GHSA-7q76-4xm4-4v93",
+        "MAL-2026-17552"
+      ]
+    },
+    {
+      "row": 5,
+      "ecosystem": "npm",
+      "package_name": "css-mpmdds-polyfill",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "css-mpmdds-polyfill"
+      ],
+      "advisory_ids": [
+        "GHSA-7f4m-pm4p-cp8q",
+        "MAL-2026-17554"
+      ]
+    },
+    {
+      "row": 6,
+      "ecosystem": "npm",
+      "package_name": "generator-epic-react",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "generator-epic-react"
+      ],
+      "advisory_ids": [
+        "GHSA-g46p-chgx-c83v",
+        "MAL-2025-49224"
+      ]
+    },
+    {
+      "row": 7,
+      "ecosystem": "npm",
+      "package_name": "pf23727",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "pf23727"
+      ],
+      "advisory_ids": [
+        "GHSA-p2hc-jmvm-qwc9",
+        "MAL-2026-16338"
+      ]
+    },
+    {
+      "row": 8,
+      "ecosystem": "npm",
+      "package_name": "pflag29424",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "pflag29424"
+      ],
+      "advisory_ids": [
+        "GHSA-8jr8-g7mm-57m6",
+        "MAL-2026-16342"
+      ]
+    },
+    {
+      "row": 9,
+      "ecosystem": "npm",
+      "package_name": "ph-common",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "ph-common"
+      ],
+      "advisory_ids": [
+        "GHSA-g6x8-wj65-55v2",
+        "MAL-2026-1809"
+      ]
+    },
+    {
+      "row": 10,
+      "ecosystem": "npm",
+      "package_name": "player-support-tools-ui",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "player-support-tools-ui"
+      ],
+      "advisory_ids": [
+        "GHSA-2p95-xv34-387r",
+        "MAL-2025-49234"
+      ]
+    },
+    {
+      "row": 11,
+      "ecosystem": "npm",
+      "package_name": "promises-dotenv3",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "promises-dotenv3"
+      ],
+      "advisory_ids": [
+        "GHSA-3rx7-3cx7-x3hv",
+        "MAL-2026-17519"
+      ]
+    },
+    {
+      "row": 12,
+      "ecosystem": "npm",
+      "package_name": "risk-detection",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "risk-detection"
+      ],
+      "advisory_ids": [
+        "GHSA-367w-p5mp-qr5j",
+        "MAL-2026-17563"
+      ]
+    },
+    {
+      "row": 13,
+      "ecosystem": "npm",
+      "package_name": "set-egs-backend",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "set-egs-backend"
+      ],
+      "advisory_ids": [
+        "GHSA-whwx-38wq-2f27",
+        "MAL-2025-49237"
+      ]
+    },
+    {
+      "row": 14,
+      "ecosystem": "npm",
+      "package_name": "store-service-worker",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "store-service-worker"
+      ],
+      "advisory_ids": [
+        "GHSA-pp63-g67g-4hxq",
+        "MAL-2025-49239"
+      ]
+    },
+    {
+      "row": 15,
+      "ecosystem": "npm",
+      "package_name": "turbo-ws",
+      "stratum": "npm|amazon",
+      "campaign_members": [
+        "turbo-ws"
+      ],
+      "advisory_ids": [
+        "GHSA-3933-m2c5-xfm8",
+        "MAL-2026-16440"
+      ]
+    },
+    {
+      "row": 16,
+      "ecosystem": "npm",
+      "package_name": "@diezyclutch/baileys",
+      "stratum": "npm|no-amazon",
+      "campaign_members": [
+        "@diezyclutch/baileys"
+      ],
+      "advisory_ids": [
+        "GHSA-5f29-482c-j4rr",
+        "MAL-2026-17618"
+      ]
+    },
+    {
+      "row": 17,
+      "ecosystem": "npm",
+      "package_name": "documenclient",
+      "stratum": "npm|no-amazon",
+      "campaign_members": [
+        "documenclient"
+      ],
+      "advisory_ids": [
+        "GHSA-648r-w4vm-vvvp"
+      ]
+    },
+    {
+      "row": 18,
+      "ecosystem": "npm",
+      "package_name": "dzyclutch",
+      "stratum": "npm|no-amazon",
+      "campaign_members": [
+        "dzyclutch"
+      ],
+      "advisory_ids": [
+        "GHSA-36rj-4crv-cmgm",
+        "MAL-2026-17619"
+      ]
+    },
+    {
+      "row": 19,
+      "ecosystem": "npm",
+      "package_name": "dzyclutch-baileys",
+      "stratum": "npm|no-amazon",
+      "campaign_members": [
+        "dzyclutch-baileys"
+      ],
+      "advisory_ids": [
+        "GHSA-c936-2h58-8v2f",
+        "MAL-2026-17620"
+      ]
+    },
+    {
+      "row": 20,
+      "ecosystem": "npm",
+      "package_name": "dzyhaxz-libsignal",
+      "stratum": "npm|no-amazon",
+      "campaign_members": [
+        "dzyhaxz-libsignal"
+      ],
+      "advisory_ids": [
+        "GHSA-jjrx-mg27-p6ww",
+        "MAL-2026-17623"
+      ]
+    },
+    {
+      "row": 21,
+      "ecosystem": "npm",
+      "package_name": "kartykgithub-ph-e",
+      "stratum": "npm|no-amazon",
+      "campaign_members": [
+        "kartykgithub-ph-e"
+      ],
+      "advisory_ids": [
+        "GHSA-7hq7-x7ww-7cxr",
+        "MAL-2026-17425"
+      ]
+    },
+    {
+      "row": 22,
+      "ecosystem": "pypi",
+      "package_name": "ai-perf-toolkit",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "ai-perf-toolkit"
+      ],
+      "advisory_ids": [
+        "GHSA-9p9m-j35v-j8cp",
+        "MAL-2026-11197"
+      ]
+    },
+    {
+      "row": 23,
+      "ecosystem": "pypi",
+      "package_name": "azure-langchain-example",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "azure-langchain-example"
+      ],
+      "advisory_ids": [
+        "GHSA-h82v-pqpv-jr3r",
+        "MAL-2026-17213"
+      ]
+    },
+    {
+      "row": 24,
+      "ecosystem": "pypi",
+      "package_name": "cleanup-string",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "cleanup-string"
+      ],
+      "advisory_ids": [
+        "GHSA-r9mq-4q39-vw6h",
+        "MAL-2026-17325"
+      ]
+    },
+    {
+      "row": 25,
+      "ecosystem": "pypi",
+      "package_name": "cli-anything-ai-market",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "cli-anything-ai-market"
+      ],
+      "advisory_ids": [
+        "GHSA-94x6-gfxh-v73w",
+        "MAL-2026-16212"
+      ]
+    },
+    {
+      "row": 26,
+      "ecosystem": "pypi",
+      "package_name": "dbt-sa-cli",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "dbt-sa-cli"
+      ],
+      "advisory_ids": [
+        "GHSA-xf8p-r8w2-fx5m",
+        "MAL-2026-15934"
+      ]
+    },
+    {
+      "row": 27,
+      "ecosystem": "pypi",
+      "package_name": "launchdarkly-ai-server-sdk",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "launchdarkly-ai-server-sdk"
+      ],
+      "advisory_ids": [
+        "GHSA-8m32-rjxc-vw3m",
+        "MAL-2026-11519"
+      ]
+    },
+    {
+      "row": 28,
+      "ecosystem": "pypi",
+      "package_name": "mcp-search-server",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "mcp-search-server"
+      ],
+      "advisory_ids": [
+        "GHSA-3rhm-6v7p-whrg",
+        "MAL-2026-11198"
+      ]
+    },
+    {
+      "row": 29,
+      "ecosystem": "pypi",
+      "package_name": "nvtorch-oot-nightly",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "nvtorch-oot-nightly"
+      ],
+      "advisory_ids": [
+        "GHSA-5g9f-m99h-h89p",
+        "MAL-2026-11425"
+      ]
+    },
+    {
+      "row": 30,
+      "ecosystem": "pypi",
+      "package_name": "telegram-helper",
+      "stratum": "pypi|amazon",
+      "campaign_members": [
+        "telegram-helper"
+      ],
+      "advisory_ids": [
+        "GHSA-vxg4-4jxm-7ff9",
+        "MAL-2026-16017"
+      ]
+    },
+    {
+      "row": 31,
+      "ecosystem": "pypi",
+      "package_name": "0xfighter3",
+      "stratum": "pypi|no-amazon",
+      "campaign_members": [
+        "0xfighter3"
+      ],
+      "advisory_ids": [
+        "GHSA-w8cx-q6rx-qfj2",
+        "MAL-2026-14525"
+      ]
+    },
+    {
+      "row": 32,
+      "ecosystem": "pypi",
+      "package_name": "asdk-plugin-ai-platform",
+      "stratum": "pypi|no-amazon",
+      "campaign_members": [
+        "asdk-plugin-ai-platform"
+      ],
+      "advisory_ids": [
+        "GHSA-pwmm-jg95-fq28",
+        "MAL-2026-11421"
+      ]
+    },
+    {
+      "row": 33,
+      "ecosystem": "pypi",
+      "package_name": "databricks-webapp-navigation-homepage",
+      "stratum": "pypi|no-amazon",
+      "campaign_members": [
+        "databricks-webapp-navigation-homepage"
+      ],
+      "advisory_ids": [
+        "GHSA-5c43-fq29-3rx9",
+        "MAL-2026-16080"
+      ]
+    },
+    {
+      "row": 34,
+      "ecosystem": "pypi",
+      "package_name": "dlmm",
+      "stratum": "pypi|no-amazon",
+      "campaign_members": [
+        "dlmm"
+      ],
+      "advisory_ids": [
+        "GHSA-5gh8-34vp-xw63",
+        "MAL-2026-13728"
+      ]
+    },
+    {
+      "row": 35,
+      "ecosystem": "pypi",
+      "package_name": "flyteplugins-agento11y",
+      "stratum": "pypi|no-amazon",
+      "campaign_members": [
+        "flyteplugins-agento11y"
+      ],
+      "advisory_ids": [
+        "GHSA-8cpp-43j8-xg7c",
+        "MAL-2026-14581"
+      ]
+    },
+    {
+      "row": 36,
+      "ecosystem": "pypi",
+      "package_name": "flyteplugins-echo",
+      "stratum": "pypi|no-amazon",
+      "campaign_members": [
+        "flyteplugins-echo"
+      ],
+      "advisory_ids": [
+        "GHSA-gcjf-mv7f-ffmf",
+        "MAL-2026-14582"
+      ]
+    },
+    {
+      "row": 37,
+      "ecosystem": "pypi",
+      "package_name": "msrcpoc",
+      "stratum": "pypi|no-amazon",
+      "campaign_members": [
+        "msrcpoc"
+      ],
+      "advisory_ids": [
+        "GHSA-gx7j-f7w4-8rwp",
+        "MAL-2026-14444"
+      ]
+    },
+    {
+      "row": 38,
+      "ecosystem": "pypi",
+      "package_name": "rce-test",
+      "stratum": "pypi|no-amazon",
+      "campaign_members": [
+        "rce-test"
+      ],
+      "advisory_ids": [
+        "GHSA-5j7w-88pp-6hpr",
+        "MAL-2026-14523"
+      ]
+    },
+    {
+      "row": 39,
+      "ecosystem": "pypi",
+      "package_name": "walmart-genai-trace",
+      "stratum": "pypi|no-amazon",
+      "campaign_members": [
+        "walmart-genai-trace"
+      ],
+      "advisory_ids": [
+        "GHSA-wj6q-qw9c-whxq",
+        "MAL-2026-11420"
+      ]
+    },
+    {
+      "row": 40,
+      "ecosystem": "pypi",
+      "package_name": "zmaker",
+      "stratum": "pypi|no-amazon",
+      "campaign_members": [
+        "zmaker",
+        "zscaner",
+        "zsender"
+      ],
+      "advisory_ids": [
+        "GHSA-qjr9-wxqm-hw3x",
+        "MAL-2025-191943"
+      ]
+    }
+  ]
+}

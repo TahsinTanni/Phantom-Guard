@@ -7,17 +7,19 @@ Run from the project_p0_edited folder:
 
 --text-source picks the advisory text that supplies the DV, --group-on the
 text that builds the campaign signature (each any|ghsa|osv). The defaults
-(any/any) reproduce Section 5.14 exactly; other settings write to
+(any/any) reproduce Section 5.18 exactly; other settings write to
 results/power_campaign_level__text-<x>__group-<y>.json.
 
 Also writes the per-campaign table results/campaigns.csv (non-default
 settings: results/campaigns__text-<x>__group-<y>.csv).
 
 --snapshot v1|v2 picks the frozen snapshot (default v1, the 401-record
-file every Section 5.14 number comes from). v2 (research_log 5.17) writes
+file every Section 5.18 v1 number comes from). v2 (research_log 5.17) writes
 its outputs with a "__v2" suffix, e.g. results/power_campaign_level__v2.json.
 
-Reproduces research-log Section 5.14 (campaign-level Fisher / CMH; supersedes 5.13 and 5.6) from the
+Reproduces research-log Section 5.18 (campaign-level Fisher / CMH; supersedes 5.14, 5.13 and
+5.6: the 5.18 no-text, Amazon Inspector template and URL-strip rules give 105 campaigns, 5.14
+had 94) from the
 frozen 401-record snapshot, then runs the power analysis that Section 7
 item 1 asks for. Writes results/power_campaign_level.json.
 """
@@ -51,7 +53,9 @@ from src.statistics.h1_pilot_analysis import (  # noqa: E402
     build_contingency_table,
     build_stratified_tables,
     SOURCE_SETTINGS,
+    apply_manual_merges,
     collapse_to_campaign_level,
+    load_manual_merges,
     run_cmh_test,
     run_fisher_exact,
     write_campaign_csv,
@@ -166,6 +170,45 @@ def reporter_block(campaigns: list[dict]) -> dict:
     return out
 
 
+MANUAL_MERGES = HERE / "data" / "manual_merges.json"
+
+
+def sensitivity_row(label: str, campaigns: list[dict], base: list[dict]) -> dict:
+    """Pooled Fisher, CMH by ecosystem and logit (d) on `campaigns`, with
+    the campaign and package difference from `base` (the main analysis)."""
+    fp = run_fisher_exact(build_contingency_table(campaigns))
+    cmh = run_cmh_test(list(build_stratified_tables(campaigns, "ecosystem").values()))
+    lr = fit_reporter_logistic_regression(add_reporter_covariates(campaigns))
+    g = lr["terms"]["grammar_flag"]
+    d_c = len(campaigns) - len(base)
+    d_p = sum(c["_member_count"] for c in campaigns) - sum(c["_member_count"] for c in base)
+    print(f"  [{label}]  campaigns {len(campaigns)} ({d_c:+d}), packages {d_p:+d}")
+    print(f"    Pooled  table={fp['table_2x2']}  OR={fp['odds_ratio']:.3f} {fmt_ci(fp['odds_ratio_ci_95'])}  "
+          f"p={fp['p_value']:.3f}")
+    print(f"    CMH     OR={cmh['common_odds_ratio']:.3f} {fmt_ci(cmh['common_odds_ratio_ci_95'])}  p={cmh['p_value']:.3f}")
+    print(f"    Logit (d) grammar_flag OR={g['odds_ratio']:.3f} [{g['or_ci_low']:.3f}, {g['or_ci_high']:.3f}]  "
+          f"p={g['p_value']:.3f}  converged={lr['converged']}")
+    return {"n_campaigns": len(campaigns), "delta_campaigns": d_c, "delta_packages": d_p,
+            "pooled": fp, "cmh": cmh, "logit": lr}
+
+
+def sensitivity_table(campaigns: list[dict]) -> dict:
+    """research_log 5.18: (1) without no-text campaigns (only the OpenSSF
+    credit link; never DV-positive); (2) with the manual merges of
+    data/manual_merges.json (package sets judged one campaign on name
+    evidence). The main analysis uses neither."""
+    out = {}
+    no_text = [c for c in add_reporter_covariates(campaigns) if not c["no_text"]]
+    out["exclude_no_text"] = sensitivity_row("exclude no-text", no_text, campaigns)
+    merged, report = apply_manual_merges(campaigns, load_manual_merges(MANUAL_MERGES))
+    for r in report:
+        print(f"  manual merge {r['id']}: {r['campaigns_merged']} campaigns, {r['packages_merged']} packages"
+              + (f", missing {r['missing']}" if r["missing"] else ""))
+    out["with_manual_merges"] = sensitivity_row("with manual merges", merged, campaigns)
+    out["with_manual_merges"]["merges"] = report
+    return out
+
+
 def parse_args(argv=None) -> argparse.Namespace:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--text-source", choices=SOURCE_SETTINGS, default="any",
@@ -173,7 +216,7 @@ def parse_args(argv=None) -> argparse.Namespace:
     ap.add_argument("--group-on", choices=SOURCE_SETTINGS, default="any",
                     help="advisory text used for the campaign signature (default: first record, Section 5.6)")
     ap.add_argument("--snapshot", choices=sorted(SNAPSHOTS), default="v1",
-                    help="frozen snapshot (default v1, which reproduces Section 5.14)")
+                    help="frozen snapshot (default v1, which reproduces Section 5.18)")
     return ap.parse_args(argv)
 
 
@@ -206,21 +249,21 @@ def main(argv=None) -> None:
 
     banner("3. Collapse to independent campaigns")
     campaigns = collapse_to_campaign_level(joined, text_source=args.text_source, group_on=args.group_on)
-    print(f"  campaigns: {len(campaigns)}   (research log 5.14: 94; 5.13 was 106, 5.6 was 142)")
+    print(f"  campaigns: {len(campaigns)}   (research log 5.18: 105; 5.14 was 94, 5.13 was 106, 5.6 was 142)")
 
-    banner("4. Section 5.14 reproduction (campaign level; supersedes 5.13)")
+    banner("4. Section 5.18 reproduction (campaign level; supersedes 5.14)")
     pooled = build_contingency_table(campaigns)
     fp = run_fisher_exact(pooled)
     print(f"  Pooled  n={fp['n_total']}  table={fp['table_2x2']}  "
-          f"OR={fp['odds_ratio']:.3f} {fmt_ci(fp['odds_ratio_ci_95'])}  p={fp['p_value']:.3f}   (log 5.14: OR 0.884, p 0.818)")
+          f"OR={fp['odds_ratio']:.3f} {fmt_ci(fp['odds_ratio_ci_95'])}  p={fp['p_value']:.3f}   (log 5.18: OR 0.812, p 0.668)")
     strata = build_stratified_tables(campaigns, "ecosystem")
-    expected = {"npm": "OR 2.200, p 0.624", "pypi": "OR 0.673, p 0.587"}
+    expected = {"npm": "OR 1.543, p 0.673", "pypi": "OR 0.673, p 0.587"}
     for eco, t in strata.items():
         r = run_fisher_exact(t)
         print(f"  {eco:6s} n={r['n_total']}  table={r['table_2x2']}  "
-              f"OR={r['odds_ratio']:.3f} {fmt_ci(r['odds_ratio_ci_95'])}  p={r['p_value']:.3f}   (log 5.14: {expected.get(eco, '?')})")
+              f"OR={r['odds_ratio']:.3f} {fmt_ci(r['odds_ratio_ci_95'])}  p={r['p_value']:.3f}   (log 5.18: {expected.get(eco, '?')})")
     cmh = run_cmh_test(list(strata.values()))
-    print(f"  CMH     OR={cmh['common_odds_ratio']:.3f} {fmt_ci(cmh['common_odds_ratio_ci_95'])}  p={cmh['p_value']:.3f}   (log 5.14: OR 0.890, p 0.802)")
+    print(f"  CMH     OR={cmh['common_odds_ratio']:.3f} {fmt_ci(cmh['common_odds_ratio_ci_95'])}  p={cmh['p_value']:.3f}   (log 5.18: OR 0.851, p 0.723)")
 
     banner("5. Power analysis at the campaign-level n (Section 7, item 1)")
     out = {"settings": {"snapshot": args.snapshot, "text_source": args.text_source,
@@ -234,6 +277,9 @@ def main(argv=None) -> None:
 
     banner("6. Reporter analysis (review.md A3 / D2)")
     out["reporters_d2"] = reporter_block(campaigns)
+
+    banner("7. Sensitivity table (research_log 5.18)")
+    out["sensitivity"] = sensitivity_table(campaigns)
 
     Path("results").mkdir(exist_ok=True)
     out_path = Path("results") / ("power_campaign_level" + ("" if is_default else

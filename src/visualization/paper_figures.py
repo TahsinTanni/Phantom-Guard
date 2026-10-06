@@ -9,6 +9,12 @@ Everything is recomputed from data/frozen/incidents_snapshot.jsonl through
 the same pipeline functions run_check.py uses; model estimates are read from
 results/power_campaign_level*.json. Writes vector PDFs to paper/figures/ and
 paper_dib/figures/.
+
+    python -m src.visualization.paper_figures --snapshot v2
+
+draws the full set from the v2 snapshot (research_log 5.19) into
+results/figures/v2/, after run_check.py --snapshot v2 (default and
+--text-source ghsa). The paper folders are not touched.
 """
 
 from __future__ import annotations
@@ -102,8 +108,8 @@ def wilson(k: int, n: int, z: float = 1.959964) -> tuple[float, float]:
     return (c - h, c + h)
 
 
-def load():
-    with open(SNAPSHOT, encoding="utf-8") as f:
+def load(snapshot: Path = SNAPSHOT):
+    with open(snapshot, encoding="utf-8") as f:
         records = [json.loads(line) for line in f if line.strip()]
     joined = attach_grammar_labels(label_batch(records))
     campaigns = add_reporter_covariates(collapse_to_campaign_level(joined))
@@ -178,7 +184,8 @@ def fig_units(records, campaigns, width: float, height: float = 3.6):
             left += v
         a.text(left + 6, y[i], f"{left}", ha="left", va="center", color=INK, fontsize=7.5)
     a.set_yticks(y, stages)
-    a.set_xlim(0, 440)
+    a.set_xlim(0, 440 if counts['npm'][0] + counts['pypi'][0] <= 401 else
+               1.12 * (counts['npm'][0] + counts['pypi'][0]))
     a.set_xlabel("Count")
     a.tick_params(axis="y", length=0)
     hgrid(a)
@@ -205,10 +212,11 @@ def fig_units(records, campaigns, width: float, height: float = 3.6):
     return fig
 
 
-def fig_forest(width: float):
+def fig_forest(width: float, main_json: Path = RESULTS / "power_campaign_level.json",
+               ghsa_json: Path = RESULTS / "power_campaign_level__text-ghsa__group-any.json"):
     """Grammar OR across specifications (left) and reporter terms (right)."""
-    d = json.load(open(RESULTS / "power_campaign_level.json"))
-    g = json.load(open(RESULTS / "power_campaign_level__text-ghsa__group-any.json"))
+    d = json.load(open(main_json))
+    g = json.load(open(ghsa_json))
     s56, rep = d["section_5_6"], d["reporters_d2"]
 
     def fisher(r):
@@ -224,8 +232,8 @@ def fig_forest(width: float):
     sens = rep["logit_sensitivity"]
     grammar_rows = [
         ("Pooled, Fisher", fisher(s56["pooled"]), "main"),
-        ("npm, Fisher (n = 22)", fisher(s56["by_ecosystem"]["npm"]), "main"),
-        ("PyPI, Fisher (n = 72)", fisher(s56["by_ecosystem"]["pypi"]), "main"),
+        (f"npm, Fisher (n = {s56['by_ecosystem']['npm']['n_total']})", fisher(s56["by_ecosystem"]["npm"]), "main"),
+        (f"PyPI, Fisher (n = {s56['by_ecosystem']['pypi']['n_total']})", fisher(s56["by_ecosystem"]["pypi"]), "main"),
         ("CMH by ecosystem", cmh(s56["cmh"]), "main"),
         ("CMH by eco. × reporter count", cmh(rep["cmh"]["ecosystem_x_n_reporters"]["result"]), "main"),
         ("Logit (d)", term(rep["logit"], "grammar_flag"), "main"),
@@ -388,8 +396,8 @@ def fig_grammar(campaigns, width: float):
     return fig
 
 
-def fig_power(width: float):
-    d = json.load(open(RESULTS / "power_campaign_level.json"))["power"]["pooled"]
+def fig_power(width: float, main_json: Path = RESULTS / "power_campaign_level.json"):
+    d = json.load(open(main_json))["power"]["pooled"]
     p0, prev, n_now = d["p_control"], d["exposure_prevalence"], d["n"]
 
     def power(n, or_):
@@ -428,9 +436,8 @@ def fig_power(width: float):
     return fig
 
 
-def fig_timeline(records, width: float):
-    """Records published per day by ecosystem, September-October 2026."""
-    start = datetime(2026, 9, 1)
+def fig_timeline(records, width: float, start: datetime = datetime(2026, 9, 1)):
+    """Records published per day by ecosystem, from `start`."""
     days: dict[str, Counter] = {"npm": Counter(), "pypi": Counter()}
     early = Counter()
     last = start
@@ -450,16 +457,20 @@ def fig_timeline(records, width: float):
         ax.bar(range(span), vals, bottom=bottom, width=0.8, color=ECO_COLOR[eco],
                edgecolor="white", linewidth=0.5, label=ECO_LABEL[eco])
         bottom = [b + v for b, v in zip(bottom, vals)]
-    labels = {0: "1 Sep", 7: "8 Sep", 14: "15 Sep", 21: "22 Sep", 28: "29 Sep"}
+    from datetime import timedelta
+    step = 7 if span <= 40 else 14
+    labels = {k: f"{(start + timedelta(days=k)).day} {(start + timedelta(days=k)):%b}"
+              for k in range(0, span - 2, step)}
     ax.set_xticks(list(labels), list(labels.values()))
     ax.set_xlim(-0.8, span - 0.2)
     ax.set_ylabel("Records published per day")
     vgrid(ax)
     ax.legend(loc="upper left", ncol=2)
     n_early = sum(early.values())
+    earliest = min(datetime.fromisoformat(r["published_at"].replace("Z", "+00:00")) for r in records)
     ax.text(0.01, 0.80,
-            f"Not shown: {n_early} records published before 1 Sep 2026\n"
-            f"(PyPI {early['pypi']}, npm {early['npm']}; earliest 30 Oct 2025)",
+            f"Not shown: {n_early} records published before {start.day} {start:%b %Y}\n"
+            f"(PyPI {early['pypi']}, npm {early['npm']}; earliest {earliest.day} {earliest:%b %Y})",
             transform=ax.transAxes, ha="left", va="top", fontsize=6.5, color=INK_2)
     return fig
 
@@ -554,6 +565,30 @@ def fig_reporters(records, width: float):
     return fig, per_eco
 
 
+def main_v2(out: Path = RESULTS / "figures" / "v2") -> None:
+    """Every figure from the v2 snapshot, at the analysis paper's sizes
+    (column width; the forest plot full width)."""
+    snap = ROOT / "data" / "frozen" / "incidents_snapshot_v2.jsonl"
+    main_json = RESULTS / "power_campaign_level__v2.json"
+    ghsa_json = RESULTS / "power_campaign_level__text-ghsa__group-any__v2.json"
+    records, joined, campaigns = load(snap)
+    print(f"v2: records={len(records)} campaigns={len(campaigns)}")
+    first_ghsa = min(datetime.fromisoformat(r["published_at"].replace("Z", "+00:00")).replace(tzinfo=None)
+                     for r in records if r["source"] == "ghsa")
+    save(fig_units(records, campaigns, COL_W), "fig_units", out)
+    save(fig_dv_by_reporter(campaigns, COL_W), "fig_dv_by_reporter", out)
+    save(fig_grammar(campaigns, COL_W), "fig_grammar", out)
+    save(fig_forest(FULL_W, main_json, ghsa_json), "fig_forest", out)
+    save(fig_power(COL_W, main_json), "fig_power", out)
+    save(fig_timeline(records, FULL_W, start=datetime(first_ghsa.year, first_ghsa.month, first_ghsa.day)),
+         "fig_timeline", out)
+    fig, mech = fig_mechanisms(joined, campaigns, COL_W * 1.3)
+    save(fig, "fig_mechanisms", out)
+    fig, rep_ = fig_reporters(records, COL_W * 1.4)
+    save(fig, "fig_reporters", out)
+    print(f"Written: {out}")
+
+
 def main() -> None:
     records, joined, campaigns = load()
     print(f"records={len(records)} campaigns={len(campaigns)}")
@@ -578,4 +613,6 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    main_v2() if sys.argv[1:] == ["--snapshot", "v2"] else main()

@@ -1,0 +1,25 @@
+{
+  "description": "Package sets judged to be one campaign on name evidence, where the advisory text is a generic template and cannot group them (research_log 5.18). Used only by the 'with manual merges' sensitivity row of run_check.py; the main analysis ignores this file.",
+  "merges": [
+    {
+      "id": "npm-epic-dependency-confusion",
+      "ecosystem": "npm",
+      "packages": [
+        "set-egs-backend",
+        "player-support-tools-ui",
+        "ssp-config-management-tool",
+        "store-service-worker",
+        "mod-manager",
+        "qa-egs-rollback",
+        "mms-simulation",
+        "mms-tools",
+        "mms-thin-client",
+        "mms-service",
+        "mms-ref-dedserver",
+        "mms-ref-client",
+        "generator-epic-react"
+      ],
+      "reason": "Internal-looking project names of one organisation (mms-*, *-egs-*, generator-epic-react, store/player/mod tooling): one dependency-confusion family. Every GHSA text is only Amazon Inspector's one-line 'was found to contain malicious code' verdict plus the OpenSSF credit link, so no text rule can group them. Decision of 2026-10-06 (collapse audits v1 row 1, v2 row 57)."
+    }
+  ]
+}
