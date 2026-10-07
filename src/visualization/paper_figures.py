@@ -15,6 +15,11 @@ paper_dib/figures/.
 draws the full set from the v2 snapshot (research_log 5.19) into
 results/figures/v2/, after run_check.py --snapshot v2 (default and
 --text-source ghsa). The paper folders are not touched.
+
+    python -m src.visualization.paper_figures --paper-forest
+
+writes paper/figures/fig_forest_specs.pdf (analysis paper Fig. 3: grammar OR
+across every Table II specification) from results/analysis_v2.json.
 """
 
 from __future__ import annotations
@@ -565,6 +570,81 @@ def fig_reporters(records, width: float):
     return fig, per_eco
 
 
+def fig_spec_forest(width: float, analysis_json: Path = RESULTS / "analysis_v2.json",
+                    row_h: float = 0.142):
+    """Grammar OR [95% CI] for every Table II specification of the analysis
+    paper (v2), plus the earlier 105-campaign (v1) pooled and GHSA-only
+    Fisher estimates as hollow diamonds. All values from analysis_v2.json;
+    the misclassification-corrected rows use the simple correction as the
+    point and the probabilistic interval, as in Table II."""
+    a = json.load(open(analysis_json))
+    t2, t1 = a["table_ii"]["v2"], a["table_ii"]["v1"]
+    mc = a["misclassification_v2"]
+
+    def est(x):
+        return x["or"], x["ci"][0], x["ci"][1]
+
+    def corr(key):
+        m = mc[key]
+        return m["simple"]["odds_ratio"], *m["probabilistic"]["interval_95"]
+
+    rows = [  # (label, (or, lo, hi), kind) kind: main | single | earlier
+        ("Pooled, Fisher", est(t2["pooled_fisher"]), "main"),
+        (f"npm, Fisher (n = {t2['npm_fisher']['n']})", est(t2["npm_fisher"]), "main"),
+        (f"PyPI, Fisher (n = {t2['pypi_fisher']['n']})", est(t2["pypi_fisher"]), "main"),
+        ("CMH by ecosystem", est(t2["cmh_ecosystem"]), "main"),
+        ("CMH by eco. × reporter count", est(t2["cmh_ecosystem_x_n_reporters"]), "main"),
+        ("Logit (a)", est(t2["logit_a_grammar"]), "main"),
+        ("Logit (b)", est(t2["logit_b_grammar"]), "main"),
+        ("Logit (c)", est(t2["logit_c_grammar"]), "main"),
+        ("Logit (d)", est(t2["logit_d_grammar"]), "main"),
+        ("Corrected, miss rate 17/40", corr("main_miss_17_40"), "main"),
+        ("Corrected, miss rate 14/40", corr("miss_excluding_borderline_14_40"), "main"),
+        ("GHSA text only, Fisher", est(t2["ghsa_only_fisher"]), "single"),
+        ("GHSA text only, CMH", est(t2["ghsa_only_cmh"]), "single"),
+        (f"Earlier {t1['pooled_fisher']['n']}: pooled, Fisher", est(t1["pooled_fisher"]), "earlier"),
+        (f"Earlier {t1['ghsa_only_fisher']['n']}: GHSA only, Fisher", est(t1["ghsa_only_fisher"]), "earlier"),
+    ]
+    gap_before = {11, 13}  # visual gaps before the single-source and earlier groups
+    ys, y = [], 0.0
+    for i in range(len(rows)):
+        if i in gap_before:
+            y += 0.5
+        ys.append(-y)
+        y += 1
+    fig, ax = plt.subplots(figsize=(width, row_h * (y + 0.5) + 0.5))
+    xlim = (0.2, 10)
+    for (label, (o, lo, hi), kind), yy in zip(rows, ys):
+        col = {"main": NPM, "single": ACCENT, "earlier": INK_2}[kind]
+        ax.plot([max(lo, xlim[0]), min(hi, xlim[1])], [yy, yy], color=col, linewidth=1.4,
+                solid_capstyle="round")
+        if kind == "earlier":
+            ax.plot(o, yy, "D", markerfacecolor="white", markeredgecolor=col, markeredgewidth=1.1,
+                    markersize=4.2, zorder=3)
+        else:
+            ax.plot(o, yy, "o", color=col, markersize=4.5, markeredgecolor="white",
+                    markeredgewidth=0.8, zorder=3)
+    ax.axvline(1, color=INK_2, linewidth=0.7, linestyle=(0, (3, 2)), zorder=1)
+    ax.set_xscale("log")
+    ax.set_xlim(*xlim)
+    ticks = [0.25, 0.5, 1, 2, 4, 8]
+    ax.xaxis.set_major_locator(FixedLocator(ticks))
+    ax.xaxis.set_minor_locator(NullLocator())
+    ax.xaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:g}"))
+    ax.set_yticks(ys, [r[0] for r in rows])
+    ax.tick_params(axis="y", length=0, pad=2)
+    ax.set_ylim(ys[-1] - 0.6, 0.6)
+    ax.set_xlabel("Grammar odds ratio, 95% CI (log scale)")
+    hgrid(ax)
+    return fig
+
+
+def main_paper_forest(out: Path = OUT_MAIN) -> None:
+    """Fig. 3 of the analysis paper (reviewer R8)."""
+    save(fig_spec_forest(COL_W), "fig_forest_specs", out)
+    print(f"Written: {out / 'fig_forest_specs.pdf'}")
+
+
 def main_v2(out: Path = RESULTS / "figures" / "v2") -> None:
     """Every figure from the v2 snapshot, at the analysis paper's sizes
     (column width; the forest plot full width)."""
@@ -615,4 +695,9 @@ def main() -> None:
 if __name__ == "__main__":
     import sys
 
-    main_v2() if sys.argv[1:] == ["--snapshot", "v2"] else main()
+    if sys.argv[1:] == ["--snapshot", "v2"]:
+        main_v2()
+    elif sys.argv[1:] == ["--paper-forest"]:
+        main_paper_forest()
+    else:
+        main()
