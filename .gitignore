@@ -1,13 +1,29 @@
-.venv/
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
 .pytest_cache/
+.venv/
+
+# OS / editors
 .DS_Store
+.vscode/
+.idea/
+
+# LaTeX build files (any folder)
+*.aux
+*.log
+*.out
+*.spl
+*.bbl
+*.blg
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# Compiled papers (rebuild with pdflatex, twice, in paper/ and paper_dib/)
+paper/main.pdf
+paper_dib/dib_main.pdf
+
+# Private notes (paper outline) — must stay out of the repo
 notes/
-paper_dib/*.aux
-paper_dib/*.log
-paper_dib/*.out
-paper_dib/*.spl
-paper/*.aux
-paper/*.log
-paper/*.out
